@@ -1,0 +1,18 @@
+-> Stack
+OK
+
+-> Vector
+
+
+-> Map
+
+-> Others
+• iterators_traits                      OK
+• reverse_iterator                      OK
+• enable_if                             OK
+• is_integral
+• equal et/ou lexicographical_compare   OK
+• std::pair                             OK
+• std::make_pair                        OK
+
+don't forget to replace std::vector with ft::vector in tests
