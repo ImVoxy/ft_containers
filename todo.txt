@@ -1,5 +1,4 @@
--> Stack
-OK
+-> Stack                                OK
 
 -> Vector
 
@@ -10,7 +9,7 @@ OK
 • iterators_traits                      OK
 • reverse_iterator                      OK
 • enable_if                             OK
-• is_integral
+• is_integral                           OK
 • equal et/ou lexicographical_compare   OK
 • std::pair                             OK
 • std::make_pair                        OK

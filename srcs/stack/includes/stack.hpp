@@ -20,7 +20,7 @@ namespace ft
             explicit stack(const container_type& ctnr = container_type()) : _cont(ctnr){};
             stack(const stack<value_type, container_type>& cont) : _cont(cont._cont){};
             ~stack(){};
-//  Member fonctions          
+//  Member fonctions
             bool empty(){return (_cont.empty());}
             int size(){return (_cont.size());}
             value_type top(){return (_cont.back());}

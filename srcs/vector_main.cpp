@@ -27,7 +27,7 @@ void display_vec_int(std::vector<int> vector_int)
     std::cout << std::endl;
 }
 
-int vector_test()
+int main()
 {
     std::vector<std::string> vector_str;
 	std::vector<int> vector_int;

@@ -1,17 +1,18 @@
 // enable_if example: two ways of using enable_if
 #include <iostream>
-#include <type_traits>
+// #include <type_traits>
 #include "others/includes/enable_if.hpp"
+#include "others/includes/is_integral.hpp"
 
 // 1. the return type (bool) is only valid if T is an integral type:
 template <class T>
-typename ft::enable_if<std::is_integral<T>::value,bool>::type
+typename ft::enable_if<ft::is_integral<T>::value,bool>::type
   is_odd (T i) {return bool(i%2);}
 
 // 2. the second template argument is onsly valid if T is an integral type:
-template < class T,
-           class = typename ft::enable_if<std::is_integral<T>::value>::type>
-bool is_even (T i) {return !bool(i%2);}
+template <class T>
+typename ft::enable_if<ft::is_integral<T>::value,bool>::type
+  is_even (T i) {return !bool(i%2);}
 
 int enable_if_test() {
 
