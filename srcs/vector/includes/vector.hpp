@@ -1,6 +1,8 @@
 #include <memory>
 #include <cstddef>
 #include <iterator>
+#include "../../others/includes/reverse_iterator.hpp"
+#include "../../others/includes/standard_iterator.hpp"
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
@@ -27,10 +29,10 @@ namespace ft
             typedef const value_type*                           const_pointer;
             typedef std::size_t                                 size_type;
             typedef std::ptrdiff_t                              difference_type;
-            typedef standard_iterator< pointer, vector >        iterator;
-            typedef standard_iterator< const_pointer, vector >  const_iterator;
-            typedef reverse_iterator< const_iterator >          const_reverse_iterator;
-            typedef reverse_iterator< iterator >                reverse_iterator;
+            typedef standard_iterator<pointer, vector>        iterator;
+            typedef standard_iterator<const_pointer, vector> const_iterator;
+            typedef reverse_iterator<const_iterator>          const_reverse_iterator;
+            typedef reverse_iterator<iterator>                reverse_iterator;
 
 //  Constructors and destructors
             explicit vector (const allocator_type& alloc = allocator_type())
@@ -57,7 +59,6 @@ namespace ft
             vector (InputIterator first, InputIterator last,
                     const allocator_type& alloc = allocator_type())
             {
-                pointer tmp;
                 _alloc = alloc;
                 _size = last - first;
                 _capa = last - first;
@@ -75,37 +76,74 @@ namespace ft
 
             ~vector()
             {
-                allocator.deallocate(_cont, size);
+                _alloc.deallocate(_cont, _size);
             }
 
             vector& operator= (const vector& x)
             {
                 _alloc = x.get_allocator();
-                _size = x.size;
+                _size = x._size;
                 _capa = x._capa;
                 _cont = x._cont;
             }
 //  Iterators
-            iterator begin();
-            const_iterator begin() const;
-            iterator end();
-            const_iterator end() const;
-            reverse_iterator rbegin();
-            const_reverse_iterator rbegin() const;
-            reverse_iterator rend();
-            const_reverse_iterator rend() const;
+            iterator begin(){return (iterator(*this->_cont));}
+            const_iterator begin() const
+            {
+                const iterator it(*this->_cont);
+                return (it);
+            }
+            iterator end(){return (iterator(*this->_cont + (*this->_size - 1)));}
+            const_iterator end() const
+            {
+                const iterator it(*this->_cont + (*this->_size - 1));
+                return (it);
+            }
+            reverse_iterator rbegin(){return (reverse_iterator(end()));}
+            const_reverse_iterator rbegin() const
+            {
+                const reverse_iterator it(end());
+                return (it);
+            }
+            reverse_iterator rend(){return (reverse_iterator(begin()));}
+            const_reverse_iterator rend() const
+            {
+                const reverse_iterator it(begin());
+                return (it);
+            }
+
 //  Capacity
             size_type size() const{return (*this->_size);}
-            size_type max_size() const;
+            size_type max_size() const{return (_alloc.max_size());}
             void resize (size_type n, value_type val = value_type());
             size_type capacity() const{return (*this->_capa);}
             bool empty() const
             {
-                if (_cont)
-                    return (0);
-                return (1);
+                if (!(*this->_size))
+                    return (1);
+                return (0);
             }
-            void reserve (size_type n);
+
+            void reserve (size_type n)
+            {
+                value_type tmp;
+
+                tmp = *this->_cont;
+                if (n > *this->_capa)
+                {
+                    if (n > max_size())
+                        throw std::length_error("n is higher than max_size");
+                    *this->_cont = *this->_alloc.allocate(n, 0);
+                    for (int i = 0; i < n; i++)
+                        _alloc.construct(&_cont[i], &tmp[i]);
+                    for (int i = 0; i < *this->_size; i++)
+                        _alloc.destroy(&tmp[i]);
+                    _alloc.deallocate(_cont, _size);
+                    *this->_cont = tmp;
+                    *this->_capa = n;
+                }
+            }
+
 //  Element access
             reference operator[] (size_type n){return (_cont[n]);}
             const_reference operator[] (size_type n) const{return (_cont[n]);}
@@ -131,22 +169,22 @@ namespace ft
             void swap (vector& x);
             void clear();
 //  Allocator
-            allocator_type get_allocator() const;
+            allocator_type get_allocator() const{return (*this->_alloc());}
 //  Non-member fuction overloads
             template <class A, class B>
-            bool operator== (const vector<A,B>& lhs, const vector<A,B>& rhs);
+            friend bool operator== (const vector<A,B>& lhs, const vector<A,B>& rhs);
             template <class A, class B>
-            bool operator!= (const vector<A,B>& lhs, const vector<A,B>& rhs);
+            friend bool operator!= (const vector<A,B>& lhs, const vector<A,B>& rhs);
             template <class A, class B>
-            bool operator< (const vector<A,B>& lhs, const vector<A,B>& rhs);
+            friend bool operator< (const vector<A,B>& lhs, const vector<A,B>& rhs);
             template <class A, class B>
-            bool operator<= (const vector<A,B>& lhs, const vector<A,B>& rhs);
+            friend bool operator<= (const vector<A,B>& lhs, const vector<A,B>& rhs);
             template <class A, class B>
-            bool operator> (const vector<A,B>& lhs, const vector<A,B>& rhs);
+            friend bool operator> (const vector<A,B>& lhs, const vector<A,B>& rhs);
             template <class A, class B>
-            bool operator>= (const vector<A,B>& lhs, const vector<A,B>& rhs)
+            friend bool operator>= (const vector<A,B>& lhs, const vector<A,B>& rhs);
             template <class A, class B>
-            void swap (vector<A,B>& lhs, vector<A,B>& rhs)
+            void swap (vector<A,B>& lhs, vector<A,B>& rhs);
     };
     template <class T, class Alloc>
     bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
@@ -170,7 +208,7 @@ namespace ft
         for (int i = 0; i < lhs._size; i++)
         {
             if (i == rhs._size || rhs._cont < lhs._cont)
-                return (0)
+                return (0);
             else if (lhs._cont < rhs._cont)
                 return (1);
         }

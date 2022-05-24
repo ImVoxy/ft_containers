@@ -1,4 +1,5 @@
-#include<vector>
+#include <vector>
+#include <iterator>
 #ifndef STACK_HPP
 # define STACK_HPP
 
