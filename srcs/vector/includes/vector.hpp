@@ -29,10 +29,10 @@ namespace ft
             typedef const value_type*                           const_pointer;
             typedef std::size_t                                 size_type;
             typedef std::ptrdiff_t                              difference_type;
-            typedef standard_iterator<pointer, vector>        iterator;
-            typedef standard_iterator<const_pointer, vector> const_iterator;
-            typedef reverse_iterator<const_iterator>          const_reverse_iterator;
-            typedef reverse_iterator<iterator>                reverse_iterator;
+            typedef standard_iterator<pointer, vector>          iterator;
+            typedef standard_iterator<const_pointer, vector>    const_iterator;
+            typedef reverse_iterator<const_iterator>            const_reverse_iterator;
+            typedef reverse_iterator<iterator>                  reverse_iterator;
 
 //  Constructors and destructors
             explicit vector (const allocator_type& alloc = allocator_type())
