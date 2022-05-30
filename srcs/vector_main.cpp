@@ -14,35 +14,36 @@ struct Buffer
 
 // void display_vec_int(std::vector<int> vector_int)
 // {
-//     for (int i : vector_int)
+//     for (int i = 0 : vector_int)
 //         std::cout << i << ", ";
 //     std::cout << std::endl;
 // }
 
-void display_vec_int(std::vector<int> vector_int)
+void display_vec_int(ft::vector<int> vector_int)
 {   
     // std::cout << __PRETTY_FUNCTION__ << std::endl;
-    for (unsigned i = 0 ; i < vector_int.size(); i++)
-        std::cout << vector_int.at(i) << ", ";
+    for (int i = 0 ; i < (int)vector_int.size(); i += 1)
+        std::cout << vector_int[i] << ", ";
     std::cout << std::endl;
 }
 
 int main()
 {
-    ft::vector<std::string> vector_str;
+    ft::vector<int> vector_int;
+    ft::vector<int> vector_int2;
+    vector_int.assign(5, 10);
+    ft::vector<int>::iterator it_e = vector_int.end();
+    ft::vector<int>::iterator it_b = vector_int.begin();
+    display_vec_int(vector_int);
+    vector_int2.assign(it_b, it_e);
+    display_vec_int(vector_int2);
+    vector_int.push_back(42);
+    display_vec_int(vector_int);
+    vector_int.pop_back();
+    display_vec_int(vector_int);
     // std::vector<std::string> vector_str;
 	// std::vector<int> vector_int;
     // std::vector<int> input_vector_int;
-    // std::vector<int>::iterator in_it_e = input_vector_int.end();
-    // std::vector<int>::iterator in_it_b = input_vector_int.begin();
-    // std::vector<int>::iterator it_e = vector_int.end();
-    // std::vector<int>::iterator it_b = vector_int.begin();
-    // std::vector<int>::reverse_iterator in_it_re = input_vector_int.rend();
-    // std::vector<int>::reverse_iterator in_it_rb = input_vector_int.rbegin();
-    // std::vector<int> alloc_test;
-    // std::vector<Buffer> vector_buffer;
-    // unsigned int max_size = 0;
-
     // vector_int.push_back(10);
     // vector_int.push_back(42);
     // vector_int.push_back(32);
@@ -53,9 +54,19 @@ int main()
     // input_vector_int.push_back(3);
     // input_vector_int.push_back(4);
 
+    // std::vector<int>::iterator in_it_e = input_vector_int.end();
+    // std::vector<int>::iterator in_it_b = input_vector_int.begin();
+    // std::vector<int>::iterator it_e = vector_int.end();
+    // std::vector<int>::iterator it_b = vector_int.begin();
+    // std::vector<int>::reverse_iterator in_it_re = input_vector_int.rend();
+    // std::vector<int>::reverse_iterator in_it_rb = input_vector_int.rbegin();
+    // std::vector<int> alloc_test;
+    // std::vector<Buffer> vector_buffer;
+    // unsigned int max_size = 0;
+
     // std::cout << "vector_int = ";
     // display_vec_int(vector_int);
-
+    
     // vector_int.insert(it_e, 32);
     // vector_int.push_back(57);
     // it_e = vector_int.end();
