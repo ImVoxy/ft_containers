@@ -27,13 +27,38 @@ void display_vec_int(ft::vector<int> vector_int)
     std::cout << std::endl;
 }
 
+void display_svec_int(std::vector<int> vector_int)
+{   
+    // std::cout << __PRETTY_FUNCTION__ << std::endl;
+    for (int i = 0 ; i < (int)vector_int.size(); i += 1)
+        std::cout << vector_int[i] << ", ";
+    std::cout << std::endl;
+}
+
 int main()
 {
     ft::vector<int> vector_int;
     ft::vector<int> vector_int2;
+    ft::vector<int> vector_int3;
+    vector_int3.push_back(1);
+    vector_int3.push_back(2);
+    vector_int3.push_back(3);
+    vector_int3.push_back(4);
+    std::vector<int> svector_int3;
+    svector_int3.push_back(1);
+    svector_int3.push_back(2);
+    svector_int3.push_back(3);
+    svector_int3.push_back(4);
     vector_int.assign(5, 10);
+    std::vector<int> svector_int;
+    svector_int.assign(5, 10);
+    std::vector<int>::iterator sit_e = svector_int.end();
+    ft::vector<int>::iterator it3_e = vector_int3.end();
+    ft::vector<int>::iterator it3_b = vector_int3.begin();
     ft::vector<int>::iterator it_e = vector_int.end();
     ft::vector<int>::iterator it_b = vector_int.begin();
+    std::vector<int>::iterator sit3_e = svector_int3.end();
+    std::vector<int>::iterator sit3_b = svector_int3.begin();
     display_vec_int(vector_int);
     vector_int2.assign(it_b, it_e);
     display_vec_int(vector_int2);
@@ -41,6 +66,29 @@ int main()
     display_vec_int(vector_int);
     vector_int.pop_back();
     display_vec_int(vector_int);
+
+    it_e--;
+    sit_e--;
+    it_e--;
+    sit_e--;
+    it_e--;
+    sit_e--;
+    vector_int.insert(it_e, 3, 54);
+    display_vec_int(vector_int);
+    svector_int.insert(sit_e, 3, 54);
+    display_svec_int(svector_int);
+    
+    vector_int.insert(it_b, 22);
+    display_vec_int(vector_int);
+    std::vector<int>::iterator sit_b = svector_int.begin();
+    svector_int.insert(sit_b, 22);
+    display_svec_int(svector_int);
+
+    vector_int.insert(it_b + 5, it3_b, it3_e);
+    display_vec_int(vector_int);
+    svector_int.insert(sit_b + 5, sit3_b, sit3_e);
+    display_svec_int(svector_int);
+    
     // std::vector<std::string> vector_str;
 	// std::vector<int> vector_int;
     // std::vector<int> input_vector_int;

@@ -176,6 +176,7 @@ namespace ft
                         this->_cont[i] = (*first.base() + i);
                 this->_size = n;
             }
+
             void assign (int n, const value_type& val)
             {
                 if (this->_capa < n)
@@ -193,6 +194,7 @@ namespace ft
                         this->_cont[i] = val;
                 this->_size = n;
             }
+
             void push_back (const value_type& val)
             {
                 value_type tmp[this->_size];
@@ -210,7 +212,7 @@ namespace ft
                     this->_cont = this->_alloc.allocate(this->_capa, 0);
                     for (int i = 0; i < this->_size; i++)
                         _alloc.construct(&_cont[i], tmp[i]);
-                    _alloc.construct(&_cont[this->_size], val);
+                    _alloc.construct(&_cont[_size], val);
                 }                
                 this->_size++;
             }
@@ -219,10 +221,116 @@ namespace ft
                 _alloc.destroy(&this->_cont[this->_size - 1]);
                 this->_size--;
             }
-            iterator insert (iterator position, const value_type& val);
-            void insert (iterator position, size_type n, const value_type& val);
+
+            iterator insert (iterator position, const value_type& val)
+            {
+                int         ind;
+                int         j = 0;
+                value_type  tmp[this->_size + 1];
+
+                if (this->_capa <= this->_size)
+                    this->_capa++;
+                
+                for (int i = 0; i < this->_size; i++)
+                {
+                    if (position == iterator(&_cont[i]) ||
+                        (position < iterator(&_cont[i]) && i == 0))
+                    {
+                        if (i != 0)
+                        {
+                            tmp[i] = _cont[i];
+                            i++;
+                        }
+                        tmp[i] = val;
+                        ind = i;
+                        j = 1;
+                    }
+                    if (i < this->_size)
+                        tmp[i + j] = this->_cont[i];
+                }
+                for (int i = 0; i < this->_capa; i++)
+                    _alloc.destroy(&this->_cont[i]);
+                _alloc.deallocate(_cont, _size);
+                this->_cont = this->_alloc.allocate(this->_capa, 0);
+                for (int i = 0; i <= this->_size; i++)
+                    _alloc.construct(&_cont[i], tmp[i]);
+                this->_size++;
+                return (iterator(&_cont[ind]));
+            }
+
+            void insert (iterator position, int n, const value_type& val)
+            {
+                int         ind;
+                int         j = 0;
+                value_type  tmp[this->_size + n];
+
+                if (this->_capa < this->_size + n)
+                    this->_capa += n;
+                
+                for (int i = 0; i < this->_size; i++)
+                {
+                    if (position == iterator(&_cont[i]) ||
+                        (position < iterator(&_cont[i]) && i == 0))
+                    {
+                        if (i != 0)
+                        {
+                            tmp[i] = _cont[i];
+                            i++;
+                        }
+                        for (int k = 0; k < n; k++)
+                            tmp[i + k] = val;
+                        ind = i;
+                        j = n;
+                    }
+                    if (i < this->_size)
+                        tmp[i + j] = this->_cont[i];
+                }
+                for (int i = 0; i < this->_capa; i++)
+                    _alloc.destroy(&this->_cont[i]);
+                _alloc.deallocate(_cont, _size);
+                this->_cont = this->_alloc.allocate(this->_capa, 0);
+                for (int i = 0; i < (this->_capa); i++)
+                    _alloc.construct(&_cont[i], tmp[i]);
+                this->_size += n;
+            }
+
             template <class InputIterator>
-            void insert (iterator position, InputIterator first, InputIterator last);
+            void insert (iterator position, InputIterator first, InputIterator last)
+            {
+                difference_type n = last - first + 1;
+                int             ind;
+                int             j = 0;
+                value_type      tmp[this->_size + n];
+
+                if (this->_capa < this->_size + n)
+                    this->_capa += n;
+                for (int i = 0; i < this->_size; i++)
+                {
+                    if (i == (&(*position) - _cont) ||
+                        (position < iterator(&_cont[i]) && i == 0))
+                    {
+                        if (i != 0)
+                        {
+                            tmp[i] = _cont[i];
+                            i++;
+                        }
+                        for (int k = 0; k <= n; k++)
+                            tmp[i + k] = *(first + k);
+                        ind = i;
+                        j = n;
+                    }
+                    if (i < this->_size)
+                        tmp[i + j] = this->_cont[i];
+                }
+                for (int i = 0; i < this->_capa; i++)
+                    _alloc.destroy(&this->_cont[i]);
+                _alloc.deallocate(_cont, _size);
+                this->_cont = this->_alloc.allocate(this->_capa, 0);
+                for (int i = 0; i < (this->_capa); i++)
+                    _alloc.construct(&_cont[i], tmp[i]);
+                this->_size += n;
+            }
+
             iterator erase (iterator position);
             iterator erase (iterator first, iterator last);
             void swap (vector& x);
