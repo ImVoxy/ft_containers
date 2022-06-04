@@ -1,7 +1,9 @@
 -> Stack                                OK
 
 -> Vector
-Iterator
+destructor drunk (aled)
+retest reserve (untested changes)
+fix old main
 
 -> Map
 
@@ -15,3 +17,4 @@ Iterator
 • std::make_pair                        OK
 
 don't forget to replace std::vector with ft::vector in tests
+find a tester

@@ -35,6 +35,7 @@ namespace ft
             typedef reverse_iterator<iterator>                  reverse_iterator;
 
 //  Constructors and destructors
+
             explicit vector (const allocator_type& alloc = allocator_type())
             {
                 _alloc = alloc;
@@ -74,9 +75,12 @@ namespace ft
                 _cont = x._cont;
             }
 
-            ~vector()
+            
+            virtual ~vector()
             {
-                // _alloc.deallocate(_cont, _size);
+                for (int i = 0; i < this->_capa; i++)
+                    _alloc.destroy(&this->_cont[i]);
+                _alloc.deallocate(_cont, _capa);
             }
 
             vector& operator= (const vector& x)
@@ -133,11 +137,14 @@ namespace ft
                 {
                     if (n > max_size())
                         throw std::length_error("n is higher than max_size");
-                    this->_cont = this->_alloc.allocate(n, 0);
+                    tmp = this->_alloc.allocate(n, 0);
+                    // this->_cont = this->_alloc.allocate(n, 0);
                     for (int i = 0; i < n; i++)
-                        _alloc.construct(&_cont[i], &tmp[i]);
+                        _alloc.construct(&tmp[i], &_cont[i]);
+                        // _alloc.construct(&_cont[i], &tmp[i]);
                     for (int i = 0; i < this->_size; i++)
-                        _alloc.destroy(&tmp[i]);
+                        _alloc.destroy(&_cont[i]);
+                        // _alloc.destroy(&tmp[i]);
                     _alloc.deallocate(_cont, _size);
                     this->_cont = tmp;
                     this->_capa = n;
@@ -167,9 +174,7 @@ namespace ft
                     _alloc.deallocate(_cont, _size);
                     this->_cont = this->_alloc.allocate(n, 0);
                     for (int i = 0; i < n; i++)
-                    {
                         _alloc.construct(&_cont[i], first[i]);
-                    }
                 }
                 else
                     for (size_type i = 0; i < n; i++)
@@ -304,16 +309,11 @@ namespace ft
 
                 if (this->_capa < this->_size + n)
                     this->_capa += n;
-                for (int i = 0; i < this->_size; i++)
+                for (int i = 0; i <= this->_size; i++)
                 {
-                    if (i == (&(*position) - _cont) ||
+                    if (position == iterator(&_cont[i]) ||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
-                        if (i != 0)
-                        {
-                            tmp[i] = _cont[i];
-                            i++;
-                        }
                         for (int k = 0; k <= n; k++)
                             tmp[i + k] = *(first + k);
                         ind = i;
@@ -326,15 +326,82 @@ namespace ft
                     _alloc.destroy(&this->_cont[i]);
                 _alloc.deallocate(_cont, _size);
                 this->_cont = this->_alloc.allocate(this->_capa, 0);
-                for (int i = 0; i < (this->_capa); i++)
+                for (int i = 0; i < (this->_size + n); i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size += n;
             }
 
-            iterator erase (iterator position);
-            iterator erase (iterator first, iterator last);
-            void swap (vector& x);
-            void clear();
+            iterator erase (iterator position)
+            {
+                int         j;
+                value_type  tmp[this->_size - 1];
+
+                j = 0;
+                for (int i = 0; i < _size; i++)
+                {
+                    if (position == iterator(&_cont[i]))
+                        i++;
+                    tmp[j] = _cont[i];
+                    j++; 
+                }
+                for (int i = 0; i < this->_capa; i++)
+                    _alloc.destroy(&this->_cont[i]);
+                _alloc.deallocate(_cont, _size);
+                this->_cont = this->_alloc.allocate(this->_capa - 1, 0);
+                for (int i = 0; i < this->_size; i++)
+                    _alloc.construct(&_cont[i], tmp[i]);
+                this->_size--;
+                return (iterator(&_cont[0]));
+            }
+
+            iterator erase (iterator first, iterator last)
+            {
+                int             j;
+                value_type      tmp[this->_size - 1];
+                difference_type n = last - first;
+
+                j = 0;
+                for (int i = 0; i < _size; i++)
+                {
+                    if (first == iterator(&_cont[i]))
+                        i += n + 1;
+                    tmp[j] = _cont[i];
+                    j++; 
+                }
+                for (int i = 0; i < this->_capa; i++)
+                    _alloc.destroy(&this->_cont[i]);
+                _alloc.deallocate(_cont, _size);
+                this->_cont = this->_alloc.allocate(this->_capa, 0);
+                for (int i = 0; i < this->_size - n; i++)
+                    _alloc.construct(&_cont[i], tmp[i]);
+                this->_size -= (n + 1);
+                return (iterator(&_cont[0]));
+            }
+
+            void swap (vector& x)
+            {
+                Alloc tmp_a     = x.get_allocator();
+                size_t tmp_s    = x._size;
+                size_t tmp_c    = x._capa;
+                T* tmp_cont     = x._cont;
+
+                x._alloc    = this->_alloc;
+                x._size     = this->_size;
+                x._capa     = this->_capa;
+                x._cont     = this->_cont;
+
+                this->_alloc = tmp_a;
+                this->_size = tmp_s;
+                this->_capa = tmp_c;
+                this->_cont = tmp_cont;
+            }
+
+            void clear()
+            {
+                for (int i = 0; i < this->_capa; i++)
+                    _alloc.destroy(&this->_cont[i]);
+                this->_size = 0;
+            }
 //  Allocator
             allocator_type get_allocator() const{return (this->_alloc);}
 //  Non-member fuction overloads
@@ -404,7 +471,20 @@ namespace ft
     template <class T, class Alloc>
     void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
     {
-        
+        Alloc tmp_a     = y.get_allocator();
+        size_t tmp_s    = y._size;
+        size_t tmp_c    = y._capa;
+        T* tmp_cont     = y._cont;
+
+        y._alloc    = x.get_allocator();
+        y._size     = x._size;
+        y._capa     = x._capa;
+        y._cont     = x._cont;
+
+        x._alloc = tmp_a;
+        x._size = tmp_s;
+        x._capa = tmp_c;
+        x._cont = tmp_cont;
     }
 
 }
