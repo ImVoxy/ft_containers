@@ -80,7 +80,7 @@ namespace ft
             {
                 for (int i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
-                _alloc.deallocate(_cont, _capa);
+                // _alloc.deallocate(_cont, _capa);
             }
 
             vector& operator= (const vector& x)
@@ -119,7 +119,33 @@ namespace ft
 //  Capacity
             size_type size() const{return (this->_size);}
             size_type max_size() const{return (_alloc.max_size());}
-            void resize (size_type n, value_type val = value_type());
+            void resize (size_type n, value_type val = value_type())
+            {
+                value_type tmp[n];
+
+                if (n < this->_size)
+                    for (int i = n; i < this->_size; i++)
+                        _alloc.destroy(&_cont[i]);
+                if (n > this->_size)
+                {
+                    if (n > this->_capa)
+                    {
+                        for (int i = 0; i < this->_size; i++)
+                            tmp[i] = this->_cont[i];
+                        for (int i = 0; i < this->_size; i++)
+                            _alloc.destroy(&this->_cont[i]);
+                        _alloc.deallocate(_cont, _size);
+                        this->_cont = this->_alloc.allocate(this->_capa, 0);
+                        for (int i = 0; i < this->_size; i++)
+                            _alloc.construct(&_cont[i], tmp[i]);
+                    }
+                    for (int i = this->_size; i < n; i++)
+                        _alloc.construct(&_cont[i], val);
+                }
+
+                this->_size = n;
+            }
+
             size_type capacity() const{return (this->_capa);}
             bool empty() const
             {
@@ -130,22 +156,22 @@ namespace ft
 
             void reserve (size_type n)
             {
-                value_type tmp;
+                value_type *tmp;
 
-                tmp = this->_cont;
+                // tmp = this->_cont;
                 if (n > this->_capa)
                 {
                     if (n > max_size())
                         throw std::length_error("n is higher than max_size");
                     tmp = this->_alloc.allocate(n, 0);
                     // this->_cont = this->_alloc.allocate(n, 0);
-                    for (int i = 0; i < n; i++)
-                        _alloc.construct(&tmp[i], &_cont[i]);
+                    for (int i = 0; i < this->_size; i++)
+                        _alloc.construct(&tmp[i], _cont[i]);
                         // _alloc.construct(&_cont[i], &tmp[i]);
                     for (int i = 0; i < this->_size; i++)
                         _alloc.destroy(&_cont[i]);
                         // _alloc.destroy(&tmp[i]);
-                    _alloc.deallocate(_cont, _size);
+                    _alloc.deallocate(_cont, _capa);
                     this->_cont = tmp;
                     this->_capa = n;
                 }
@@ -154,18 +180,19 @@ namespace ft
 //  Element access
             reference operator[] (size_type n){return (_cont[n]);}
             const_reference operator[] (size_type n) const{return (_cont[n]);}
-            reference at (size_type n){return (&_cont[n]);}
-            const_reference at (size_type n) const{return (&_cont[n]);}
-            reference front(){return (&_cont[_size]);}
-            const_reference front() const{return (&_cont[_size]);}
-            reference back(){return (&_cont[0]);}
-            const_reference back() const{return (&_cont[0]);}
+            reference at (size_type n){return (_cont[n]);}
+            const_reference at (size_type n) const{return (_cont[n]);}
+            reference front(){return (_cont[0]);}
+            const_reference front() const{return (_cont[0]);}
+            reference back(){return (_cont[_size - 1]);}
+            const_reference back() const{return (_cont[_size - 1]);}
 
 // Modifiers
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last)
             {
-                int n = last - first + 1;
+                int n = last - first;
+                std::cout<<"!!" << *first << std::endl;
                 if (this->_capa < n)
                 {
                     this->_capa = n;
@@ -177,8 +204,11 @@ namespace ft
                         _alloc.construct(&_cont[i], first[i]);
                 }
                 else
+                {
+                    
                     for (size_type i = 0; i < n; i++)
-                        this->_cont[i] = (*first.base() + i);
+                        this->_cont[i] = first[i];
+                }
                 this->_size = n;
             }
 
@@ -314,6 +344,11 @@ namespace ft
                     if (position == iterator(&_cont[i]) ||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
+                        if (i != 0)
+                        {
+                            tmp[i] = _cont[i];
+                            i++;
+                        }
                         for (int k = 0; k <= n; k++)
                             tmp[i + k] = *(first + k);
                         ind = i;
@@ -364,7 +399,11 @@ namespace ft
                 for (int i = 0; i < _size; i++)
                 {
                     if (first == iterator(&_cont[i]))
+                    {
+                        tmp[j] = _cont[i];
+                        j++;
                         i += n + 1;
+                    }
                     tmp[j] = _cont[i];
                     j++; 
                 }
@@ -374,7 +413,7 @@ namespace ft
                 this->_cont = this->_alloc.allocate(this->_capa, 0);
                 for (int i = 0; i < this->_size - n; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
-                this->_size -= (n + 1);
+                this->_size -= (n + 0);
                 return (iterator(&_cont[0]));
             }
 

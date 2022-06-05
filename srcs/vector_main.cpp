@@ -139,7 +139,7 @@ int main()
 
 
 
-
+    // std::cout << "\033[1;33m     STD VEC     \033[0m" << std::endl << std::endl;
 
 
     // std::vector<std::string> stest_vector_str;
@@ -174,7 +174,7 @@ int main()
     // stest_vector_int.insert(stest_it_e, 32);
     // std::cout << "vector_int = ";
     // display_svec_int(stest_vector_int);
-
+    
     // stest_vector_int.insert(stest_it_e + 1, stest_in_it_b, stest_in_it_e);
     // std::cout << "vector_int = ";
     // display_svec_int(stest_vector_int);
@@ -245,9 +245,9 @@ int main()
     //     stest_alloc_test.get_allocator().destroy(&stest_p[i]);
     // stest_alloc_test.get_allocator().deallocate(stest_p, 10);
 
-
-
-    //FT !!!!
+    // std::cout << std::endl;
+    // std::cout << "\033[1;33m     FT VEC     \033[0m" << std::endl << std::endl;
+    
     ft::vector<std::string> test_vector_str;
 	ft::vector<int> test_vector_int;
     ft::vector<int> test_input_vector_int;
@@ -280,7 +280,7 @@ int main()
     test_vector_int.insert(test_it_e, 32);
     std::cout << "vector_int = ";
     display_vec_int(test_vector_int);
-
+    
     test_vector_int.insert(test_it_e + 1, test_in_it_b, test_in_it_e);
     std::cout << "vector_int = ";
     display_vec_int(test_vector_int);
@@ -305,50 +305,51 @@ int main()
     std::cout << "Back element = " << test_vector_int.back() << std::endl;
     std::cout << "Front element = " << test_vector_int.front() << std::endl;
 
-    std::cout << "vector_int = ";
-    display_vec_int(test_vector_int);
-    std::cout << "input_vector_int = ";
-    display_vec_int(test_input_vector_int);
-    test_input_vector_int.swap(test_vector_int);
-    std::cout << "input_vector_int.swap(vector_int)" << std::endl;
-    std::cout << "vector_int = ";
-    display_vec_int(test_vector_int);
-    std::cout << "input_vector_int = ";
-    display_vec_int(test_input_vector_int);
-    std::cout << "vector_int.swap(input_vector_int)" << std::endl;
-    test_vector_int.swap(test_input_vector_int);
-    std::cout << "vector_int = ";
-    std::cout << "vector_int = ";
-    display_vec_int(test_vector_int);
-    std::cout << "input_vector_int = ";
-    display_vec_int(test_input_vector_int); 
+    // std::cout << "vector_int = ";
+    // display_vec_int(test_vector_int);
+    // std::cout << "input_vector_int = ";
+    // display_vec_int(test_input_vector_int);
+    // test_input_vector_int.swap(test_vector_int);
+    // std::cout << "input_vector_int.swap(vector_int)" << std::endl;
+    // std::cout << "vector_int = ";
+    // display_vec_int(test_vector_int);
+    // std::cout << "input_vector_int = ";
+    // display_vec_int(test_input_vector_int);
+    // std::cout << "vector_int.swap(input_vector_int)" << std::endl;
+    // test_vector_int.swap(test_input_vector_int);
+    // std::cout << "vector_int = ";
+    // std::cout << "vector_int = ";
+    // display_vec_int(test_vector_int);
+    // std::cout << "input_vector_int = ";
+    // display_vec_int(test_input_vector_int); 
 
-    std::cout << "is vector_str empty ?: " << test_vector_str.empty() << std::endl;
-    std::cout << "is vector_int empty ?: " << test_vector_int.empty() << std::endl;
-    std::cout << "size of vector_int = " << test_vector_int.size() << std::endl;
-    test_max_size = test_vector_int.max_size();
-    std::cout << "max_size of vector_int = " << test_max_size << std::endl;
-    test_vector_int.resize(10, 12);
-    display_vec_int(test_vector_int);
+    // std::cout << "is vector_str empty ?: " << test_vector_str.empty() << std::endl;
+    // std::cout << "is vector_int empty ?: " << test_vector_int.empty() << std::endl;
+    // std::cout << "size of vector_int = " << test_vector_int.size() << std::endl;
+    // test_max_size = test_vector_int.max_size();
+    // std::cout << "max_size of vector_int = " << test_max_size << std::endl;
+    // test_vector_int.resize(10, 12);
+    // display_vec_int(test_vector_int);
 
-    std::cout << "vector_int.capacity = " << (int) test_vector_int.capacity() << std::endl;
-    std::cout << "size of vector_int = " << test_vector_int.size() << std::endl;
-    test_vector_int.reserve(5000000);
-    std::cout << "vector_int.capacity = " << (int) test_vector_int.capacity() << std::endl;
-    std::cout << "size of vector_int = " << test_vector_int.size() << std::endl;
+    // std::cout << "vector_int.capacity = " << (int) test_vector_int.capacity() << std::endl;
+    // std::cout << "size of vector_int = " << test_vector_int.size() << std::endl;
+    // test_vector_int.reserve(5000000);
+    // std::cout << "vector_int.capacity = " << (int) test_vector_int.capacity() << std::endl;
+    // std::cout << "size of vector_int = " << test_vector_int.size() << std::endl;
 
-    int *test_p;
-    test_p = test_alloc_test.get_allocator().allocate(10);
-    for (int i = 0; i < 10; i++)
-        std::cout << test_p[i] << " ";
-    std::cout << std::endl;
-    for (int i = 0; i < 10; i++)
-        test_alloc_test.get_allocator().construct(&test_p[i], i);
-    for (int i = 0; i < 10; i++)
-        std::cout << test_p[i] << " ";
-    for (int i = 0; i < 10; i++)
-        test_alloc_test.get_allocator().destroy(&test_p[i]);
-    test_alloc_test.get_allocator().deallocate(test_p, 10);
+    // int *test_p;
+    // test_p = test_alloc_test.get_allocator().allocate(10);
+    // for (int i = 0; i < 10; i++)
+    //     std::cout << test_p[i] << " ";
+    // std::cout << std::endl;
+    // for (int i = 0; i < 10; i++)
+    //     test_alloc_test.get_allocator().construct(&test_p[i], i);
+    // for (int i = 0; i < 10; i++)
+    //     std::cout << test_p[i] << " ";
+    // std::cout << std::endl;
+    // for (int i = 0; i < 10; i++)
+    //     test_alloc_test.get_allocator().destroy(&test_p[i]);
+    // test_alloc_test.get_allocator().deallocate(test_p, 10);
 
     return (0);
 }
