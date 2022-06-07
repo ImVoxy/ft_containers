@@ -75,12 +75,10 @@ namespace ft
                 _cont = x._cont;
             }
 
-            
             virtual ~vector()
             {
-                for (int i = 0; i < this->_capa; i++)
-                    _alloc.destroy(&this->_cont[i]);
-                // _alloc.deallocate(_cont, _capa);
+                this->clear();
+                _alloc.deallocate(_cont, _capa);
             }
 
             vector& operator= (const vector& x)
