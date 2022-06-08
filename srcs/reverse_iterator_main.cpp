@@ -4,7 +4,7 @@
 #include <iterator>
 #include <map>
 
-int reverse_iterator_test()
+int main()
 {
     std::vector<int> v;
     std::vector<int> v2;

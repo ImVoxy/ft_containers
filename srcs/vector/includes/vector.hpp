@@ -78,7 +78,7 @@ namespace ft
             virtual ~vector()
             {
                 this->clear();
-                _alloc.deallocate(_cont, _capa);
+                // _alloc.deallocate(_cont, _capa);
             }
 
             vector& operator= (const vector& x)
@@ -95,10 +95,10 @@ namespace ft
                 const iterator it(this->_cont);
                 return (it);
             }
-            iterator end(){return (iterator(this->_cont + (this->_size - 1)));}
+            iterator end(){return (iterator(this->_cont + (this->_size)));}
             const_iterator end() const
             {
-                const iterator it(this->_cont + (this->_size - 1));
+                const iterator it(this->_cont + (this->_size));
                 return (it);
             }
             reverse_iterator rbegin(){return (reverse_iterator(end()));}
@@ -189,17 +189,16 @@ namespace ft
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last)
             {
-                int n = last - first;
-                std::cout<<"!!" << *first << std::endl;
+                difference_type n = last - first;
                 if (this->_capa < n)
                 {
                     this->_capa = n;
                     for (int i = 0; i < this->_size; i++)
                         _alloc.destroy(&this->_cont[i]);
-                    _alloc.deallocate(_cont, _size);
+                    _alloc.deallocate(_cont, _capa);
                     this->_cont = this->_alloc.allocate(n, 0);
                     for (int i = 0; i < n; i++)
-                        _alloc.construct(&_cont[i], first[i]);
+                        _alloc.construct(&_cont[i], *(first + i));
                 }
                 else
                 {
@@ -266,7 +265,7 @@ namespace ft
                 
                 for (int i = 0; i < this->_size; i++)
                 {
-                    if (position == iterator(&_cont[i]) ||
+                    if (position == iterator(&_cont[i]) + 1 ||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
                         if (i != 0)
@@ -302,7 +301,7 @@ namespace ft
                 
                 for (int i = 0; i < this->_size; i++)
                 {
-                    if (position == iterator(&_cont[i]) ||
+                    if (position == iterator(&_cont[i]) + 1 ||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
                         if (i != 0)
@@ -330,7 +329,7 @@ namespace ft
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last)
             {
-                difference_type n = last - first + 1;
+                difference_type n = last - first ;
                 int             ind;
                 int             j = 0;
                 value_type      tmp[this->_size + n];
@@ -339,7 +338,7 @@ namespace ft
                     this->_capa += n;
                 for (int i = 0; i <= this->_size; i++)
                 {
-                    if (position == iterator(&_cont[i]) ||
+                    if (position == iterator(&_cont[i]) + 1 ||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
                         if (i != 0)

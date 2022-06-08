@@ -43,18 +43,20 @@ namespace ft
             
             reverse_iterator operator+ (difference_type n) const
             {
-                reverse_iterator tmp = *this;
-                for (int i = 0; i < n; i++)
-                    ++tmp;
-                return (tmp);
+                // reverse_iterator tmp = *this;
+                // for (int i = 0; i < n; i++)
+                //     ++tmp;
+                // return (tmp);
+                return (reverse_iterator(_it - n));
             }
 
             reverse_iterator operator- (difference_type n) const
             {
-                reverse_iterator tmp = *this;
-                for (int i = 0; i < n; i++)
-                    --tmp;
-                return (tmp);
+                // reverse_iterator tmp = *this;
+                // for (int i = 0; i < n; i++)
+                //     --tmp;
+                // return (tmp);
+                return (reverse_iterator(_it + n));
             }
 
             reverse_iterator& operator+= (difference_type n)
@@ -80,7 +82,8 @@ namespace ft
             reverse_iterator  operator++(int)
             {
                 reverse_iterator tmp = *this;
-                ++(*this);
+                --_it;
+                // ++(*this);
                 return (tmp);
             }
 
@@ -93,7 +96,8 @@ namespace ft
             reverse_iterator  operator--(int)
             {
                 reverse_iterator tmp = *this;
-                --(*this);
+                ++_it;
+                // --(*this);
                 return (tmp);
             }
 
@@ -104,11 +108,12 @@ namespace ft
 
             reference operator[] (difference_type n) const
             {
-                Iter tmp;
-                tmp = _it;
-                for (int i = 0; i <= n; i++)
-                    tmp--;
-                return (*tmp);
+                // Iter tmp;
+                // tmp = _it;
+                // for (int i = 0; i < n; i++)
+                //     tmp--;
+                // return (*tmp);
+                return(*(*this + n));
             }
 
             template <class A>

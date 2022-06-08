@@ -3,7 +3,8 @@
 -> Vector
 destructor drunk (aled)
 retest reserve (untested changes)
-fix old main
+fix std98
+
 
 -> Map
 
