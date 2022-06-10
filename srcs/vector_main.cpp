@@ -37,109 +37,109 @@ void display_svec_int(std::vector<int> vector_int)
 
 int main()
 {
-    // ft::vector<int> vector_int;
-    // ft::vector<int> vector_int2;
-    // ft::vector<int> vector_int3;
-    // vector_int3.push_back(1);
-    // vector_int3.push_back(2);
-    // vector_int3.push_back(3);
-    // vector_int3.push_back(4);
-    // std::vector<int> svector_int3;
-    // svector_int3.push_back(1);
-    // svector_int3.push_back(2);
-    // svector_int3.push_back(3);
-    // svector_int3.push_back(4);
-    // vector_int.assign(5, 10);
-    // std::vector<int> svector_int;
-    // svector_int.assign(5, 10);
-    // std::vector<int>::iterator sit_e = svector_int.end();
-    // ft::vector<int>::iterator it3_e = vector_int3.end();
-    // ft::vector<int>::iterator it3_b = vector_int3.begin();
-    // ft::vector<int>::iterator it_e = vector_int.end();
-    // ft::vector<int>::iterator it_b = vector_int.begin();
-    // std::vector<int>::iterator sit3_e = svector_int3.end();
-    // std::vector<int>::iterator sit3_b = svector_int3.begin();
-    // display_vec_int(vector_int);
-    // vector_int2.assign(it_b, it_e);
-    // display_vec_int(vector_int2);
-    // vector_int.push_back(42);
-    // display_vec_int(vector_int);
-    // vector_int.pop_back();
-    // display_vec_int(vector_int);
+    ft::vector<int> vector_int;
+    ft::vector<int> vector_int2;
+    ft::vector<int> vector_int3;
+    vector_int3.push_back(1);
+    vector_int3.push_back(2);
+    vector_int3.push_back(3);
+    vector_int3.push_back(4);
+    std::vector<int> svector_int3;
+    svector_int3.push_back(1);
+    svector_int3.push_back(2);
+    svector_int3.push_back(3);
+    svector_int3.push_back(4);
+    vector_int.assign(5, 10);
+    std::vector<int> svector_int;
+    svector_int.assign(5, 10);
+    std::vector<int>::iterator sit_e = svector_int.end();
+    ft::vector<int>::iterator it3_e = vector_int3.end();
+    ft::vector<int>::iterator it3_b = vector_int3.begin();
+    ft::vector<int>::iterator it_e = vector_int.end();
+    ft::vector<int>::iterator it_b = vector_int.begin();
+    std::vector<int>::iterator sit3_e = svector_int3.end();
+    std::vector<int>::iterator sit3_b = svector_int3.begin();
+    display_vec_int(vector_int);
+    vector_int2.assign(it_b, it_e);
+    display_vec_int(vector_int2);
+    vector_int.push_back(42);
+    display_vec_int(vector_int);
+    vector_int.pop_back();
+    display_vec_int(vector_int);
 
-    // it_e--;
-    // sit_e--;
-    // it_e--;
-    // sit_e--;
-    // it_e--;
-    // sit_e--;
-    // vector_int.insert(it_e, 3, 54);
-    // display_vec_int(vector_int);
-    // svector_int.insert(sit_e, 3, 54);
-    // display_svec_int(svector_int);
+    it_e--;
+    sit_e--;
+    it_e--;
+    sit_e--;
+    it_e--;
+    sit_e--;
+    vector_int.insert(it_e, 3, 54);
+    display_vec_int(vector_int);
+    svector_int.insert(sit_e, 3, 54);
+    display_svec_int(svector_int);
     
-    // vector_int.insert(it_b, 22);
-    // display_vec_int(vector_int);
-    // std::vector<int>::iterator sit_b = svector_int.begin();
-    // it_b = vector_int.begin();
-    // sit_e = svector_int.end();
-    // it_e = vector_int.end();
-    // svector_int.insert(sit_b, 22);
-    // display_svec_int(svector_int);
+    vector_int.insert(it_b, 22);
+    display_vec_int(vector_int);
+    std::vector<int>::iterator sit_b = svector_int.begin();
+    it_b = vector_int.begin();
+    svector_int.insert(sit_b, 22);
+    display_svec_int(svector_int);
+    sit_e = svector_int.end();
+    it_e = vector_int.end();
 
-    // vector_int.insert(it_e - 3, it3_b, it3_e);
-    // display_vec_int(vector_int);
-    // svector_int.insert(sit_e - 3, sit3_b, sit3_e);
-    // display_svec_int(svector_int);
-    // it_b = vector_int.begin();
-    // vector_int.erase(it_b + 5);
-    // display_vec_int(vector_int);
-    // sit_b = svector_int.begin();
-    // svector_int.erase(sit_b + 5);
-    // display_svec_int(svector_int);
+    vector_int.insert(it_e - 3, it3_b, it3_e);
+    display_vec_int(vector_int);
+    svector_int.insert(sit_e - 3, sit3_b, sit3_e);
+    display_svec_int(svector_int);
+    it_b = vector_int.begin();
+    vector_int.erase(it_b + 5);
+    display_vec_int(vector_int);
+    sit_b = svector_int.begin();
+    svector_int.erase(sit_b + 5);
+    display_svec_int(svector_int);
     
-    // it_b = vector_int.begin();
-    // it_e = vector_int.end();
-    // vector_int.erase(it_b + 6, it_e - 3);
-    // display_vec_int(vector_int);
-    // sit_b = svector_int.begin();
-    // sit_e = svector_int.end();
-    // svector_int.erase(sit_b + 6, sit_e - 3);
-    // display_svec_int(svector_int);
+    it_b = vector_int.begin();
+    it_e = vector_int.end();
+    vector_int.erase(it_b + 6, it_e - 3);
+    display_vec_int(vector_int);
+    sit_b = svector_int.begin();
+    sit_e = svector_int.end();
+    svector_int.erase(sit_b + 6, sit_e - 3);
+    display_svec_int(svector_int);
 
-    // std::vector<int> svector_int4;
-    // svector_int4.push_back(1);
-    // svector_int4.push_back(2);
-    // svector_int4.push_back(3);
-    // svector_int4.push_back(4);
-    // std::vector<int> svector_int5;
-    // svector_int5.push_back(5);
-    // svector_int5.push_back(6);
-    // svector_int5.push_back(7);
-    // display_svec_int(svector_int4);
-    // display_svec_int(svector_int5);
-    // svector_int4.swap(svector_int5);
-    // display_svec_int(svector_int4);
-    // display_svec_int(svector_int5);
+    std::vector<int> svector_int4;
+    svector_int4.push_back(1);
+    svector_int4.push_back(2);
+    svector_int4.push_back(3);
+    svector_int4.push_back(4);
+    std::vector<int> svector_int5;
+    svector_int5.push_back(5);
+    svector_int5.push_back(6);
+    svector_int5.push_back(7);
+    display_svec_int(svector_int4);
+    display_svec_int(svector_int5);
+    svector_int4.swap(svector_int5);
+    display_svec_int(svector_int4);
+    display_svec_int(svector_int5);
 
-    // ft::vector<int> vector_int4;
-    // vector_int4.push_back(1);
-    // vector_int4.push_back(2);
-    // vector_int4.push_back(3);
-    // vector_int4.push_back(4);
-    // ft::vector<int> vector_int5;
-    // vector_int5.push_back(5);
-    // vector_int5.push_back(6);
-    // vector_int5.push_back(7);
-    // display_vec_int(vector_int4);
-    // display_vec_int(vector_int5);
-    // vector_int4.swap(vector_int5);
-    // display_vec_int(vector_int4);
-    // display_vec_int(vector_int5);
+    ft::vector<int> vector_int4;
+    vector_int4.push_back(1);
+    vector_int4.push_back(2);
+    vector_int4.push_back(3);
+    vector_int4.push_back(4);
+    ft::vector<int> vector_int5;
+    vector_int5.push_back(5);
+    vector_int5.push_back(6);
+    vector_int5.push_back(7);
+    display_vec_int(vector_int4);
+    display_vec_int(vector_int5);
+    vector_int4.swap(vector_int5);
+    display_vec_int(vector_int4);
+    display_vec_int(vector_int5);
 
 
 
-    std::cout << "\033[1;33m     STD VEC     \033[0m" << std::endl << std::endl;
+    std::cout << std::endl << "\033[1;33m     STD VEC     \033[0m" << std::endl << std::endl;
 
 
     std::vector<std::string> stest_vector_str;
@@ -174,11 +174,9 @@ int main()
     stest_vector_int.insert(stest_it_e, 32);
     std::cout << "vector_int = ";
     display_svec_int(stest_vector_int);
-        std::cout << "!!!!!vector_int.capacity = " << (int)stest_vector_int.capacity() << std::endl;
 
-    stest_vector_int.insert(stest_it_e + 1, stest_in_it_b, stest_in_it_e);
-        std::cout << "!!!!!vector_int.capacity = " << (int)stest_vector_int.capacity() << std::endl;
-
+    stest_it_e++;
+    stest_vector_int.insert(stest_it_e, stest_in_it_b, stest_in_it_e);
     std::cout << "vector_int = ";
     display_svec_int(stest_vector_int);
 
@@ -234,21 +232,18 @@ int main()
     std::cout << "vector_int.capacity = " << (int) stest_vector_int.capacity() << std::endl;
     std::cout << "size of vector_int = " << stest_vector_int.size() << std::endl;
 
-    // int *stest_p;
-    // stest_p = stest_alloc_test.get_allocator().allocate(10);
-    // for (int i = 0; i < 10; i++)
-    //     std::cout << stest_p[i] << " ";
-    // std::cout << std::endl;
-    // for (int i = 0; i < 10; i++)
-    //     stest_alloc_test.get_allocator().construct(&stest_p[i], i);
-    // for (int i = 0; i < 10; i++)
-    //     std::cout << stest_p[i] << " ";
-    // std::cout << std::endl;
-    // for (int i = 0; i < 10; i++)
-    //     stest_alloc_test.get_allocator().destroy(&stest_p[i]);
-    // stest_alloc_test.get_allocator().deallocate(stest_p, 10);
+    int *stest_p;
+    stest_p = stest_alloc_test.get_allocator().allocate(10);
+    for (int i = 0; i < 10; i++)
+        stest_alloc_test.get_allocator().construct(&stest_p[i], i);
+    for (int i = 0; i < 10; i++)
+        std::cout << stest_p[i] << " ";
+    std::cout << std::endl;
+    for (int i = 0; i < 10; i++)
+        stest_alloc_test.get_allocator().destroy(&stest_p[i]);
+    stest_alloc_test.get_allocator().deallocate(stest_p, 10);
 
-    // std::cout << std::endl;
+    std::cout << std::endl;
     std::cout << "\033[1;33m     FT VEC     \033[0m" << std::endl << std::endl;
     
     ft::vector<std::string> test_vector_str;
@@ -276,15 +271,16 @@ int main()
 
     std::cout << "vector_int = ";
     display_vec_int(test_vector_int);
-    
     test_vector_int.insert(test_it_e, 32);
     test_vector_int.push_back(57);
+    
     test_it_e = test_vector_int.end();
     test_vector_int.insert(test_it_e, 32);
     std::cout << "vector_int = ";
     display_vec_int(test_vector_int);
     
-    test_vector_int.insert(test_it_e + 1, test_in_it_b, test_in_it_e);
+    test_it_e++;
+    test_vector_int.insert(test_it_e, test_in_it_b, test_in_it_e);
     std::cout << "vector_int = ";
     display_vec_int(test_vector_int);
 
@@ -340,19 +336,16 @@ int main()
     std::cout << "vector_int.capacity = " << (int) test_vector_int.capacity() << std::endl;
     std::cout << "size of vector_int = " << test_vector_int.size() << std::endl;
 
-    // int *test_p;
-    // test_p = test_alloc_test.get_allocator().allocate(10);
-    // for (int i = 0; i < 10; i++)
-    //     std::cout << test_p[i] << " ";
-    // std::cout << std::endl;
-    // for (int i = 0; i < 10; i++)
-    //     test_alloc_test.get_allocator().construct(&test_p[i], i);
-    // for (int i = 0; i < 10; i++)
-    //     std::cout << test_p[i] << " ";
-    // std::cout << std::endl;
-    // for (int i = 0; i < 10; i++)
-    //     test_alloc_test.get_allocator().destroy(&test_p[i]);
-    // test_alloc_test.get_allocator().deallocate(test_p, 10);
+    int *test_p;
+    test_p = test_alloc_test.get_allocator().allocate(10);
+    for (int i = 0; i < 10; i++)
+        test_alloc_test.get_allocator().construct(&test_p[i], i);
+    for (int i = 0; i < 10; i++)
+        std::cout << test_p[i] << " ";
+    std::cout << std::endl;
+    for (int i = 0; i < 10; i++)
+        test_alloc_test.get_allocator().destroy(&test_p[i]);
+    test_alloc_test.get_allocator().deallocate(test_p, 10);
 
     return (0);
 }
