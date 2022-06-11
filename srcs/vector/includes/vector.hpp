@@ -131,22 +131,22 @@ namespace ft
                 value_type tmp[n];
 
                 if (n < this->_size)
-                    for (int i = n; i < this->_size; i++)
+                    for (size_t i = n; i < this->_size; i++)
                         _alloc.destroy(&_cont[i]);
                 if (n > this->_size)
                 {
                     if (n > this->_capa)
                     {
-                        for (int i = 0; i < this->_size; i++)
+                        for (size_t i = 0; i < this->_size; i++)
                             tmp[i] = this->_cont[i];
-                        for (int i = 0; i < this->_size; i++)
+                        for (size_t i = 0; i < this->_size; i++)
                             _alloc.destroy(&this->_cont[i]);
                         _alloc.deallocate(_cont, _size);
                         this->_cont = this->_alloc.allocate(this->_capa, 0);
-                        for (int i = 0; i < this->_size; i++)
+                        for (size_t i = 0; i < this->_size; i++)
                             _alloc.construct(&_cont[i], tmp[i]);
                     }
-                    for (int i = this->_size; i < n; i++)
+                    for (size_t i = this->_size; i < n; i++)
                         _alloc.construct(&_cont[i], val);
                 }
 
@@ -172,10 +172,10 @@ namespace ft
                         throw std::length_error("n is higher than max_size");
                     tmp = this->_alloc.allocate(n, 0);
                     // this->_cont = this->_alloc.allocate(n, 0);
-                    for (int i = 0; i < this->_size; i++)
+                    for (size_t i = 0; i < this->_size; i++)
                         _alloc.construct(&tmp[i], _cont[i]);
                         // _alloc.construct(&_cont[i], &tmp[i]);
-                    for (int i = 0; i < this->_size; i++)
+                    for (size_t i = 0; i < this->_size; i++)
                         _alloc.destroy(&_cont[i]);
                         // _alloc.destroy(&tmp[i]);
                     _alloc.deallocate(_cont, _capa);
@@ -199,10 +199,10 @@ namespace ft
             void assign (InputIterator first, InputIterator last)
             {
                 difference_type n = last - first;
-                if (this->_capa < n)
+                if (this->_capa < (size_t)n)
                 {
                     this->_capa = n;
-                    for (int i = 0; i < this->_size; i++)
+                    for (size_t i = 0; i < this->_size; i++)
                         _alloc.destroy(&this->_cont[i]);
                     _alloc.deallocate(_cont, _capa);
                     this->_cont = this->_alloc.allocate(n, 0);
@@ -212,7 +212,7 @@ namespace ft
                 else
                 {
                     
-                    for (size_type i = 0; i < n; i++)
+                    for (difference_type i = 0; i < n; i++)
                         this->_cont[i] = first[i];
                 }
                 this->_size = n;
@@ -220,10 +220,10 @@ namespace ft
 
             void assign (int n, const value_type& val)
             {
-                if (this->_capa < n)
+                if ((int)this->_capa < n)
                 {
                     this->_capa = n;
-                    for (int i = 0; i < this->_size; i++)
+                    for (size_t i = 0; i < this->_size; i++)
                         _alloc.destroy(&this->_cont[i]);
                     _alloc.deallocate(_cont, _size);
                     this->_cont = this->_alloc.allocate(n, 0);
@@ -231,7 +231,7 @@ namespace ft
                         _alloc.construct(&_cont[i], val);
                 }
                 else
-                    for (size_type i = 0; i < n; i++)
+                    for (int i = 0; i < n; i++)
                         this->_cont[i] = val;
                 this->_size = n;
             }
@@ -245,18 +245,19 @@ namespace ft
                 else if (this->_capa <= this->_size)
                 {
                     this->_capa++;
-                    for (int i = 0; i < this->_size; i++)
+                    for (size_t i = 0; i < this->_size; i++)
                         tmp[i] = this->_cont[i];
-                    for (int i = 0; i < this->_size; i++)
+                    for (size_t i = 0; i < this->_size; i++)
                         _alloc.destroy(&this->_cont[i]);
                     _alloc.deallocate(_cont, _size);
                     this->_cont = this->_alloc.allocate(this->_capa, 0);
-                    for (int i = 0; i < this->_size; i++)
+                    for (size_t i = 0; i < this->_size; i++)
                         _alloc.construct(&_cont[i], tmp[i]);
                     _alloc.construct(&_cont[_size], val);
                 }                
                 this->_size++;
             }
+
             void pop_back()
             {
                 _alloc.destroy(&this->_cont[this->_size - 1]);
@@ -272,7 +273,7 @@ namespace ft
                 if (this->_capa <= this->_size)
                     this->_capa++;
                 
-                for (int i = 0; i < this->_size; i++)
+                for (size_t i = 0; i < this->_size; i++)
                 {
                     if (position == iterator(&_cont[i + 1])||
                         (position < iterator(&_cont[i]) && i == 0))
@@ -289,11 +290,11 @@ namespace ft
                     if (i < this->_size)
                         tmp[i + j] = this->_cont[i];
                 }
-                for (int i = 0; i < this->_capa; i++)
+                for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
                 _alloc.deallocate(_cont, _size);
                 this->_cont = this->_alloc.allocate(this->_capa, 0);
-                for (int i = 0; i <= this->_size; i++)
+                for (size_t i = 0; i <= this->_size; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size++;
                 return (iterator(&_cont[ind]));
@@ -308,7 +309,7 @@ namespace ft
                 if (this->_capa < this->_size + n)
                     this->_capa += n;
                 
-                for (int i = 0; i < this->_size; i++)
+                for (size_t i = 0; i < this->_size; i++)
                 {
                     if (position == iterator(&_cont[i + 1])  ||
                         (position < iterator(&_cont[i]) && i == 0))
@@ -326,11 +327,11 @@ namespace ft
                     if (i < this->_size)
                         tmp[i + j] = this->_cont[i];
                 }
-                for (int i = 0; i < this->_capa; i++)
+                for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
                 _alloc.deallocate(_cont, _size);
                 this->_cont = this->_alloc.allocate(this->_capa, 0);
-                for (int i = 0; i < (this->_capa); i++)
+                for (size_t i = 0; i < (this->_capa); i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size += n;
             }
@@ -345,7 +346,7 @@ namespace ft
 
                 if (this->_capa < this->_size + n && n > 0)
                     this->_capa += n;
-                for (int i = 0; i < this->_size; i++)
+                for (size_t i = 0; i < this->_size; i++)
                 {
                     if (position == iterator(&_cont[i + 1]) ||
                         (position < iterator(&_cont[i]) && i == 0))
@@ -363,11 +364,11 @@ namespace ft
                     if (i < this->_size)
                         tmp[i + j] = this->_cont[i];
                 }
-                for (int i = 0; i < this->_capa; i++)
+                for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
                 _alloc.deallocate(_cont, _size);
                 this->_cont = this->_alloc.allocate(this->_capa, 0);
-                for (int i = 0; i < (this->_size + n); i++)
+                for (size_t i = 0; i < (this->_size + n); i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size += n;
             }
@@ -378,18 +379,18 @@ namespace ft
                 value_type  tmp[this->_size - 1];
 
                 j = 0;
-                for (int i = 0; i < _size; i++)
+                for (size_t i = 0; i < _size; i++)
                 {
                     if (position == iterator(&_cont[i]))
                         i++;
                     tmp[j] = _cont[i];
                     j++; 
                 }
-                for (int i = 0; i < this->_capa; i++)
+                for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
                 _alloc.deallocate(_cont, _size);
                 this->_cont = this->_alloc.allocate(this->_capa - 1, 0);
-                for (int i = 0; i < this->_size; i++)
+                for (size_t i = 0; i < this->_size; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size--;
                 return (iterator(&_cont[0]));
@@ -402,7 +403,7 @@ namespace ft
                 difference_type n = last - first;
 
                 j = 0;
-                for (int i = 0; i < _size; i++)
+                for (size_t i = 0; i < _size; i++)
                 {
                     if (first == iterator(&_cont[i + 1]))
                     {
@@ -413,11 +414,11 @@ namespace ft
                     tmp[j] = _cont[i];
                     j++; 
                 }
-                for (int i = 0; i < this->_capa; i++)
+                for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
                 _alloc.deallocate(_cont, _size);
                 this->_cont = this->_alloc.allocate(this->_capa, 0);
-                for (int i = 0; i < this->_size - n; i++)
+                for (size_t i = 0; i < this->_size - n; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size -= (n + 0);
                 return (iterator(&_cont[0]));
@@ -443,7 +444,7 @@ namespace ft
 
             void clear()
             {
-                for (int i = 0; i < this->_capa; i++)
+                for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
                 this->_size = 0;
             }

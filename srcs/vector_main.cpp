@@ -35,7 +35,7 @@ void display_svec_int(std::vector<int> vector_int)
     std::cout << std::endl;
 }
 
-int main()
+int vector_test()
 {
     ft::vector<int> vector_int;
     ft::vector<int> vector_int2;
@@ -78,6 +78,7 @@ int main()
     svector_int.insert(sit_e, 3, 54);
     display_svec_int(svector_int);
     
+    it_b = vector_int.begin();
     vector_int.insert(it_b, 22);
     display_vec_int(vector_int);
     std::vector<int>::iterator sit_b = svector_int.begin();

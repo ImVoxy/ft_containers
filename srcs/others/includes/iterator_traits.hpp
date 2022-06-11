@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <iterator>
+#include "is_integral.hpp"
 #ifndef ITERATOR_TRAITS_HPP
 # define ITERATOR_TRAITS_HPP
 

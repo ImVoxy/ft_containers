@@ -28,7 +28,7 @@ namespace ft
 			explicit standard_iterator(const Iterator& it) : _it(it) {}
 			template < typename T >
 			standard_iterator(const standard_iterator< T,
-					typename enable_if< std::is_same< T, typename Container::pointer >::value,
+					typename enable_if< is_same< T, typename Container::pointer >::value,
 										Container >::type >& it): _it(it.base()) {}
 			~standard_iterator(){}
 //Access

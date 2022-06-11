@@ -80,6 +80,9 @@ namespace ft
     {
         typedef long long value;
     };
+
+    template <typename T, typename U> struct is_same : public false_type {};
+    template <typename T> struct is_same<T, T> : public true_type {};
 }
 
 #endif
