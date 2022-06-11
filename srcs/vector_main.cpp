@@ -37,6 +37,7 @@ void display_svec_int(std::vector<int> vector_int)
 
 int vector_test()
 {
+    ft::vector<int> testnul(5);
     ft::vector<int> vector_int;
     ft::vector<int> vector_int2;
     ft::vector<int> vector_int3;

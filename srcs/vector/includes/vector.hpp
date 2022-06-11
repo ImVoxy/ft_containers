@@ -47,13 +47,12 @@ namespace ft
             explicit vector (size_type n, const value_type& val = value_type(),
                     const allocator_type& alloc = allocator_type())
             {
-                pointer tmp;
                 _alloc = alloc;
                 _size = n;
                 _capa = n;
-                _cont = alloc.allocate(n, 0);
-                for (int i = 0; i < n; i++)
-                    alloc.construct(&_cont[i], val[i]);
+                _cont = _alloc.allocate(n, 0);
+                for (size_t i = 0; i < n; i++)
+                    _alloc.construct(&_cont[i], val);
             }
 
             template <class InputIterator>
@@ -187,8 +186,18 @@ namespace ft
 //  Element access
             reference operator[] (size_type n){return (_cont[n]);}
             const_reference operator[] (size_type n) const{return (_cont[n]);}
-            reference at (size_type n){return (_cont[n]);}
-            const_reference at (size_type n) const{return (_cont[n]);}
+            reference at (size_type n)
+            {
+                if (n > _size)
+                    throw(std::out_of_range("n is out of range"));
+                return (_cont[n]);
+            }
+            const_reference at (size_type n) const
+            {
+                if (n > _size)
+                    throw(std::out_of_range("n is out of range"));
+                return (_cont[n]);
+            }
             reference front(){return (_cont[0]);}
             const_reference front() const{return (_cont[0]);}
             reference back(){return (_cont[_size - 1]);}
