@@ -7,8 +7,7 @@
 #include "others/includes/lexicographical_compare.hpp"
 #include "others/includes/pair.hpp"
 #include "stack/includes/stack.hpp"
-
-// void vector_test();
+#include "vector/includes/vector.hpp"
 
 // int main()
 // {
@@ -33,53 +32,43 @@
 //     return (0);
 // }
 
-// #include "common.hpp"
-
 #include "../containers_test/srcs/vector/common.hpp"
-
-void	is_empty(ft::vector<int> const &vct)
+// #include "common.hpp"
+void	checkErase(ft::vector<std::string> const &vct,
+					ft::vector<std::string>::const_iterator const &it)
 {
-	std::cout << "is_empty: " << vct.empty() << std::endl;
+	static int i = 0;
+	std::cout << "[" << i++ << "] " << "erase: " << it - vct.begin() << std::endl;
+	printSize(vct);
 }
 
 int		main(void)
 {
-	const int start_size = 7;
-	ft::vector<int> vct(start_size, 20);
-	// ft::vector<int> vct2;
-	// ft::vector<int>::iterator it = vct.begin();
+	ft::vector<std::string> vct(10);
 
-	// for (int i = 2; i < start_size; ++i)
-	// 	it[i] = (start_size - i) * 3;
-	// printSize(vct, true);
+	for (unsigned long int i = 0; i < vct.size(); ++i)
+		vct[i] = std::string((vct.size() - i), i + 65);
+	printSize(vct);
 
-	// vct.resize(10, 42);
-	// printSize(vct, true);
+	checkErase(vct, vct.erase(vct.begin() + 2));
 
-	// vct.resize(18, 43);
-	// printSize(vct, true);
-	// vct.resize(10);
-	// printSize(vct, true);
-	// vct.resize(23, 44);
-	// printSize(vct, true);
-	// vct.resize(5);
-	// printSize(vct, true);
-	// vct.reserve(5);
-	// vct.reserve(3);
-	// printSize(vct, true);
-	// vct.resize(87);
-	// vct.resize(5);
-	// printSize(vct, true);
+	checkErase(vct, vct.erase(vct.begin()));
+	checkErase(vct, vct.erase(vct.end() - 1));
 
-	// is_empty(vct2);
-	// vct2 = vct;
-	// is_empty(vct2);
-	// vct.reserve(vct.capacity() + 1);
-	// printSize(vct, true);
-	// printSize(vct2, true);
+	checkErase(vct, vct.erase(vct.begin(), vct.begin() + 3));
+	checkErase(vct, vct.erase(vct.end() - 3, vct.end() - 1));
 
-	// vct2.resize(0);
-	// is_empty(vct2);
-	// printSize(vct2, true);
+	vct.push_back("Hello");
+	vct.push_back("Hi there");
+	printSize(vct);
+	checkErase(vct, vct.erase(vct.end() - 3, vct.end()));
+
+	vct.push_back("ONE");
+	vct.push_back("TWO");
+	vct.push_back("THREE");
+	vct.push_back("FOUR");
+	printSize(vct);
+	checkErase(vct, vct.erase(vct.begin(), vct.end()));
+
 	return (0);
 }

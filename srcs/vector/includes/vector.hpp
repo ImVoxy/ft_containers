@@ -55,13 +55,13 @@ namespace ft
                     _alloc.construct(&_cont[i], val);
             }
 
-            template <class InputIterator>
-            vector (InputIterator first, InputIterator last,
+            // template <class InputIterator>
+            vector (iterator first, iterator last,
                     const allocator_type& alloc = allocator_type())
             {
                 _alloc = alloc;
-                _size = last - first + 1;
-                _capa = last - first + 1;
+                _size = last - first - 1;
+                _capa = last - first - 1;
                 _cont = NULL;
                 this->assign(first, last);
             
@@ -136,13 +136,14 @@ namespace ft
                 {
                     if (n > this->_capa)
                     {
+                        this->_capa = n;
                         for (size_t i = 0; i < this->_size; i++)
                             tmp[i] = this->_cont[i];
                         for (size_t i = 0; i < this->_size; i++)
                             _alloc.destroy(&this->_cont[i]);
                         _alloc.deallocate(_cont, _size);
                         this->_cont = this->_alloc.allocate(this->_capa, 0);
-                        for (size_t i = 0; i < this->_size; i++)
+                        for (size_t i = 0; i < this->_capa; i++)
                             _alloc.construct(&_cont[i], tmp[i]);
                     }
                     for (size_t i = this->_size; i < n; i++)
@@ -385,30 +386,41 @@ namespace ft
             iterator erase (iterator position)
             {
                 int         j;
-                value_type  tmp[this->_size - 1];
+                size_t      ret = 0;
+                value_type  tmp[this->_size + 1];
 
                 j = 0;
                 for (size_t i = 0; i < _size; i++)
                 {
                     if (position == iterator(&_cont[i]))
+                    {
                         i++;
-                    tmp[j] = _cont[i];
-                    j++; 
+                        if (i == _size)
+                            ret = i;
+                        else
+                            ret = i - 1;
+                    }
+                    if (i <_size)
+                    {
+                        tmp[j] = _cont[i];
+                        j++; 
+                    }
                 }
                 for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
-                _alloc.deallocate(_cont, _size);
+                _alloc.deallocate(_cont, _capa);
                 this->_cont = this->_alloc.allocate(this->_capa - 1, 0);
                 for (size_t i = 0; i < this->_size; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size--;
-                return (iterator(&_cont[0]));
+                return (iterator(&_cont[ret]));
             }
 
             iterator erase (iterator first, iterator last)
             {
                 int             j;
-                value_type      tmp[this->_size - 1];
+                size_t          ret;
+                value_type      tmp[this->_size + 1];
                 difference_type n = last - first;
 
                 j = 0;
@@ -419,6 +431,10 @@ namespace ft
                         tmp[j] = _cont[i];
                         j++;
                         i += n + 1;
+                        if (i == _size)
+                            ret = 55;
+                        else
+                            ret = 56;
                     }
                     tmp[j] = _cont[i];
                     j++; 
@@ -430,7 +446,7 @@ namespace ft
                 for (size_t i = 0; i < this->_size - n; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size -= (n + 0);
-                return (iterator(&_cont[0]));
+                return (iterator(&_cont[ret]));
             }
 
             void swap (vector& x)
