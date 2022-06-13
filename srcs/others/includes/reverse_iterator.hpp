@@ -43,19 +43,11 @@ namespace ft
             
             reverse_iterator operator+ (difference_type n) const
             {
-                // reverse_iterator tmp = *this;
-                // for (int i = 0; i < n; i++)
-                //     ++tmp;
-                // return (tmp);
                 return (reverse_iterator(_it - n));
             }
 
             reverse_iterator operator- (difference_type n) const
             {
-                // reverse_iterator tmp = *this;
-                // for (int i = 0; i < n; i++)
-                //     --tmp;
-                // return (tmp);
                 return (reverse_iterator(_it + n));
             }
 
@@ -138,7 +130,7 @@ namespace ft
             friend typename reverse_iterator<A>::difference_type operator- (
                                     const reverse_iterator<A>& lhs,
                                     const reverse_iterator<A>& rhs);
-                                    template <class A>
+            template <class A>
             friend typename reverse_iterator<A>::difference_type operator+ (
                                     typename reverse_iterator<A>::difference_type n,
                                     const reverse_iterator<A>& rev_it);

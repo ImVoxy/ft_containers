@@ -283,16 +283,11 @@ namespace ft
                 if (this->_capa <= this->_size)
                     this->_capa++;
                 
-                for (size_t i = 0; i < this->_size; i++)
+                for (size_t i = 0; i <= this->_size; i++)
                 {
-                    if (position == iterator(&_cont[i + 1])||
+                    if (position == iterator(&_cont[i])||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
-                        if (i != 0)
-                        {
-                            tmp[i] = _cont[i];
-                            i++;
-                        }
                         tmp[i] = val;
                         ind = i;
                         j = 1;
@@ -319,16 +314,11 @@ namespace ft
                 if (this->_capa < this->_size + n)
                     this->_capa += n;
                 
-                for (size_t i = 0; i < this->_size; i++)
+                for (size_t i = 0; i <= this->_size; i++)
                 {
-                    if (position == iterator(&_cont[i + 1])  ||
+                    if (position == iterator(&_cont[i])  ||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
-                        if (i != 0)
-                        {
-                            tmp[i] = _cont[i];
-                            i++;
-                        }
                         for (int k = 0; k < n; k++)
                             tmp[i + k] = val;
                         ind = i;
@@ -356,16 +346,11 @@ namespace ft
 
                 if (this->_capa < this->_size + n && n > 0)
                     this->_capa += n;
-                for (size_t i = 0; i < this->_size; i++)
+                for (size_t i = 0; i <= this->_size; i++)
                 {
-                    if (position == iterator(&_cont[i + 1]) ||
+                    if (position == iterator(&_cont[i]) ||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
-                        if (i != 0)
-                        {
-                            tmp[i] = _cont[i];
-                            i++;
-                        }
                         for (int k = 0; k <= n; k++)
                             tmp[i + k] = *(first + k);
                         ind = i;
@@ -394,11 +379,8 @@ namespace ft
                 {
                     if (position == iterator(&_cont[i]))
                     {
+                        ret = i;
                         i++;
-                        if (i == _size)
-                            ret = i;
-                        else
-                            ret = i - 1;
                     }
                     if (i <_size)
                     {
@@ -413,28 +395,25 @@ namespace ft
                 for (size_t i = 0; i < this->_size; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
                 this->_size--;
+                if (ret < 0)
+                    ret = 0;
                 return (iterator(&_cont[ret]));
             }
 
             iterator erase (iterator first, iterator last)
             {
                 int             j;
-                size_t          ret;
-                value_type      tmp[this->_size + 1];
+                size_t          ret = 0;
+                value_type      tmp[this->_size];
                 difference_type n = last - first;
 
                 j = 0;
                 for (size_t i = 0; i < _size; i++)
                 {
-                    if (first == iterator(&_cont[i + 1]))
+                    if (first == iterator(&_cont[i + 0]))
                     {
-                        tmp[j] = _cont[i];
-                        j++;
-                        i += n + 1;
-                        if (i == _size)
-                            ret = 55;
-                        else
-                            ret = 56;
+                        ret = i;
+                        i += n;
                     }
                     tmp[j] = _cont[i];
                     j++; 
@@ -496,7 +475,7 @@ namespace ft
     bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
     {
         if (lhs._size == rhs._size)
-            for (int i = 0; (i < lhs._size && i < rhs._size); i++)
+            for (int i = 0; (i < lhs.size() && i < rhs.size()); i++)
                 if (rhs._cont[i] != lhs._cont[i])
                     return (0);
         return (1);
@@ -511,9 +490,9 @@ namespace ft
     template <class T, class Alloc>
     bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
     {
-        for (int i = 0; i < lhs._size; i++)
+        for (int i = 0; i < lhs.size(); i++)
         {
-            if (i == rhs._size || rhs._cont < lhs._cont)
+            if (i == rhs.size() || rhs._cont < lhs._cont)
                 return (0);
             else if (lhs._cont < rhs._cont)
                 return (1);
@@ -543,14 +522,14 @@ namespace ft
     void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
     {
         Alloc tmp_a     = y.get_allocator();
-        size_t tmp_s    = y._size;
-        size_t tmp_c    = y._capa;
-        T* tmp_cont     = y._cont;
+        size_t tmp_s    = y.size();
+        size_t tmp_c    = y.capacity();
+        T* tmp_cont     = &y.front();
 
         y._alloc    = x.get_allocator();
-        y._size     = x._size;
-        y._capa     = x._capa;
-        y._cont     = x._cont;
+        y._size     = x.size();
+        y._capa     = x.capacity();
+        y._cont     = &x.front();
 
         x._alloc = tmp_a;
         x._size = tmp_s;

@@ -9,7 +9,7 @@ namespace ft
 	template < typename Iterator, typename Container >
 	class standard_iterator
 	{
-		typedef iterator_traits< Iterator > traits;
+		typedef iterator_traits< Iterator > traits;		
 
 		private:
 		protected:
@@ -55,7 +55,10 @@ namespace ft
 				return (*this);
 			}
 			standard_iterator operator+(difference_type ptr) const
-			{return standard_iterator(_it + ptr);}
+			{
+				return (standard_iterator(_it + ptr));
+			}
+
 			standard_iterator& operator-=(difference_type ptr)
 			{
 				_it -= ptr;
@@ -64,12 +67,22 @@ namespace ft
 			standard_iterator operator-(difference_type ptr) const
 			{return (standard_iterator(_it - ptr));}
 		};
-//Relational operators
+
+		template <class Iter, class Cont>
+    	typename ft::standard_iterator<Iter, Cont> operator+ (
+                                    typename standard_iterator<Iter, Cont>::difference_type n,
+                                    const standard_iterator<Iter, Cont>& it)
+		{
+			return (standard_iterator<Iter, Cont>(it.base() + n));
+		}
+
+
 		template < typename IteratorL, typename IteratorR, typename Container >
 		bool operator==(const standard_iterator< IteratorL, Container >& lhs,
 						const standard_iterator< IteratorR, Container >& rhs)
 		{return (lhs.base() == rhs.base());}
 
+//Relational operators
 		template < typename Iterator, typename Container >
 		bool operator==(const standard_iterator< Iterator, Container >& lhs,
 						const standard_iterator< Iterator, Container >& rhs)
