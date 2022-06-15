@@ -1,6 +1,7 @@
 #include <memory>
 #include <cstddef>
 #include <iterator>
+#include <algorithm>
 #include "../../others/includes/reverse_iterator.hpp"
 #include "../../others/includes/standard_iterator.hpp"
 #ifndef VECTOR_HPP
@@ -55,13 +56,18 @@ namespace ft
                     _alloc.construct(&_cont[i], val);
             }
 
-            // template <class InputIterator>
-            vector (iterator first, iterator last,
+            template <class InputIterator>
+            vector (InputIterator first, InputIterator last,
                     const allocator_type& alloc = allocator_type())
             {
+                // InputIterator   tmp = first;
+                // int             size = 0;
+
+                // while (tmp + size != last)
+                //     size++;
                 _alloc = alloc;
-                _size = last - first - 1;
-                _capa = last - first - 1;
+                _size = 0;
+                _capa = 0;
                 _cont = NULL;
                 this->assign(first, last);
             
@@ -221,7 +227,6 @@ namespace ft
                 }
                 else
                 {
-                    
                     for (difference_type i = 0; i < n; i++)
                         this->_cont[i] = first[i];
                 }
@@ -270,8 +275,12 @@ namespace ft
 
             void pop_back()
             {
-                _alloc.destroy(&this->_cont[this->_size - 1]);
-                this->_size--;
+                if (this->_size > 0)
+                {
+                    _alloc.destroy(&this->_cont[this->_size - 1]);
+                    this->_size--;
+                    this->_capa--;
+                }
             }
 
             iterator insert (iterator position, const value_type& val)
@@ -430,20 +439,10 @@ namespace ft
 
             void swap (vector& x)
             {
-                Alloc tmp_a     = x.get_allocator();
-                size_t tmp_s    = x._size;
-                size_t tmp_c    = x._capa;
-                T* tmp_cont     = x._cont;
-
-                x._alloc    = this->_alloc;
-                x._size     = this->_size;
-                x._capa     = this->_capa;
-                x._cont     = this->_cont;
-
-                this->_alloc = tmp_a;
-                this->_size = tmp_s;
-                this->_capa = tmp_c;
-                this->_cont = tmp_cont;
+                std::swap(_alloc, x._alloc);
+                std::swap(_size, x._size);
+                std::swap(_capa, x._capa);
+                std::swap(_cont, x._cont);
             }
 
             void clear()
@@ -474,10 +473,11 @@ namespace ft
     template <class T, class Alloc>
     bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
     {
-        if (lhs._size == rhs._size)
-            for (int i = 0; (i < lhs.size() && i < rhs.size()); i++)
-                if (rhs._cont[i] != lhs._cont[i])
-                    return (0);
+        if (lhs._size != rhs._size)
+            return (0);
+        for (size_t i = 0; (i < lhs.size() && i < rhs.size()); i++)
+            if (rhs._cont[i] != lhs._cont[i])
+                return (0);
         return (1);
     }
 
@@ -490,20 +490,22 @@ namespace ft
     template <class T, class Alloc>
     bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
     {
-        for (int i = 0; i < lhs.size(); i++)
+        for (size_t i = 0; (i < lhs.size() && i < rhs.size()); i++)
         {
-            if (i == rhs.size() || rhs._cont < lhs._cont)
+            if (rhs._cont[i] < lhs._cont[i])
                 return (0);
-            else if (lhs._cont < rhs._cont)
+            else if (lhs._cont[i] < rhs._cont[i])
                 return (1);
         }
+        if (lhs.size() < rhs.size())
+            return (1);
         return (0);
     }
 
     template <class T, class Alloc>
     bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
     {
-        return (!(rhs > lhs));
+        return (!(lhs > rhs));
     }
 
     template <class T, class Alloc>
@@ -521,20 +523,7 @@ namespace ft
     template <class T, class Alloc>
     void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
     {
-        Alloc tmp_a     = y.get_allocator();
-        size_t tmp_s    = y.size();
-        size_t tmp_c    = y.capacity();
-        T* tmp_cont     = &y.front();
-
-        y._alloc    = x.get_allocator();
-        y._size     = x.size();
-        y._capa     = x.capacity();
-        y._cont     = &x.front();
-
-        x._alloc = tmp_a;
-        x._size = tmp_s;
-        x._capa = tmp_c;
-        x._cont = tmp_cont;
+        x.swap(y);
     }
 
 }
