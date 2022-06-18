@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "../../others/includes/reverse_iterator.hpp"
 #include "../../others/includes/standard_iterator.hpp"
+#include "../../others/includes/utils.hpp"
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
@@ -214,7 +215,8 @@ namespace ft
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last)
             {
-                difference_type n = last - first;
+                difference_type n = it_diff(first, last);
+
                 if (this->_capa < (size_t)n)
                 {
                     this->_capa = n;
@@ -223,12 +225,18 @@ namespace ft
                     _alloc.deallocate(_cont, _capa);
                     this->_cont = this->_alloc.allocate(n, 0);
                     for (int i = 0; i < n; i++)
-                        _alloc.construct(&_cont[i], *(first + i));
+                    {
+                        _alloc.construct(&_cont[i], *(first));
+                        first++;
+                    }
                 }
                 else
                 {
                     for (difference_type i = 0; i < n; i++)
-                        this->_cont[i] = first[i];
+                    {
+                        this->_cont[i] = *first;
+                        first++;
+                    }
                 }
                 this->_size = n;
             }
@@ -348,7 +356,7 @@ namespace ft
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last)
             {
-                difference_type n = last - first ;
+                difference_type n = it_diff(first, last) ;
                 int             ind;
                 int             j = 0;
                 value_type      tmp[this->_size + n];
@@ -361,7 +369,10 @@ namespace ft
                         (position < iterator(&_cont[i]) && i == 0))
                     {
                         for (int k = 0; k <= n; k++)
-                            tmp[i + k] = *(first + k);
+                        {
+                            tmp[i + k] = *(first);
+                            first++;
+                        }
                         ind = i;
                         j = n;
                     }

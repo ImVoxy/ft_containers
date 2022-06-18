@@ -10,7 +10,7 @@ namespace ft
         Iterator    tmp = first;
         size_t      i = 0;
 
-        while (tmp <= last)
+        while (tmp != last)
         {
             tmp++;
             i++;

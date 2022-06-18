@@ -35,6 +35,8 @@ $(OBJDIR)%.o: $(SRCDIR)%.cpp
 
 exec: all ;$(TEST)
 
+valgrind: all ; valgrind $(TEST)
+
 clean:
 	rm -rf $(OBJDIR)
 
