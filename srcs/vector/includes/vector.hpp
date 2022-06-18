@@ -411,10 +411,11 @@ namespace ft
                 for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
                 _alloc.deallocate(_cont, _capa);
-                this->_cont = this->_alloc.allocate(this->_capa - 1, 0);
+                this->_cont = this->_alloc.allocate(this->_capa, 0);
+                this->_size--;
                 for (size_t i = 0; i < this->_size; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
-                this->_size--;
+                
                 if (ret < 0)
                     ret = 0;
                 return (iterator(&_cont[ret]));

@@ -35,7 +35,7 @@ void display_svec_int(std::vector<int> vector_int)
     std::cout << std::endl;
 }
 
-int main()
+int vector_test()
 {
     ft::vector<int> testnul(5);
     ft::vector<int> vector_int;

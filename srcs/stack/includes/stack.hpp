@@ -9,14 +9,13 @@ namespace ft
 {
     template<class T, class Container = std::vector<T> > 
     class stack
-    {
-        typedef Container   container_type;
-        typedef T           value_type;
-        
+    {   
         private:
         protected:
-            container_type  _cont;
+            Container  _cont;
         public:
+            typedef Container   container_type;
+            typedef T           value_type;
 //  Constructors and destructors
             explicit stack(const container_type& ctnr = container_type()) : _cont(ctnr){};
             stack(const stack<value_type, container_type>& cont) : _cont(cont._cont){};
