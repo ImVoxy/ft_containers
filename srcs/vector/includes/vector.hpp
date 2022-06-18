@@ -368,7 +368,7 @@ namespace ft
                     if (position == iterator(&_cont[i]) ||
                         (position < iterator(&_cont[i]) && i == 0))
                     {
-                        for (int k = 0; k <= n; k++)
+                        for (int k = 0; k < n; k++)
                         {
                             tmp[i + k] = *(first);
                             first++;
@@ -402,11 +402,11 @@ namespace ft
                         ret = i;
                         i++;
                     }
-                    if (i <_size)
-                    {
+                    // if (i <_size)
+                    // {
                         tmp[j] = _cont[i];
                         j++; 
-                    }
+                    // }
                 }
                 for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);
@@ -425,17 +425,18 @@ namespace ft
                 int             j;
                 size_t          ret = 0;
                 value_type      tmp[this->_size];
-                difference_type n = last - first;
+                difference_type n = it_diff(first, last);
 
                 j = 0;
                 for (size_t i = 0; i < _size; i++)
                 {
-                    if (first == iterator(&_cont[i + 0]))
+                    if (first == iterator(&_cont[i]))
                     {
                         ret = i;
                         i += n;
                     }
-                    tmp[j] = _cont[i];
+                    if (i < _size)
+                        tmp[j] = _cont[i];
                     j++; 
                 }
                 for (size_t i = 0; i < this->_capa; i++)
@@ -444,7 +445,7 @@ namespace ft
                 this->_cont = this->_alloc.allocate(this->_capa, 0);
                 for (size_t i = 0; i < this->_size - n; i++)
                     _alloc.construct(&_cont[i], tmp[i]);
-                this->_size -= (n + 0);
+                this->_size -= (n);
                 return (iterator(&_cont[ret]));
             }
 
