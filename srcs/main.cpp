@@ -16,6 +16,8 @@ int main()
     stack_test();
     std::cout << std::endl << "\033[1;32m     VECTOR TESTS     \033[0m" << std::endl << std::endl;
     vector_test();
+    // std::cout << std::endl << "\033[1;32m     MAP TESTS     \033[0m" << std::endl << std::endl;
+    // map_test();
     std::cout << std::endl << "\033[1;32m     ITERATOR TESTS     \033[0m" << std::endl << std::endl;
     iterator_test();
     std::cout << std::endl << "\033[1;32m     REVERSE_ITERATOR TESTS     \033[0m" << std::endl << std::endl;
@@ -28,7 +30,6 @@ int main()
     enable_if_test();
     std::cout << std::endl << "\033[1;32m     IS INTEGRAL TESTS     \033[0m" << std::endl << std::endl;
     is_integral_test();
-
     return (0);
 }
 

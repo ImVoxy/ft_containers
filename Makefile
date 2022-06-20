@@ -35,7 +35,7 @@ $(OBJDIR):
 $(OBJDIR)%.o: $(SRCDIR)%.cpp
 	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
-exec: all ;$(TEST)
+exec: all ; $(TEST)
 
 valgrind: all ; valgrind $(TEST)
 

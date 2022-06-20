@@ -1,4 +1,7 @@
 #include "others/includes/reverse_iterator.hpp"
+#include "others/includes/make_pair.hpp"
+#include "vector/includes/vector.hpp"
+#include "others/includes/pair.hpp"
 #include <iostream>
 #include <vector>
 #include <iterator>
@@ -6,9 +9,9 @@
 
 int reverse_iterator_test()
 {
-    std::vector<int> v;
-    std::vector<int> v2;
-    std::vector<int> v3;
+    ft::vector<int> v;
+    ft::vector<int> v2;
+    ft::vector<int> v3;
     std::map<int,std::string> numbers;
     numbers.insert (std::make_pair(1,"one"));
     numbers.insert (std::make_pair(2,"two"));
@@ -18,7 +21,7 @@ int reverse_iterator_test()
     for (int i=0; i<10; i++)
         v2.push_back(i);
 
-    typedef std::vector<int>::iterator iter_type;
+    typedef ft::vector<int>::iterator iter_type;
     typedef std::map<int,std::string>::iterator map_iter;
 
     std::reverse_iterator<iter_type> rev_end (v.begin());

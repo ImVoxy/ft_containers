@@ -3,6 +3,7 @@
 #include <stack>
 #include <string>
 #include <cstring>
+#include "vector/includes/vector.hpp"
 #include "stack/includes/stack.hpp"
 
 #define MAX_RAM 4294967296
@@ -16,7 +17,7 @@ struct Buffer
 
 int stack_test()
 {
-    std::vector<int> vector_int;
+    ft::vector<int> vector_int;
     ft::stack<std::string> ft_stack_str;
     ft::stack<int> ft_stack_int;
     ft::stack<int> ft_lhs_stack;

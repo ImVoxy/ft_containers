@@ -1,12 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "vector/includes/vector.hpp"
 #include "others/includes/lexicographical_compare.hpp"
  
 int lexicographical_compare_test()
 {
-    std::vector<char> v1;
-    std::vector<char> v2;
+    ft::vector<char> v1;
+    ft::vector<char> v2;
     std::string str;
 
     str = std::string("abcd");

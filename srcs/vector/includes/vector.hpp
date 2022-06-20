@@ -211,7 +211,7 @@ namespace ft
             reference back(){return (_cont[_size - 1]);}
             const_reference back() const{return (_cont[_size - 1]);}
 
-// Modifiers
+//  Modifiers
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last)
             {
