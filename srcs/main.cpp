@@ -32,4 +32,3 @@ int main()
     is_integral_test();
     return (0);
 }
-

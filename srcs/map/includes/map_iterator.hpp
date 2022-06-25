@@ -1,9 +1,6 @@
 #ifndef MAP_ITERATOR_HPP
 # define MAP_ITERATOR_HPP
 
-#include "../../others/includes/standard_iterator.hpp"
-#include "../../others/includes/rb_tree.hpp"
-
 namespace ft
 {
 
@@ -14,7 +11,7 @@ namespace ft
 
 		private:
 		protected:
-			Node* _it;
+			Node*	_it;
 
 		public:
 			typedef Iterator                           iterator_type;
@@ -40,13 +37,18 @@ namespace ft
 //  Assignation
 			map_iterator& operator++()
 			{
-				// ++_it;
-				// return (*this);
+				
+				return (*this);
 			}
 			map_iterator operator++(int) { return map_iterator(_it++); }
 			map_iterator& operator--()
 			{
-				--_it;
+				if (_it->left)
+					_it = _it->left;
+				else if (_it->parent &&_it == _it->parent->right)
+					_it = _it->parent;
+				else if (_it->parent && _it->parent->parent && _it == _it->parent->left)
+					_it = _it->parent->parent;
 				return (*this);
 			}
 			map_iterator operator--(int) { return map_iterator(_it--); }
@@ -144,8 +146,6 @@ namespace ft
 		operator-(const map_iterator< IteratorL, Container >& lhs,
 				const map_iterator< IteratorR, Container >& rhs)
 		{return (lhs.base() - rhs.base());}
-}
-
 }
 
 #endif
