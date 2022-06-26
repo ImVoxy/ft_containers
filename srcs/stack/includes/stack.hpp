@@ -1,5 +1,6 @@
 #include <vector>
 #include <iterator>
+#include "../../vector/includes/vector.hpp"
 #ifndef STACK_HPP
 # define STACK_HPP
 
@@ -7,7 +8,7 @@ int stack_test();
 
 namespace ft
 {
-    template<class T, class Container = std::vector<T> > 
+    template<class T, class Container = ft::vector<T> > 
     class stack
     {   
         private:
