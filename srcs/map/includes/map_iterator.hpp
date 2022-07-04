@@ -1,3 +1,4 @@
+#include "map.hpp"
 #ifndef MAP_ITERATOR_HPP
 # define MAP_ITERATOR_HPP
 
@@ -7,11 +8,12 @@ namespace ft
 	template < typename Iterator, typename Container >
 	class map_iterator
 	{
-		typedef iterator_traits< Iterator > traits;		
+		typedef iterator_traits< Iterator > traits;
+		// typedef Node *NodePtr;
 
 		private:
 		protected:
-			Node*	_it;
+			NodePtr	_it;
 
 		public:
 			typedef Iterator                           iterator_type;
@@ -24,6 +26,7 @@ namespace ft
 //  Constructors and destructors
 			map_iterator() : _it(Iterator()) {}
 			explicit map_iterator(const Iterator& it) : _it(it) {}
+			explicit map_iterator(NodePtr it) : _it(it) {}
 			template < typename T >
 			map_iterator(const map_iterator< T,
 					typename enable_if< is_same< T, typename Container::pointer >::value,
@@ -34,27 +37,51 @@ namespace ft
 			reference operator*() const { return *_it; }
 			pointer operator->() const { return _it; }
 			reference operator[](difference_type ptr) const { return _it[ptr]; }
+
 //  Assignation
 			map_iterator& operator++()
 			{
 				
-				return (*this);
+				if (_it->parent && _it == _it->parent->left)
+					_it = _it->parent;
+				else if (_it->parent && _it == _it->parent->right)
+				{
+					while (_it->parent && _it == _it->parent->right)
+						_it = _it->parent;
+					
+					if (_it->right)
+					{
+						_it = _it->right;
+						while (_it->left)
+							_it = _it->left;
+					}
+				}
+				return (_it);
 			}
 			map_iterator operator++(int) { return map_iterator(_it++); }
 			map_iterator& operator--()
 			{
-				if (_it->left)
-					_it = _it->left;
-				else if (_it->parent &&_it == _it->parent->right)
+				if (_it->parent && _it == _it->parent->right)
 					_it = _it->parent;
-				else if (_it->parent && _it->parent->parent && _it == _it->parent->left)
-					_it = _it->parent->parent;
-				return (*this);
+				else if (_it->parent && _it == _it->parent->left)
+				{
+					while (_it->parent && _it == _it->parent->left)
+						_it = _it->parent;
+					
+					if (_it->left)
+					{
+						_it = _it->left;
+						while (_it->right)
+							_it = _it->right;
+					}
+				}
+				return (_it);
 			}
 			map_iterator operator--(int) { return map_iterator(_it--); }
 			map_iterator& operator+=(difference_type ptr)
 			{
-				_it += ptr;
+				while (ptr--)
+					this++;
 				return (*this);
 			}
 			map_iterator operator+(difference_type ptr) const
@@ -64,7 +91,8 @@ namespace ft
 
 			map_iterator& operator-=(difference_type ptr)
 			{
-				_it -= ptr;
+				while (ptr--)
+					this--;
 				return (*this);
 			}
 			map_iterator operator-(difference_type ptr) const

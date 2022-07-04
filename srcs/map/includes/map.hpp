@@ -20,7 +20,7 @@ namespace ft
         protected:
             Alloc           _alloc;
             size_t          _size;
-            Node*           _cont;
+            NodePtr         _cont;
             Compare         _comp;
             
         public:
@@ -28,7 +28,8 @@ namespace ft
             typedef Key                                         key_type;
             typedef T                                           mapped_type;
             typedef pair<const key_type, mapped_type>           value_type;
-            typedef Compare                                     key_compare;
+            typedef Compare                   
+                              key_compare;
             typedef Alloc                                       allocator_type;
             typedef value_type&                                 reference;
             typedef const value_type&                           const_reference;
@@ -95,7 +96,7 @@ namespace ft
     //  Iterators
         iterator begin()
         {
-            iterator it = this->_cont;
+            iterator it(this->_cont);
          
             while (it->left)
                 it = it->left;
@@ -104,7 +105,7 @@ namespace ft
 
         const_iterator begin() const
         {
-            iterator it = this->_cont;
+            iterator it(this->_cont);
          
             while (it->left)
                 it = it->left;
@@ -114,7 +115,7 @@ namespace ft
         
         iterator end()
         {
-            iterator it = this->_cont;
+            iterator it(this->_cont);
          
             while (it->right)
                 it = it->right;
@@ -123,7 +124,7 @@ namespace ft
 
         const_iterator end() const
         {
-            iterator it = this->cont;
+            iterator it(this->cont);
          
             while (it->right)
                 it = it->right;
