@@ -13,9 +13,10 @@ namespace ft
 
 		private:
 		protected:
-			NodePtr	_it;
+			
 
 		public:
+		Node *	_it;
 			typedef Iterator                           iterator_type;
 			typedef typename traits::iterator_category iterator_category;
 			typedef typename traits::value_type        value_type;
@@ -35,7 +36,7 @@ namespace ft
 //  Access
 			const Iterator& base() const { return _it; }
 			reference operator*() const { return *_it; }
-			pointer operator->() const { return _it; }
+			// pointer operator->() const { return _it; }
 			reference operator[](difference_type ptr) const { return _it[ptr]; }
 
 //  Assignation

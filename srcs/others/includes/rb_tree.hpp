@@ -24,8 +24,8 @@ private:
 	void initializeNULLNode(NodePtr node, NodePtr parent) {
 		node->data = 0;
 		node->parent = parent;
-		node->left = nullptr;
-		node->right = nullptr;
+		node->left = NULL;
+		node->right = NULL;
 		node->color = 0;
 	}
 
@@ -135,7 +135,7 @@ private:
 
 
 	void rbTransplant(NodePtr u, NodePtr v){
-		if (u->parent == nullptr) {
+		if (u->parent == NULL) {
 			root = v;
 		} else if (u == u->parent->left){
 			u->parent->left = v;
@@ -272,8 +272,8 @@ public:
 	RBTree() {
 		TNULL = new Node;
 		TNULL->color = 0;
-		TNULL->left = nullptr;
-		TNULL->right = nullptr;
+		TNULL->left = NULL;
+		TNULL->right = NULL;
 		root = TNULL;
 	}
 
@@ -362,7 +362,7 @@ public:
 			y->left->parent = x;
 		}
 		y->parent = x->parent;
-		if (x->parent == nullptr) {
+		if (x->parent == NULL) {
 			this->root = y;
 		} else if (x == x->parent->left) {
 			x->parent->left = y;
@@ -381,7 +381,7 @@ public:
 			y->right->parent = x;
 		}
 		y->parent = x->parent;
-		if (x->parent == nullptr) {
+		if (x->parent == NULL) {
 			this->root = y;
 		} else if (x == x->parent->right) {
 			x->parent->right = y;
@@ -397,13 +397,13 @@ public:
 	void insert(int key) {
 		// Ordinary Binary Search Insertion
 		NodePtr node = new Node;
-		node->parent = nullptr;
+		node->parent = NULL;
 		node->data = key;
 		node->left = TNULL;
 		node->right = TNULL;
 		node->color = 1; // new node must be red
 
-		NodePtr y = nullptr;
+		NodePtr y = NULL;
 		NodePtr x = this->root;
 
 		while (x != TNULL) {
@@ -417,7 +417,7 @@ public:
 
 		// y is parent of x
 		node->parent = y;
-		if (y == nullptr) {
+		if (y == NULL) {
 			root = node;
 		} else if (node->data < y->data) {
 			y->left = node;
@@ -426,13 +426,13 @@ public:
 		}
 
 		// if new node is a root node, simply return
-		if (node->parent == nullptr){
+		if (node->parent == NULL){
 			node->color = 0;
 			return;
 		}
 
 		// if the grandparent is null, simply return
-		if (node->parent->parent == nullptr) {
+		if (node->parent->parent == NULL) {
 			return;
 		}
 

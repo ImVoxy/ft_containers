@@ -12,7 +12,7 @@ namespace ft
 {
 
     template < class Key, class T, class Compare = less<Key>,              
-           class Alloc = allocator<pair<const Key,T>> >
+           class Alloc = allocator<pair<const Key,T> > >
     class map
     {
         
@@ -96,18 +96,18 @@ namespace ft
     //  Iterators
         iterator begin()
         {
-            iterator it(this->_cont);
+            NodePtr it = _cont;
          
-            while (it->left)
+            while (it->left->left)
                 it = it->left;
-            return (it);
+            return (iterator(it));
         }
 
         const_iterator begin() const
         {
-            iterator it(this->_cont);
+            NodePtr it = _cont;
          
-            while (it->left)
+            while (it->left)    
                 it = it->left;
             const iterator ret(it);
             return (ret);
@@ -115,17 +115,17 @@ namespace ft
         
         iterator end()
         {
-            iterator it(this->_cont);
+            NodePtr it = _cont;
          
-            while (it->right)
+            while (it->right->right)
                 it = it->right;
-            return (it);
+            return (iterator(it));
         }
 
         const_iterator end() const
         {
-            iterator it(this->cont);
-         
+            NodePtr it = _cont;
+
             while (it->right)
                 it = it->right;
             const iterator ret(it);
@@ -156,7 +156,12 @@ namespace ft
     //  Element access
     
     //  Modifiers
-    
+        void insert (const key_type& val)
+        {
+            _tree.insert(val);
+            _cont = _tree.getRoot();
+        }
+
     //  Observers
         key_compare key_comp() const{return (_comp);}
         // value_compare value_comp() const{return (_comp);}

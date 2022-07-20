@@ -7,31 +7,31 @@ int main()
     ft::map<int, int> bst;
 
 
-	bst._tree.insert(8);
+	bst.insert(8);
     bst._tree.prettyPrint();
-	bst._tree.insert(18);
+	bst.insert(18);
     bst._tree.prettyPrint();
-	bst._tree.insert(5);
+	bst.insert(5);
     bst._tree.prettyPrint();
-	bst._tree.insert(15);
+	bst.insert(15);
 	bst._tree.prettyPrint();
-    bst._tree.insert(17);
+    bst.insert(17);
     bst._tree.prettyPrint();
-	bst._tree.insert(25);
+	bst.insert(25);
     bst._tree.prettyPrint();
-	bst._tree.insert(40);
+	bst.insert(40);
     bst._tree.prettyPrint();
-	bst._tree.insert(80);
+	bst.insert(80);
     bst._tree.prettyPrint();
-    bst._tree.insert(42);
+    bst.insert(42);
     bst._tree.prettyPrint();
-	bst._tree.insert(11);
+	bst.insert(11);
     bst._tree.prettyPrint();
-	bst._tree.insert(8);
+	bst.insert(8);
     bst._tree.prettyPrint();
-	bst._tree.insert(204);
+	bst.insert(204);
     bst._tree.prettyPrint();
-	bst._tree.insert(111);
+	bst.insert(111);
     bst._tree.prettyPrint();
 	bst._tree.deleteNode(25);
 	bst._tree.prettyPrint();
@@ -41,6 +41,8 @@ int main()
     ft::map<int, int>::iterator it = bst.begin();
     ft::map<int, int>::iterator ite = bst.end();
 
+    std::cout << "begin = " << it._it->data << std::endl ;
+     std::cout << "end = " << ite._it->data << std::endl ;
 
 	return (0);
 }
