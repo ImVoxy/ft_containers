@@ -1,14 +1,17 @@
 #include <iostream>
+#include "pair.hpp"
 
 using namespace std;
 
-// data structure that represents a node in the tree
+// key structure that represents a node in the tree
 struct Node {
-	int data; // holds the key
-	Node *parent; // pointer to the parent
-	Node *left; // pointer to left child
-	Node *right; // pointer to right child
+	int key;
+	int val;
 	int color; // 1 -> Red, 0 -> Black
+	Node *parent;
+	Node *left;
+	Node *right;
+	
 };
 
 typedef Node *NodePtr;
@@ -22,7 +25,8 @@ private:
 	// initializes the nodes with appropirate values
 	// all the pointers are set to point to the null pointer
 	void initializeNULLNode(NodePtr node, NodePtr parent) {
-		node->data = 0;
+		node->key = 0;
+		node->val = 0;
 		node->parent = parent;
 		node->left = NULL;
 		node->right = NULL;
@@ -31,7 +35,7 @@ private:
 
 	void preOrderHelper(NodePtr node) {
 		if (node != TNULL) {
-			cout<<node->data<<" ";
+			cout<<node->key<<" ";
 			preOrderHelper(node->left);
 			preOrderHelper(node->right);
 		} 
@@ -40,7 +44,7 @@ private:
 	void inOrderHelper(NodePtr node) {
 		if (node != TNULL) {
 			inOrderHelper(node->left);
-			cout<<node->data<<" ";
+			cout<<node->key<<" ";
 			inOrderHelper(node->right);
 		} 
 	}
@@ -49,16 +53,16 @@ private:
 		if (node != TNULL) {
 			postOrderHelper(node->left);
 			postOrderHelper(node->right);
-			cout<<node->data<<" ";
+			cout<<node->key<<" ";
 		} 
 	}
 
 	NodePtr searchTreeHelper(NodePtr node, int key) {
-		if (node == TNULL || key == node->data) {
+		if (node == TNULL || key == node->key) {
 			return node;
 		}
 
-		if (key < node->data) {
+		if (key < node->key) {
 			return searchTreeHelper(node->left, key);
 		} 
 		return searchTreeHelper(node->right, key);
@@ -150,11 +154,11 @@ private:
 		NodePtr z = TNULL;
 		NodePtr x, y;
 		while (node != TNULL){
-			if (node->data == key) {
+			if (node->key == key) {
 				z = node;
 			}
 
-			if (node->data <= key) {
+			if (node->key <= key) {
 				node = node->right;
 			} else {
 				node = node->left;
@@ -261,11 +265,11 @@ private:
 		   }
             
            string sColor = root->color?"RED":"BLACK";
-		   cout<<root->data<<"("<<sColor<<")"<<endl;
+		   cout<<root->key<<"("<<sColor<<")"<<endl;
 		   printHelper(root->left, indent, false);
 		   printHelper(root->right, indent, true);
 		}
-		// cout<<root->left->data<<endl;
+		// cout<<root->left->key<<endl;
 	}
 
 public:
@@ -394,11 +398,12 @@ public:
 
 	// insert the key to the tree in its appropriate position
 	// and fix the tree
-	void insert(int key) {
+	void insert(ft::pair<int, int> in) {
 		// Ordinary Binary Search Insertion
 		NodePtr node = new Node;
 		node->parent = NULL;
-		node->data = key;
+		node->key = in.first;
+		node->val = in.second;
 		node->left = TNULL;
 		node->right = TNULL;
 		node->color = 1; // new node must be red
@@ -408,7 +413,7 @@ public:
 
 		while (x != TNULL) {
 			y = x;
-			if (node->data < x->data) {
+			if (node->key < x->key) {
 				x = x->left;
 			} else {
 				x = x->right;
@@ -419,7 +424,7 @@ public:
 		node->parent = y;
 		if (y == NULL) {
 			root = node;
-		} else if (node->data < y->data) {
+		} else if (node->key < y->key) {
 			y->left = node;
 		} else {
 			y->right = node;
@@ -445,8 +450,8 @@ public:
 	}
 
 	// delete the node from the tree
-	void deleteNode(int data) {
-		deleteNodeHelper(this->root, data);
+	void deleteNode(int key) {
+		deleteNodeHelper(this->root, key);
 	}
 
 	// print the tree structure on the screen

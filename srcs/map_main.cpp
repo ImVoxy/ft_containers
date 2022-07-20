@@ -1,5 +1,6 @@
 // #include "others/includes/rb_tree.hpp"
 #include "map/includes/map.hpp"
+#include "others/includes/make_pair.hpp"
 
 int main()
 {
@@ -7,31 +8,31 @@ int main()
     ft::map<int, int> bst;
 
 
-	bst.insert(8);
+	bst.insert(ft::make_pair(8, 1));
     bst._tree.prettyPrint();
-	bst.insert(18);
+	bst.insert(ft::make_pair(18, 2));
     bst._tree.prettyPrint();
-	bst.insert(5);
+	bst.insert(ft::make_pair(5, 3));
     bst._tree.prettyPrint();
-	bst.insert(15);
+	bst.insert(ft::make_pair(15, 4));
 	bst._tree.prettyPrint();
-    bst.insert(17);
+    bst.insert(ft::make_pair(17, 5));
     bst._tree.prettyPrint();
-	bst.insert(25);
+	bst.insert(ft::make_pair(25, 6));
     bst._tree.prettyPrint();
-	bst.insert(40);
+	bst.insert(ft::make_pair(40, 7));
     bst._tree.prettyPrint();
-	bst.insert(80);
+	bst.insert(ft::make_pair(80, 8));
     bst._tree.prettyPrint();
-    bst.insert(42);
+    bst.insert(ft::make_pair(42, 9));
     bst._tree.prettyPrint();
-	bst.insert(11);
+	bst.insert(ft::make_pair(11, 10));
     bst._tree.prettyPrint();
-	bst.insert(8);
+	bst.insert(ft::make_pair(8, 11));
     bst._tree.prettyPrint();
-	bst.insert(204);
+	bst.insert(ft::make_pair(204, 12));
     bst._tree.prettyPrint();
-	bst.insert(111);
+	bst.insert(ft::make_pair(111, 13));
     bst._tree.prettyPrint();
 	bst._tree.deleteNode(25);
 	bst._tree.prettyPrint();
@@ -41,8 +42,8 @@ int main()
     ft::map<int, int>::iterator it = bst.begin();
     ft::map<int, int>::iterator ite = bst.end();
 
-    std::cout << "begin = " << it._it->data << std::endl ;
-     std::cout << "end = " << ite._it->data << std::endl ;
+    std::cout << "begin = " << it._it->key << std::endl ;
+     std::cout << "end = " << ite._it->key << std::endl ;
 
 	return (0);
 }

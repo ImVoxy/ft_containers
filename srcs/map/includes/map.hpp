@@ -156,7 +156,7 @@ namespace ft
     //  Element access
     
     //  Modifiers
-        void insert (const key_type& val)
+        void insert (const value_type& val)
         {
             _tree.insert(val);
             _cont = _tree.getRoot();
