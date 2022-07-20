@@ -398,7 +398,7 @@ public:
 
 	// insert the key to the tree in its appropriate position
 	// and fix the tree
-	void insert(ft::pair<int, int> in) {
+	ft::pair<int, bool> insert(ft::pair<int, int> in) {
 		// Ordinary Binary Search Insertion
 		NodePtr node = new Node;
 		node->parent = NULL;

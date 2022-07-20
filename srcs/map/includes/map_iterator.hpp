@@ -13,10 +13,9 @@ namespace ft
 
 		private:
 		protected:
-			
+			Node *	_it;
 
 		public:
-		Node *	_it;
 			typedef Iterator                           iterator_type;
 			typedef typename traits::iterator_category iterator_category;
 			typedef typename traits::value_type        value_type;
@@ -36,8 +35,15 @@ namespace ft
 //  Access
 			const Iterator& base() const { return _it; }
 			reference operator*() const { return *_it; }
-			// pointer operator->() const { return _it; }
-			reference operator[](difference_type ptr) const { return _it[ptr]; }
+			pointer operator->() const { return _it; }
+			// int operator[](difference_type ptr) const
+			// {
+			// 	// Node tmp;
+		
+			// 	// tmp = searchTree(ptr);
+			// 	// return (tmp.val);
+			// }
+			int getKey(){return (_it->key);};
 
 //  Assignation
 			map_iterator& operator++()

@@ -6,6 +6,7 @@
 #include "../../others/includes/utils.hpp"
 #include "../../others/includes/rb_tree.hpp"
 #include "../../vector/includes/vector.hpp"
+#include "../../others/includes/make_pair.hpp"
 #include "map_iterator.hpp"
 
 namespace ft
@@ -27,9 +28,8 @@ namespace ft
             RBTree                                              _tree;
             typedef Key                                         key_type;
             typedef T                                           mapped_type;
-            typedef pair<const key_type, mapped_type>           value_type;
-            typedef Compare                   
-                              key_compare;
+            typedef ft::pair<const key_type, mapped_type>       value_type;
+            typedef Compare                                     key_compare;
             typedef Alloc                                       allocator_type;
             typedef value_type&                                 reference;
             typedef const value_type&                           const_reference;
@@ -154,12 +154,16 @@ namespace ft
             return (0);
         }
     //  Element access
-    
+        mapped_type& operator[] (const key_type& k)
+        {
+            return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
+        }
     //  Modifiers
-        void insert (const value_type& val)
+        pair<iterator, bool> insert (const value_type& val)
         {
             _tree.insert(val);
             _cont = _tree.getRoot();
+            return ();
         }
 
     //  Observers

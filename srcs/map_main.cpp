@@ -42,8 +42,8 @@ int main()
     ft::map<int, int>::iterator it = bst.begin();
     ft::map<int, int>::iterator ite = bst.end();
 
-    std::cout << "begin = " << it._it->key << std::endl ;
-     std::cout << "end = " << ite._it->key << std::endl ;
+    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+     std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
 
 	return (0);
 }
