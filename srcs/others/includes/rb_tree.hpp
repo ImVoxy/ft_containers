@@ -1,5 +1,6 @@
 #include <iostream>
 #include "pair.hpp"
+#include "make_pair.hpp"
 
 using namespace std;
 
@@ -201,55 +202,61 @@ private:
 		}
 	}
 	
-	// fix the red-black tree
-	void fixInsert(NodePtr k){
+	ft::pair<NodePtr, bool> fixInsert(NodePtr k)
+	{
 		NodePtr u;
-		while (k->parent->color == 1) {
+
+		while (k->parent->color == 1)
+		{
 			if (k->parent == k->parent->parent->right) {
-				u = k->parent->parent->left; // uncle
-				if (u->color == 1) {
-					// case 3.1
+				u = k->parent->parent->left;
+				if (u->color == 1)
+				{
 					u->color = 0;
 					k->parent->color = 0;
 					k->parent->parent->color = 1;
 					k = k->parent->parent;
-				} else {
-					if (k == k->parent->left) {
-						// case 3.2.2
+				}
+				else
+				{
+					if (k == k->parent->left)
+					{
 						k = k->parent;
 						rightRotate(k);
 					}
-					// case 3.2.1
 					k->parent->color = 0;
 					k->parent->parent->color = 1;
 					leftRotate(k->parent->parent);
 				}
-			} else {
-				u = k->parent->parent->right; // uncle
+			}
+			else
+			{
+				u = k->parent->parent->right;
 
-				if (u->color == 1) {
-					// mirror case 3.1
+				if (u->color == 1)
+				{
 					u->color = 0;
 					k->parent->color = 0;
 					k->parent->parent->color = 1;
 					k = k->parent->parent;	
-				} else {
-					if (k == k->parent->right) {
-						// mirror case 3.2.2
+				}
+				else
+				{
+					if (k == k->parent->right)
+					{
 						k = k->parent;
 						leftRotate(k);
 					}
-					// mirror case 3.2.1
 					k->parent->color = 0;
 					k->parent->parent->color = 1;
 					rightRotate(k->parent->parent);
 				}
 			}
-			if (k == root) {
+			if (k == root)
 				break;
-			}
 		}
 		root->color = 0;
+		return (ft::make_pair(k, true));
 	}
 
 	void printHelper(NodePtr root, string indent, bool last) {
@@ -398,7 +405,7 @@ public:
 
 	// insert the key to the tree in its appropriate position
 	// and fix the tree
-	ft::pair<int, bool> insert(ft::pair<int, int> in) {
+	ft::pair<NodePtr, bool> insert(ft::pair<int, int> in) {
 		// Ordinary Binary Search Insertion
 		NodePtr node = new Node;
 		node->parent = NULL;
@@ -411,38 +418,37 @@ public:
 		NodePtr y = NULL;
 		NodePtr x = this->root;
 
-		while (x != TNULL) {
+		while (x != TNULL)
+		{
 			y = x;
-			if (node->key < x->key) {
+			if (node->key < x->key)
 				x = x->left;
-			} else {
+			else
 				x = x->right;
-			}
 		}
 
 		// y is parent of x
 		node->parent = y;
-		if (y == NULL) {
+		if (y == NULL)
 			root = node;
-		} else if (node->key < y->key) {
+		else if (node->key < y->key)
 			y->left = node;
-		} else {
+		else
 			y->right = node;
-		}
 
 		// if new node is a root node, simply return
-		if (node->parent == NULL){
+		if (node->parent == NULL)
+		{
 			node->color = 0;
-			return;
+			return (ft::make_pair(node, true));
 		}
 
 		// if the grandparent is null, simply return
-		if (node->parent->parent == NULL) {
-			return;
-		}
+		if (node->parent->parent == NULL)
+			return (ft::make_pair(node, true));
 
 		// Fix the tree
-		fixInsert(node);
+		return (fixInsert(node));
 	}
 
 	NodePtr getRoot(){

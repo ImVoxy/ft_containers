@@ -154,16 +154,19 @@ namespace ft
             return (0);
         }
     //  Element access
-        mapped_type& operator[] (const key_type& k)
+        int& operator[] (const key_type& k)
         {
-            return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
+            return (_tree.searchTree(k)->val);
+            // return (*((this->insert(k)).second));
         }
     //  Modifiers
         pair<iterator, bool> insert (const value_type& val)
         {
-            _tree.insert(val);
+            ft::pair<Node*, bool> ret = _tree.insert(val);
+            if (ret.second)
+                _size ++;
             _cont = _tree.getRoot();
-            return ();
+            return (ft::make_pair(iterator(ret.first), true));
         }
 
     //  Observers

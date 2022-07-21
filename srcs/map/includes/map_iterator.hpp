@@ -36,13 +36,14 @@ namespace ft
 			const Iterator& base() const { return _it; }
 			reference operator*() const { return *_it; }
 			pointer operator->() const { return _it; }
-			// int operator[](difference_type ptr) const
-			// {
-			// 	// Node tmp;
+			int operator[](difference_type ptr) const
+			{
+				// Node tmp;
 		
-			// 	// tmp = searchTree(ptr);
-			// 	// return (tmp.val);
-			// }
+				// tmp = searchTree(ptr);
+				// return (tmp.val);
+				return (_it->val);
+			}
 			int getKey(){return (_it->key);};
 
 //  Assignation
