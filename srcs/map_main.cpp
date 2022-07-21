@@ -45,5 +45,31 @@ int main()
     std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
      std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
 
+    // ++it;
+    // --ite;
+    //  std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
+    // --ite;
+    //  std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
+    // --ite;
+    //  std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
+
+    // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    //  std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
+
+    // it++;
+    // ite--;
+
+    //  std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    //  std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
+
+    it++;
+    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    it++;
+    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    it++;
+    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    it++;
+    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+
 	return (0);
 }

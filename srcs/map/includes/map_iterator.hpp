@@ -49,24 +49,47 @@ namespace ft
 //  Assignation
 			map_iterator& operator++()
 			{
-				
-				if (_it->parent && _it == _it->parent->left)
-					_it = _it->parent;
-				else if (_it->parent && _it == _it->parent->right)
+				Node *tmp = _it->parent;
+
+				if (_it->right)
 				{
-					while (_it->parent && _it == _it->parent->right)
-						_it = _it->parent;
-					
-					if (_it->right)
-					{
-						_it = _it->right;
-						while (_it->left)
-							_it = _it->left;
-					}
+					_it = _it->right;
+					while (_it->left)
+						_it = _it->left;
 				}
-				return (_it);
+				else
+				{
+					if (tmp->right == _it)
+						while(tmp->right == _it)
+						{
+							_it = tmp;
+							tmp = _it->parent;
+						}
+					if (_it->right != tmp)
+						_it = tmp;
+				}
+				
+
+				// else if (_it->parent && _it == _it->parent->right)
+				// {
+				// 	while (_it->parent && _it == _it->parent->right)
+				// 		_it = _it->parent;
+					
+				// 	if (_it->right)
+				// 	{
+				// 		_it = _it->right;
+				// 		while (_it->left)
+				// 			_it = _it->left;
+				// 	}
+				// }
+				return (*this);
 			}
-			map_iterator operator++(int) { return map_iterator(_it++); }
+			map_iterator operator++(int)
+			{ 
+				map_iterator tmp = *this;
+				++*this;
+				return (tmp);
+			}
 			map_iterator& operator--()
 			{
 				if (_it->parent && _it == _it->parent->right)
@@ -83,9 +106,14 @@ namespace ft
 							_it = _it->right;
 					}
 				}
-				return (_it);
+				return (*this);
 			}
-			map_iterator operator--(int) { return map_iterator(_it--); }
+			map_iterator operator--(int)
+			{
+				map_iterator tmp = *this;
+				--*this;
+				return (tmp);
+			}
 			map_iterator& operator+=(difference_type ptr)
 			{
 				while (ptr--)
