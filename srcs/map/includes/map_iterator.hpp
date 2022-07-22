@@ -51,10 +51,10 @@ namespace ft
 			{
 				Node *tmp = _it->parent;
 
-				if (_it->right)
+				if (_it->right->right || _it->right->left)
 				{
 					_it = _it->right;
-					while (_it->left)
+					while (_it->left->right || _it->left->left)
 						_it = _it->left;
 				}
 				else
@@ -68,20 +68,6 @@ namespace ft
 					if (_it->right != tmp)
 						_it = tmp;
 				}
-				
-
-				// else if (_it->parent && _it == _it->parent->right)
-				// {
-				// 	while (_it->parent && _it == _it->parent->right)
-				// 		_it = _it->parent;
-					
-				// 	if (_it->right)
-				// 	{
-				// 		_it = _it->right;
-				// 		while (_it->left)
-				// 			_it = _it->left;
-				// 	}
-				// }
 				return (*this);
 			}
 			map_iterator operator++(int)
@@ -92,19 +78,24 @@ namespace ft
 			}
 			map_iterator& operator--()
 			{
-				if (_it->parent && _it == _it->parent->right)
-					_it = _it->parent;
-				else if (_it->parent && _it == _it->parent->left)
+				Node *tmp = _it->parent;
+
+				if (_it->left->right || _it->left->left)
 				{
-					while (_it->parent && _it == _it->parent->left)
-						_it = _it->parent;
-					
-					if (_it->left)
-					{
-						_it = _it->left;
-						while (_it->right)
-							_it = _it->right;
-					}
+					_it = _it->left;
+					while (_it->right->right || _it->right->left)
+						_it = _it->right;
+				}
+				else
+				{
+					if (tmp->left == _it)
+						while(tmp->left == _it)
+						{
+							_it = tmp;
+							tmp = _it->parent;
+						}
+					if (_it->left != tmp)
+						_it = tmp;
 				}
 				return (*this);
 			}
