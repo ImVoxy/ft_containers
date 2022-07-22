@@ -33,7 +33,7 @@ namespace ft
 										Container >::type >& it): _it(it.base()) {}
 			~map_iterator(){}
 //  Access
-			const Iterator& base() const { return _it; }
+			Iterator& base() const {return ft::pair<const int, int>(getKey(), 5); }
 			reference operator*() const { return *_it; }
 			pointer operator->() const { return _it; }
 			int operator[](difference_type ptr) const
@@ -44,7 +44,7 @@ namespace ft
 				// return (tmp.val);
 				return (_it->val);
 			}
-			int getKey(){return (_it->key);};
+			int getKey() const {return (_it->key);};
 
 //  Assignation
 			map_iterator& operator++()
@@ -113,7 +113,10 @@ namespace ft
 			}
 			map_iterator operator+(difference_type ptr) const
 			{
-				return (map_iterator(_it + ptr));
+				map_iterator tmp = *this;
+				while (ptr--)
+					tmp++;
+				return (tmp);
 			}
 
 			map_iterator& operator-=(difference_type ptr)
@@ -123,7 +126,12 @@ namespace ft
 				return (*this);
 			}
 			map_iterator operator-(difference_type ptr) const
-			{return (map_iterator(_it - ptr));}
+			{
+				map_iterator tmp = *this;
+				while (ptr--)
+					tmp--;
+				return (tmp);
+			}
 		};
 
 		template <class Iter, class Cont>

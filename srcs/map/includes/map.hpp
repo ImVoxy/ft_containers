@@ -81,7 +81,12 @@ namespace ft
             _alloc = alloc;
             _comp = comp;
             _tree = RBTree();
-            //fill the map (insert ?)
+            while (first != last)
+            {
+                insert(first.getKey(), first[first.getKey()]);
+                first++;
+            }
+            insert(first.getKey(), first[first.getKey()]);
         }
 
 	    map (const map& x)
@@ -90,7 +95,6 @@ namespace ft
             _alloc = x.get_allocator();
             //aloc
             //comp cpy
-
         }
 
     //  Iterators
@@ -167,6 +171,21 @@ namespace ft
                 _size ++;
             _cont = _tree.getRoot();
             return (ft::make_pair(iterator(ret.first), true));
+        }
+
+        iterator insert (iterator position, const value_type& val)
+        {
+            return (iterator(insert(position.getKey(), val)));
+        }
+
+        template <class InputIterator>
+        void insert (InputIterator first, InputIterator last)
+        {
+            while (first != last)
+            {
+                insert (first.getKey(), first[first.getKey()]);
+                first++;
+            }
         }
 
     //  Observers

@@ -42,8 +42,10 @@ int main()
     ft::map<int, int>::iterator it = bst.begin();
     ft::map<int, int>::iterator ite = bst.end();
 
+    ft::map<int, int> test(it, ite);
+
     std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
-     std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
+    std::cout << "end key = " << ite.getKey() << " val = " << bst[ite.getKey()] << std::endl ;
 
     // ++it;
     // --ite;
@@ -86,7 +88,9 @@ int main()
     ite--;
     std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
     ite--;
-    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
+    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl << std::endl;
+
+    test._tree.prettyPrint();
 
 	return (0);
 }
