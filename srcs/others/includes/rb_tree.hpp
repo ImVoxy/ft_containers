@@ -58,7 +58,7 @@ private:
 		} 
 	}
 
-	NodePtr searchTreeHelper(NodePtr node, int key) {
+	NodePtr searchTreeHelper(NodePtr node, int key) const {
 		if (node == TNULL || key == node->key) {
 			return node;
 		}
@@ -308,7 +308,7 @@ public:
 
 	// search the tree for the key k
 	// and return the corresponding node
-	NodePtr searchTree(int k) {
+	NodePtr searchTree(int k) const {
 		return searchTreeHelper(this->root, k);
 	}
 

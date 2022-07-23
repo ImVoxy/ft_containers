@@ -81,12 +81,8 @@ namespace ft
             _alloc = alloc;
             _comp = comp;
             _tree = RBTree();
-            while (first != last)
-            {
-                insert(first.getKey(), first[first.getKey()]);
-                first++;
-            }
-            insert(first.getKey(), first[first.getKey()]);
+            insert(first, last);
+            insert(ft::make_pair(last.getKey(), last[last.getKey()]));
         }
 
 	    map (const map& x)
@@ -175,15 +171,16 @@ namespace ft
 
         iterator insert (iterator position, const value_type& val)
         {
-            return (iterator(insert(position.getKey(), val)));
+            return (iterator(insert(make_pair(position.getKey(), val))));
         }
 
         template <class InputIterator>
         void insert (InputIterator first, InputIterator last)
         {
+            // std::cout << "first.getKey()" << std::endl;
             while (first != last)
             {
-                insert (first.getKey(), first[first.getKey()]);
+                insert (make_pair(first.getKey(), first[first.getKey()]));
                 first++;
             }
         }
@@ -194,6 +191,31 @@ namespace ft
 
     //  Operations
     
+        size_type count (const key_type& k) const
+        {
+            Node *tmp = _tree.searchTree(k);
+            
+            if (tmp && (tmp->right || tmp->left))
+                return (1);
+            return (0);
+        }
+
+        iterator find (const key_type& k)
+        {
+            Node *tmp = _tree.searchTree(k);
+            
+            if (tmp && (tmp->right || tmp->left))
+                return (iterator(tmp));
+            return (end());
+        }
+
+        const_iterator find (const key_type& k) const
+        {
+            const iterator ret(find(k));
+
+            return (ret);
+        }
+
     //  Allocator
         allocator_type get_allocator() const{return (this->_alloc);}
     };
