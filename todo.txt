@@ -1,12 +1,17 @@
 -> Stack                                OK
 
--> Vector
-destructor drunk (aled)
-retest reserve (untested changes)
-fix std98
-
+-> Vector                               OK
 
 -> Map
+(destructor)
+operator=
+swap
+clear
+lower_bound
+upper_bound
+equal_range
+
+fix types for all (aled)
 
 -> Others
 • iterators_traits                      OK
@@ -16,6 +21,3 @@ fix std98
 • equal et/ou lexicographical_compare   OK
 • std::pair                             OK
 • std::make_pair                        OK
-
-don't forget to replace std::vector with ft::vector in tests
-find a tester

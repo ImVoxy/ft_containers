@@ -42,23 +42,22 @@ namespace ft
             typedef reverse_iterator<const_iterator>            const_reverse_iterator;
             typedef reverse_iterator<iterator>                  reverse_iterator;
     
-        // template <class U, class V, class C, class A>
-        // class map<U,T,Compare,Alloc>::value_compare
-        // {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
-        //     friend class map;
-        //     private:
-        //     protected:
-        //         C comp;
-        //         value_compare (C c) : comp(c) {}  // constructed with map's comparison object
-        //     public:
-        //         typedef bool result_type;
-        //         typedef value_type first_argument_type;
-        //         typedef value_type second_argument_type;
-        //         bool operator() (const value_type& x, const value_type& y) const
-        //         {
-        //             return comp(x.first, y.first);
-        //         }
-        // }
+        class   value_compare
+        {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
+            friend class map;
+            private:
+            protected:
+                Compare comp;
+                value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+            public:
+                typedef bool result_type;
+                typedef value_type first_argument_type;
+                typedef value_type second_argument_type;
+                bool operator() (const value_type& x, const value_type& y) const
+                {
+                    return comp(x.first, y.first);
+                }
+        };
 
     //  Constructors and destructors
 
@@ -83,21 +82,33 @@ namespace ft
             _tree = RBTree();
             insert(first, last);
             insert(ft::make_pair(last.getKey(), last[last.getKey()]));
+            _cont = _tree.getRoot();
         }
 
 	    map (const map& x)
         {
             _size = x.size();
             _alloc = x.get_allocator();
-            //aloc
-            //comp cpy
+            _comp = x.key_comp();
+            _tree = RBTree();
+            const_iterator it = x.begin();
+            const_iterator ite = x.end();
+            while (it != ite)
+            {
+                this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
+                it++;
+            }
+            // insert(ft::make_pair(it.getKey(), it[it.getKey()]));
+            // insert(x.begin(), x.end());
+            // insert(ft::make_pair(x.end().getKey(), x.end()[x.end().getKey()]));
+            _cont = _tree.getRoot();
         }
 
     //  Iterators
         iterator begin()
         {
             NodePtr it = _cont;
-         
+
             while (it->left->left)
                 it = it->left;
             return (iterator(it));
@@ -107,7 +118,7 @@ namespace ft
         {
             NodePtr it = _cont;
          
-            while (it->left)    
+            while (it->left->left)    
                 it = it->left;
             const iterator ret(it);
             return (ret);
@@ -126,7 +137,7 @@ namespace ft
         {
             NodePtr it = _cont;
 
-            while (it->right)
+            while (it->right->right)
                 it = it->right;
             const iterator ret(it);
             return (ret);
@@ -160,6 +171,45 @@ namespace ft
             // return (*((this->insert(k)).second));
         }
     //  Modifiers
+
+        void erase (iterator position)
+        {
+            if (_tree.isin(position.getKey()))
+            {
+                _size--;
+                _tree.deleteNode(position.getKey());
+            }
+        }
+
+        size_type erase (const key_type& k)
+        {
+            if (_tree.isin(k))
+            {
+                _tree.deleteNode(k);
+                _size--;
+                return (1);
+            }
+            return (0);
+        }
+
+        void erase (iterator first, iterator last)
+        {
+            while (first != last)
+            {
+                if (_tree.isin(first.getKey()))
+                {
+                    _tree.deleteNode(first.getKey());
+                    _size--;
+                }
+                first++;
+            }
+        }
+
+        void clear()
+        {
+            
+        }
+
         pair<iterator, bool> insert (const value_type& val)
         {
             ft::pair<Node*, bool> ret = _tree.insert(val);
@@ -187,7 +237,7 @@ namespace ft
 
     //  Observers
         key_compare key_comp() const{return (_comp);}
-        // value_compare value_comp() const{return (_comp);}
+        value_compare value_comp() const{return (_comp);}
 
     //  Operations
     
@@ -211,7 +261,7 @@ namespace ft
 
         const_iterator find (const key_type& k) const
         {
-            const iterator ret(find(k));
+            iterator ret(find(k));
 
             return (ret);
         }

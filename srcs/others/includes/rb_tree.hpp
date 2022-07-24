@@ -4,7 +4,6 @@
 
 using namespace std;
 
-// key structure that represents a node in the tree
 struct Node {
 	int key;
 	int val;
@@ -17,14 +16,11 @@ struct Node {
 
 typedef Node *NodePtr;
 
-// class RBTree implements the operations in Red Black Tree
 class RBTree {
 private:
 	NodePtr root;
 	NodePtr TNULL;
 
-	// initializes the nodes with appropirate values
-	// all the pointers are set to point to the null pointer
 	void initializeNULLNode(NodePtr node, NodePtr parent) {
 		node->key = 0;
 		node->val = 0;
@@ -69,14 +65,12 @@ private:
 		return searchTreeHelper(node->right, key);
 	}
 
-	// fix the rb tree modified by the delete operation
 	void fixDelete(NodePtr x) {
 		NodePtr s;
 		while (x != root && x->color == 0) {
 			if (x == x->parent->left) {
 				s = x->parent->right;
 				if (s->color == 1) {
-					// case 3.1
 					s->color = 0;
 					x->parent->color = 1;
 					leftRotate(x->parent);
@@ -84,19 +78,16 @@ private:
 				}
 
 				if (s->left->color == 0 && s->right->color == 0) {
-					// case 3.2
 					s->color = 1;
 					x = x->parent;
 				} else {
 					if (s->right->color == 0) {
-						// case 3.3
 						s->left->color = 0;
 						s->color = 1;
 						rightRotate(s);
 						s = x->parent->right;
 					} 
 
-					// case 3.4
 					s->color = x->parent->color;
 					x->parent->color = 0;
 					s->right->color = 0;
@@ -106,7 +97,6 @@ private:
 			} else {
 				s = x->parent->left;
 				if (s->color == 1) {
-					// case 3.1
 					s->color = 0;
 					x->parent->color = 1;
 					rightRotate(x->parent);
@@ -114,19 +104,16 @@ private:
 				}
 
 				if (s->right->color == 0 && s->right->color == 0) {
-					// case 3.2
 					s->color = 1;
 					x = x->parent;
 				} else {
 					if (s->left->color == 0) {
-						// case 3.3
 						s->right->color = 0;
 						s->color = 1;
 						leftRotate(s);
 						s = x->parent->left;
 					} 
 
-					// case 3.4
 					s->color = x->parent->color;
 					x->parent->color = 0;
 					s->left->color = 0;
@@ -151,7 +138,6 @@ private:
 	}
 
 	void deleteNodeHelper(NodePtr node, int key) {
-		// find the node containing key
 		NodePtr z = TNULL;
 		NodePtr x, y;
 		while (node != TNULL){
@@ -260,7 +246,6 @@ private:
 	}
 
 	void printHelper(NodePtr root, string indent, bool last) {
-		// print the tree structure on the screen
 	   	if (root != TNULL) {
 		   cout<<indent;
 		   if (last) {
@@ -276,7 +261,6 @@ private:
 		   printHelper(root->left, indent, false);
 		   printHelper(root->right, indent, true);
 		}
-		// cout<<root->left->key<<endl;
 	}
 
 public:
@@ -287,32 +271,24 @@ public:
 		TNULL->right = NULL;
 		root = TNULL;
 	}
+	~RBTree(){}
 
-	// Pre-Order traversal
-	// Node->Left Subtree->Right Subtree
 	void preorder() {
 		preOrderHelper(this->root);
 	}
 
-	// In-Order traversal
-	// Left Subtree -> Node -> Right Subtree
 	void inorder() {
 		inOrderHelper(this->root);
 	}
 
-	// Post-Order traversal
-	// Left Subtree -> Right Subtree -> Node
 	void postorder() {
 		postOrderHelper(this->root);
 	}
 
-	// search the tree for the key k
-	// and return the corresponding node
 	NodePtr searchTree(int k) const {
 		return searchTreeHelper(this->root, k);
 	}
 
-	// find the node with the minimum key
 	NodePtr minimum(NodePtr node) {
 		while (node->left != TNULL) {
 			node = node->left;
@@ -320,7 +296,6 @@ public:
 		return node;
 	}
 
-	// find the node with the maximum key
 	NodePtr maximum(NodePtr node) {
 		while (node->right != TNULL) {
 			node = node->right;
@@ -328,17 +303,11 @@ public:
 		return node;
 	}
 
-	// find the successor of a given node
 	NodePtr successor(NodePtr x) {
-		// if the right subtree is not null,
-		// the successor is the leftmost node in the
-		// right subtree
 		if (x->right != TNULL) {
 			return minimum(x->right);
 		}
 
-		// else it is the lowest ancestor of x whose
-		// left child is also an ancestor of x.
 		NodePtr y = x->parent;
 		while (y != TNULL && x == y->right) {
 			x = y;
@@ -347,11 +316,7 @@ public:
 		return y;
 	}
 
-	// find the predecessor of a given node
 	NodePtr predecessor(NodePtr x) {
-		// if the left subtree is not null,
-		// the predecessor is the rightmost node in the 
-		// left subtree
 		if (x->left != TNULL) {
 			return maximum(x->left);
 		}
@@ -365,7 +330,6 @@ public:
 		return y;
 	}
 
-	// rotate left at node x
 	void leftRotate(NodePtr x) {
 		NodePtr y = x->right;
 		x->right = y->left;
@@ -384,7 +348,6 @@ public:
 		x->parent = y;
 	}
 
-	// rotate right at node x
 	void rightRotate(NodePtr x) {
 		NodePtr y = x->left;
 		x->left = y->right;
@@ -403,17 +366,14 @@ public:
 		x->parent = y;
 	}
 
-	// insert the key to the tree in its appropriate position
-	// and fix the tree
 	ft::pair<NodePtr, bool> insert(ft::pair<int, int> in) {
-		// Ordinary Binary Search Insertion
 		NodePtr node = new Node;
 		node->parent = NULL;
 		node->key = in.first;
 		node->val = in.second;
 		node->left = TNULL;
 		node->right = TNULL;
-		node->color = 1; // new node must be red
+		node->color = 1;
 
 		NodePtr y = NULL;
 		NodePtr x = this->root;
@@ -427,7 +387,6 @@ public:
 				x = x->right;
 		}
 
-		// y is parent of x
 		node->parent = y;
 		if (y == NULL)
 			root = node;
@@ -435,19 +394,13 @@ public:
 			y->left = node;
 		else
 			y->right = node;
-
-		// if new node is a root node, simply return
 		if (node->parent == NULL)
 		{
 			node->color = 0;
 			return (ft::make_pair(node, true));
 		}
-
-		// if the grandparent is null, simply return
 		if (node->parent->parent == NULL)
 			return (ft::make_pair(node, true));
-
-		// Fix the tree
 		return (fixInsert(node));
 	}
 
@@ -455,16 +408,29 @@ public:
 		return this->root;
 	}
 
-	// delete the node from the tree
 	void deleteNode(int key) {
 		deleteNodeHelper(this->root, key);
 	}
 
-	// print the tree structure on the screen
 	void prettyPrint() {
 	    if (root) {
     		printHelper(this->root, "", true);
 	    }
+	}
+
+	int isin(const int &i)
+	{
+		NodePtr tmp = this->root;
+		while(tmp->right || tmp->left)
+		{
+			if (i < tmp->key)
+				tmp = tmp->left; 
+			else if (i > tmp->key)
+				tmp	= tmp->right;
+			else if (i == tmp->key)
+				return (1);
+		}
+		return (0);
 	}
 
 };

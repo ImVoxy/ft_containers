@@ -9,7 +9,6 @@ namespace ft
 	class map_iterator
 	{
 		typedef iterator_traits< Iterator > traits;
-		// typedef Node *NodePtr;
 
 		private:
 		protected:
@@ -35,7 +34,7 @@ namespace ft
 //  Access
 			Node *base() const { return _it; }
 			reference operator*() const { return *_it; }
-			pointer operator->() const { return _it; }
+			Node *operator->() const { return _it; }
 			int operator[](difference_type ptr) const
 			{
 				// Node tmp;

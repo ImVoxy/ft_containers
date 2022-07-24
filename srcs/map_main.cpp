@@ -4,12 +4,12 @@
 
 int main()
 {
-	// RBTree bst._tree;
     ft::map<int, int> bst;
 
-
+    std::cout << "is bst empty ? " << bst.empty() << std::endl;
 	bst.insert(ft::make_pair(8, 1));
     bst._tree.prettyPrint();
+    std::cout << "is bst empty ? " << bst.empty() << std::endl;
 	bst.insert(ft::make_pair(18, 2));
     bst._tree.prettyPrint();
 	bst.insert(ft::make_pair(5, 3));
@@ -34,88 +34,95 @@ int main()
     bst._tree.prettyPrint();
 	bst.insert(ft::make_pair(111, 13));
     bst._tree.prettyPrint();
-	bst._tree.deleteNode(25);
+	bst.erase(25);
 	bst._tree.prettyPrint();
-    bst._tree.deleteNode(5);
+    bst.erase(5);
     bst._tree.prettyPrint();
 
-    ft::map<int, int>::iterator it = bst.begin();
-    ft::map<int, int>::iterator ite = bst.end();
+    bst.clear();
 
-    ft::map<int, int> test(it, ite);
+    // ft::map<int, int> cpy(bst);
+    // cpy._tree.prettyPrint();
+    // std::cout << cpy[8] << std::endl;
 
-    ft::map<int, int>::iterator it_test = test.begin();
-    ft::map<int, int>::iterator ite_test = test.end();
+    // ft::map<int, int>::iterator it = cpy.begin();
+    // ft::map<int, int>::iterator ite = cpy.end();
 
-
-    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
-    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
-    it++;
-    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
-    it++;
-    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
-    it++;
-    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
-    it++;
-    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
-    it++;
-    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
-    it++;
-    std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
-
-    ite--;
-    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
-    ite--;
-    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
-    ite--;
-    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
-    ite--;
-    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
-    ite--;
-    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
-    ite--;
-    std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl << std::endl;
-
-    test._tree.prettyPrint();
-
-    std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
-    std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
-    it_test++;
-    std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
-    it_test++;
-    std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
-    it_test++;
-    std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
-    it_test++;
-    std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
-    it_test++;
-    std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
-    it_test++;
-    std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
-
-    ite_test--;
-    std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
-    ite_test--;
-    std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
-    ite_test--;
-    std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
-    ite_test--;
-    std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
-    ite_test--;
-    std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
-    ite_test--;
-    std::cout << "end key = " << ite_test.getKey() << " val = " << ite[ite_test.getKey()] << std::endl << std::endl;
+    // ft::map<int, int> test(it, ite);
+    // std::cout << test[8] << std::endl;
+    // ft::map<int, int>::iterator it_test = test.begin();
+    // ft::map<int, int>::iterator ite_test = test.end();
 
 
-    std::cout << "count existing        -> " << test.count(11) << std::endl;
-    std::cout << "count not existing    -> " << test.count(500) << std::endl;
+    // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    // std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
+    // it++;
+    // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    // it++;
+    // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    // it++;
+    // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    // it++;
+    // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    // it++;
+    // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
+    // it++;
+    // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
 
-    std::cout << "find existing        -> " << test.find(11).getKey() << std::endl;
-    std::cout << "find not existing    -> " << test.find(500).getKey() << std::endl;
+    // ite--;
+    // std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
+    // ite--;
+    // std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
+    // ite--;
+    // std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
+    // ite--;
+    // std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
+    // ite--;
+    // std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl ;
+    // ite--;
+    // std::cout << "end key = " << ite.getKey() << " val = " << ite[ite.getKey()] << std::endl << std::endl;
 
-    const ft::map<int, int>::iterator const_test = test.find(11);
-    std::cout << "find existing        -> " << const_test.find(11).getKey() << std::endl;
-    std::cout << "find not existing    -> " << const_test.find(500).getKey() << std::endl;
+    // test._tree.prettyPrint();
+
+    // std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
+    // std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
+    // it_test++;
+    // std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
+    // it_test++;
+    // std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
+    // it_test++;
+    // std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
+    // it_test++;
+    // std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
+    // it_test++;
+    // std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
+    // it_test++;
+    // std::cout << "begin key = " << it_test.getKey() << " val = " << it_test[it_test.getKey()] << std::endl ;
+
+    // ite_test--;
+    // std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
+    // ite_test--;
+    // std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
+    // ite_test--;
+    // std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
+    // ite_test--;
+    // std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
+    // ite_test--;
+    // std::cout << "end key = " << ite_test.getKey() << " val = " << ite_test[ite_test.getKey()] << std::endl ;
+    // ite_test--;
+    // std::cout << "end key = " << ite_test.getKey() << " val = " << ite[ite_test.getKey()] << std::endl << std::endl;
+
+
+    // std::cout << "count existing        -> " << test.count(11) << std::endl;
+    // std::cout << "count not existing    -> " << test.count(500) << std::endl;
+
+    // std::cout << "find existing        -> " << test.find(11).getKey() << std::endl;
+    // std::cout << "find not existing    -> " << test.find(500).getKey() << std::endl;
+
+    // const ft::map<int, int>::const_iterator const_test = test.find(11);
+    // std::cout << "find existing        -> " << const_test.getKey() << std::endl;
+
+    // std::cout << "size = " << bst.size() << " maxsixe = " << bst.max_size() << std::endl;
 
 	return (0);
 }
