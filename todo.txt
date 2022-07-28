@@ -3,10 +3,7 @@
 -> Vector                               OK
 
 -> Map
-(destructor)
 operator=
-swap
-clear
 lower_bound
 upper_bound
 equal_range

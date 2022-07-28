@@ -271,7 +271,10 @@ public:
 		TNULL->right = NULL;
 		root = TNULL;
 	}
-	~RBTree(){}
+	~RBTree(){
+
+		delete TNULL;
+	}
 
 	void preorder() {
 		preOrderHelper(this->root);
@@ -408,6 +411,10 @@ public:
 		return this->root;
 	}
 
+	const NodePtr getRoot() const {
+		return this->root;
+	}
+
 	void deleteNode(int key) {
 		deleteNodeHelper(this->root, key);
 	}
@@ -418,17 +425,20 @@ public:
 	    }
 	}
 
-	int isin(const int &i)
+	int isin(const int i)
 	{
 		NodePtr tmp = this->root;
+
 		while(tmp->right || tmp->left)
 		{
-			if (i < tmp->key)
+			if (tmp->left && i < tmp->key)
 				tmp = tmp->left; 
-			else if (i > tmp->key)
+			else if (tmp->right && i > tmp->key)
 				tmp	= tmp->right;
 			else if (i == tmp->key)
 				return (1);
+			else
+				return (0);
 		}
 		return (0);
 	}

@@ -48,18 +48,20 @@ namespace ft
 //  Assignation
 			map_iterator& operator++()
 			{
+				
 				Node *tmp = _it->parent;
 
-				if (_it->right->right || _it->right->left)
+				if ((_it->right->right || _it->right->left))
 				{
+					
 					_it = _it->right;
-					while (_it->left->right || _it->left->left)
+					while (_it->left && (_it->left->right || _it->left->left))
 						_it = _it->left;
 				}
 				else
 				{
-					if (tmp->right == _it)
-						while(tmp->right == _it)
+					if (tmp && tmp->right == _it)
+						while (tmp->right == _it)
 						{
 							_it = tmp;
 							tmp = _it->parent;

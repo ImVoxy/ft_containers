@@ -24,6 +24,7 @@ namespace ft
             NodePtr         _cont;
             Compare         _comp;
             
+            
         public:
             RBTree                                              _tree;
             typedef Key                                         key_type;
@@ -67,7 +68,6 @@ namespace ft
             _size = 0;
             _alloc = alloc;
             _comp = comp;
-            _tree = RBTree();
             _cont = _tree.getRoot();
         }
 	
@@ -79,7 +79,6 @@ namespace ft
             _size = it_diff(first, last);
             _alloc = alloc;
             _comp = comp;
-            _tree = RBTree();
             insert(first, last);
             insert(ft::make_pair(last.getKey(), last[last.getKey()]));
             _cont = _tree.getRoot();
@@ -90,33 +89,39 @@ namespace ft
             _size = x.size();
             _alloc = x.get_allocator();
             _comp = x.key_comp();
-            _tree = RBTree();
-            const_iterator it = x.begin();
-            const_iterator ite = x.end();
-            while (it != ite)
+            if (_size)
             {
-                this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
-                it++;
+                const_iterator it = x.begin();
+                const_iterator ite = x.end();
+                while (it != ite)
+                {
+                    this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
+                    it++;
+                }
+                _cont = _tree.getRoot();
             }
-            // insert(ft::make_pair(it.getKey(), it[it.getKey()]));
-            // insert(x.begin(), x.end());
-            // insert(ft::make_pair(x.end().getKey(), x.end()[x.end().getKey()]));
-            _cont = _tree.getRoot();
+        }
+
+        ~map()
+        {
+            if (_size > 0)
+                clear();
         }
 
     //  Iterators
         iterator begin()
         {
-            NodePtr it = _cont;
+            NodePtr it = _tree.getRoot();
 
-            while (it->left->left)
-                it = it->left;
+            if (it->left)
+                while (it->left->left)
+                    it = it->left;
             return (iterator(it));
         }
 
         const_iterator begin() const
         {
-            NodePtr it = _cont;
+            NodePtr it = _tree.getRoot();
          
             while (it->left->left)    
                 it = it->left;
@@ -126,16 +131,17 @@ namespace ft
         
         iterator end()
         {
-            NodePtr it = _cont;
+            NodePtr it = _tree.getRoot();
          
-            while (it->right->right)
-                it = it->right;
+            if (it->right)
+                while (it->right->right)
+                    it = it->right;
             return (iterator(it));
         }
 
         const_iterator end() const
         {
-            NodePtr it = _cont;
+            NodePtr it = _tree.getRoot();
 
             while (it->right->right)
                 it = it->right;
@@ -207,7 +213,18 @@ namespace ft
 
         void clear()
         {
-            
+            while (erase(begin().getKey()))
+            {}
+            return;
+        }
+
+        void swap (map& x)
+        {
+            std::swap(_alloc, x._alloc);
+            std::swap(_size, x._size);
+            std::swap(_cont, x._cont);
+            std::swap(_comp, x.key_comp);
+            std::swap(_tree, x._tree);
         }
 
         pair<iterator, bool> insert (const value_type& val)
@@ -266,6 +283,30 @@ namespace ft
             return (ret);
         }
 
+        iterator upper_bound (const key_type& k)
+        {
+
+        }
+        const_iterator upper_bound (const key_type& k) const
+        {
+
+        }
+        iterator lower_bound (const key_type& k)
+        {
+
+        }
+        const_iterator lower_bound (const key_type& k) const
+        {
+
+        }
+        pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+        {
+
+        }
+        pair<iterator,iterator>             equal_range (const key_type& k)
+        {
+            
+        }
     //  Allocator
         allocator_type get_allocator() const{return (this->_alloc);}
     };
