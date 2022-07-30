@@ -1,0 +1,41 @@
+10, 10, 10, 10, 10, 
+10, 10, 10, 10, 10, 
+10, 10, 10, 10, 10, 42, 
+10, 10, 10, 10, 10, 
+22, 10, 10, 10, 10, 10, 
+22, 10, 10, 1, 2, 3, 4, 10, 10, 10, 
+22, 10, 10, 1, 2, 4, 10, 10, 10, 
+22, 10, 10, 1, 2, 4, 10, 10, 10, 
+1, 2, 3, 4, 
+5, 6, 7, 
+5, 6, 7, 
+1, 2, 3, 4, 
+
+vector_int = 10, 42, 32, 68, 18, 
+vector_int = 10, 42, 32, 68, 18, 32, 57, 32, 
+vector_int = 10, 42, 32, 68, 18, 32, 57, 32, 1, 2, 3, 4, 
+vector_int = 10, 42, 32, 68, 18, 32, 57, 32, 
+vector_int = 4, 3, 2, 
+Back element = 2
+Front element = 4
+vector_int = 2, 1, 
+Back element = 1
+Front element = 2
+vector_int = 2, 1, 
+input_vector_int = 1, 2, 3, 4, 
+input_vector_int.swap(vector_int)
+vector_int = 1, 2, 3, 4, 
+input_vector_int = 2, 1, 
+vector_int.swap(input_vector_int)
+vector_int = vector_int = 2, 1, 
+input_vector_int = 1, 2, 3, 4, 
+is vector_str empty ?: 1
+is vector_int empty ?: 0
+size of vector_int = 2
+max_size of vector_int = 4294967295
+2, 1, 12, 12, 12, 12, 12, 12, 12, 12, 
+vector_int.capacity = 16
+size of vector_int = 10
+vector_int.capacity = 5000000
+size of vector_int = 10
+0 1 2 3 4 5 6 7 8 9 
