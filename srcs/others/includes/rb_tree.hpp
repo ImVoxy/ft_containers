@@ -369,7 +369,11 @@ public:
 		x->parent = y;
 	}
 
-	ft::pair<NodePtr, bool> insert(ft::pair<int, int> in) {
+	ft::pair<NodePtr, bool> insert(ft::pair<int, int> in)
+	{
+		if (isin(in.first))
+			return (ft::make_pair(searchTree(in.first), 0));
+
 		NodePtr node = new Node;
 		node->parent = NULL;
 		node->key = in.first;

@@ -44,12 +44,12 @@ namespace ft
             typedef reverse_iterator<iterator>                  reverse_iterator;
     
         class   value_compare
-        {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
+        { 
             friend class map;
             private:
             protected:
                 Compare comp;
-                value_compare (Compare c) : comp(c) {}  // constructed with map's comparison object
+                value_compare (Compare c) : comp(c) {}
             public:
                 typedef bool result_type;
                 typedef value_type first_argument_type;
@@ -98,6 +98,7 @@ namespace ft
                     this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
                     it++;
                 }
+                this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
                 _cont = _tree.getRoot();
             }
         }
@@ -106,6 +107,26 @@ namespace ft
         {
             if (_size > 0)
                 clear();
+        }
+
+        map& operator= (const map& x)
+        {
+            _size = x.size();
+            _alloc = x.get_allocator();
+            _comp = x.key_comp();
+            if (_size)
+            {
+                const_iterator it = x.begin();
+                const_iterator ite = x.end();
+                while (it != ite)
+                {
+                    this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
+                    it++;
+                }
+                this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
+                _cont = _tree.getRoot();
+            }
+            return (*this);
         }
 
     //  Iterators
@@ -230,10 +251,13 @@ namespace ft
         pair<iterator, bool> insert (const value_type& val)
         {
             ft::pair<Node*, bool> ret = _tree.insert(val);
+            
             if (ret.second)
+            {
                 _size ++;
-            _cont = _tree.getRoot();
-            return (ft::make_pair(iterator(ret.first), true));
+                _cont = _tree.getRoot();
+            }
+            return (ft::make_pair(iterator(ret.first), ret.second));
         }
 
         iterator insert (iterator position, const value_type& val)
@@ -285,27 +309,87 @@ namespace ft
 
         iterator upper_bound (const key_type& k)
         {
+            iterator tmp = begin();
+            iterator finish = end();
 
+            while (tmp != finish)
+            {
+                if (_comp(k, tmp.getKey()))
+                    break;
+                tmp++;
+            }
+            return (tmp);
         }
+
         const_iterator upper_bound (const key_type& k) const
         {
+            iterator tmp = end();
+            iterator finish = begin();
 
+            while (tmp != finish)
+            {
+                if (_comp(k, tmp.getKey()))
+                    break;
+                tmp--;
+            }
+            return (const_iterator (tmp));
         }
+
         iterator lower_bound (const key_type& k)
         {
+            iterator tmp = end();
+            iterator finish = begin();
 
+            while (tmp != finish)
+            {
+                if (!_comp(tmp.getKey(), k))
+                    break;
+                tmp--;
+            }
+            return (tmp);
         }
+
         const_iterator lower_bound (const key_type& k) const
         {
+            iterator tmp = begin();
+            iterator finish = end();
 
+            while (tmp != finish)
+            {
+                if (!_comp(tmp.getKey(), k))
+                    break;
+                tmp++;
+            }
+            return (const_iterator (tmp));
         }
+
         pair<const_iterator,const_iterator> equal_range (const key_type& k) const
         {
+            iterator tmp = begin();
 
+            if (_comp(end().getKey(), k))
+                return (ft::make_pair(const_iterator(end()), const_iterator(end())));
+            while (tmp.base())
+            {
+                if (!_comp(tmp.getKey(), k))
+                    break;
+                tmp++;
+            }
+            return (ft::make_pair(const_iterator(tmp), const_iterator(tmp)));
         }
         pair<iterator,iterator>             equal_range (const key_type& k)
         {
-            
+            iterator tmp = begin();
+
+            if (_comp(end().getKey(), k))
+                return (ft::make_pair(end(), end()));
+            while (tmp.base())
+            {
+                if (!_comp(tmp.getKey(), k))
+                    break;
+                tmp++;
+            }
+            return (ft::make_pair(tmp, tmp));
         }
     //  Allocator
         allocator_type get_allocator() const{return (this->_alloc);}

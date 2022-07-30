@@ -6,6 +6,8 @@
 #include "vector/includes/vector.hpp"
 #include "stack/includes/stack.hpp"
 
+#define TEST ft
+
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
 struct Buffer
@@ -15,7 +17,7 @@ struct Buffer
 };
 #define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
-int stack_test()
+int main()
 {
     ft::vector<int> vector_int;
     ft::stack<std::string> ft_stack_str;

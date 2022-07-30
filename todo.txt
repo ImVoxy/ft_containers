@@ -3,11 +3,6 @@
 -> Vector                               OK
 
 -> Map
-operator=
-lower_bound
-upper_bound
-equal_range
-
 fix types for all (aled)
 
 -> Others
