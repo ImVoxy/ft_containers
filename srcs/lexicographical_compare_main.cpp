@@ -4,10 +4,12 @@
 #include "vector/includes/vector.hpp"
 #include "others/includes/lexicographical_compare.hpp"
  
+#define TEST ft
+
 int lexicographical_compare_test()
 {
-    ft::vector<char> v1;
-    ft::vector<char> v2;
+    TEST::vector<char> v1;
+    TEST::vector<char> v2;
     std::string str;
 
     str = std::string("abcd");
@@ -16,10 +18,8 @@ int lexicographical_compare_test()
     for (int i = 0; str[i]; i++)
         v2.push_back(str[i]);
     std::cout << "-> v1 = abcd, v2 = abcd" << std::endl;
-    std::cout << "lexicographical_compare = " <<
-    std::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
-    std::cout << "ft_lexicographical_compare = " <<
-    ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+    std::cout << "exicographical_compare = " <<
+    TEST::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
     v1.clear();
 
     str = "adbc";
@@ -27,9 +27,7 @@ int lexicographical_compare_test()
     v1.push_back(str[i]);
     std::cout << "-> v1 = adbc, v2 = abcd" << std::endl;
     std::cout << "lexicographical_compare = " <<
-    std::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
-    std::cout << "ft_lexicographical_compare = " <<
-    ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+    TEST::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
     v1.clear();
     v2.clear();
 
@@ -40,9 +38,7 @@ int lexicographical_compare_test()
         v1.push_back(str[i]);
     std::cout << "-> v1 = abcd, v2 = adbc" <<std::endl;
     std::cout << "lexicographical_compare = " <<
-    std::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
-    std::cout << "ft_lexicographical_compare = " <<
-    ft::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+    TEST::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
     v1.clear();
     v2.clear();
     return (0);

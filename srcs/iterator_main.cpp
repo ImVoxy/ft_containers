@@ -6,12 +6,14 @@
 #include <vector>
 #include <list>
  
+#define TEST ft
+
 template<class BidirIt>
 void my_reverse(BidirIt first, BidirIt last)
 {
-    typename ft::iterator_traits<BidirIt>::difference_type n = std::distance(first, last);
+    typename TEST::iterator_traits<BidirIt>::difference_type n = std::distance(first, last);
     for (--n; n > 0; n -= 2) {
-        typename ft::iterator_traits<BidirIt>::value_type tmp = *first;
+        typename TEST::iterator_traits<BidirIt>::value_type tmp = *first;
         *first++ = *--last;
         *last = tmp;
     }
@@ -19,7 +21,7 @@ void my_reverse(BidirIt first, BidirIt last)
  
 int iterator_test()
 {
-    std::vector<int> v;
+    ft::vector<int> v;
     v.push_back(1);
     v.push_back(2);
     v.push_back(3);
