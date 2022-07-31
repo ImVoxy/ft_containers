@@ -17,7 +17,7 @@ struct Buffer
 };
 #define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
-int stack_main()
+int stack_test()
 {
     TEST::vector<int> vector_int;
     TEST::stack<std::string> stack_str;

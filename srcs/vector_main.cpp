@@ -3,7 +3,7 @@
 #include <string>
 #include "vector/includes/vector.hpp"
 
-#define TEST std
+#define TEST ft
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
@@ -22,7 +22,7 @@ void display_vec_int(TEST::vector<int> vector_int)
     std::cout << std::endl;
 }
 
-int main()
+int vector_test()
 {
     TEST::vector<int> testnul(5);
     TEST::vector<int> vector_int;

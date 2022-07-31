@@ -1,6 +1,6 @@
 #include "others/includes/iterator_traits.hpp"
 #include "others/includes/reverse_iterator.hpp"
-// #include "vector/includes/vector.hpp"
+#include "vector/includes/vector.hpp"
 #include <iostream>
 #include <iterator>
 #include <vector>
@@ -21,7 +21,7 @@ void my_reverse(BidirIt first, BidirIt last)
  
 int iterator_test()
 {
-    ft::vector<int> v;
+    TEST::vector<int> v;
     v.push_back(1);
     v.push_back(2);
     v.push_back(3);
