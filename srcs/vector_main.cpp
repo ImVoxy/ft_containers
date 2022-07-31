@@ -117,17 +117,20 @@ int vector_test()
     display_vec_int(test_vector_int);
     
     test_it_e++;
+    std::cout << "vector_int.capacity = " << (int) test_vector_int.capacity() << std::endl;
     test_vector_int.insert(test_it_e, test_in_it_b, test_in_it_e);
     std::cout << "vector_int = ";
     display_vec_int(test_vector_int);
 
     test_it_e = test_vector_int.end();
+    std::cout << "vector_int.capacity = " << (int) test_vector_int.capacity() << std::endl;
     test_vector_int.erase(test_it_e - 4, test_it_e);
     std::cout << "vector_int = ";
     display_vec_int(test_vector_int);
 
     test_in_it_re = test_input_vector_int.rend();
     test_it_b = test_vector_int.begin();
+    std::cout << "vector_int.capacity = " << (int) test_vector_int.capacity() << std::endl;
     test_vector_int.assign(test_in_it_rb, test_in_it_rb + 3);
     std::cout << "vector_int = ";
     display_vec_int(test_vector_int);

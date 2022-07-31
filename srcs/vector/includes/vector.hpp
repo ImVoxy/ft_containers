@@ -362,7 +362,7 @@ namespace ft
                 value_type      tmp[this->_size + n];
 
                 if (this->_capa < this->_size + n && n > 0)
-                    this->_capa += n;
+                    this->_capa += (n * 2);
                 for (size_t i = 0; i <= this->_size; i++)
                 {
                     if (position == iterator(&_cont[i]) ||
