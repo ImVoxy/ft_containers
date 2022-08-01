@@ -1,5 +1,6 @@
 #ifndef MAP_HPP
 # define MAP_HPP
+
 #include "../../others/includes/reverse_iterator.hpp"
 #include "../../others/includes/standard_iterator.hpp"
 #include "../../others/includes/pair.hpp"
@@ -195,7 +196,7 @@ namespace ft
     //  Element access
         int& operator[] (const key_type& k)
         {
-            return (_tree.searchTree(k)->val);
+            return (_tree.searchTree(k)->elem->second);
             // return (*((this->insert(k)).second));
         }
     //  Modifiers

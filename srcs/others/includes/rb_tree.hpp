@@ -1,3 +1,6 @@
+#ifndef RB_TREE_HPP
+# define RB_TREE_HPP
+
 #include <iostream>
 #include "pair.hpp"
 #include "make_pair.hpp"
@@ -13,7 +16,6 @@ namespace ft
 		Node *parent;
 		Node *left;
 		Node *right;
-		
 	};
 
 	
@@ -482,3 +484,5 @@ namespace ft
 		}
 	};
 }
+
+#endif

@@ -12,8 +12,10 @@ namespace ft
 
 		private:
 		protected:
-			Node<typename Container::key_type, typename Container::mapped_type> *_it;
-			
+			Node<typename Container::key_type, typename Container::mapped_type> *_node;
+			// Iterator	_it;
+
+
 
 		public:
 			typedef Iterator                          	iterator_type;
@@ -26,51 +28,52 @@ namespace ft
 			typedef typename traits::pointer          	pointer;
 
 //  Constructors and destructors
-			map_iterator() : _it(Iterator()) {}
-			explicit map_iterator(const Iterator& it) : _it(it) {}
-			explicit map_iterator(Node<key_type, mapped_type> *it) : _it(it) {}
+			map_iterator() : _node(Iterator()) {}
+			explicit map_iterator(const Iterator& it) : _node(it) {}
+			explicit map_iterator(Node<key_type, mapped_type> *it) : _node(it) {}
 			template < typename T >
 			map_iterator(const map_iterator< T,
 					typename enable_if< is_same< T, typename Container::pointer >::value,
-										Container >::type >& it): _it(it.base()) {}
+										Container >::type >& it): _node(it.base()) {}
 			~map_iterator(){}
 //  Access
-			Node<key_type, mapped_type> *base() const { return _it; }
-			reference operator*() const { return *_it; }
-			Node<key_type, mapped_type> *operator->() const { return _it; }
+			Node<key_type, mapped_type> *base() const { return _node; }
+			reference operator*() const { return *_node; }
+			// Node<key_type, mapped_type> *operator->() const { return _it; }
+			pointer *operator->() const {return _node->elem;}
 			mapped_type operator[](difference_type ptr) const
 			{
 				// Node tmp;
 		
 				// tmp = searchTree(ptr);
 				// return (tmp.val);
-				return (_it->elem->second);
+				return (_node->elem->second);
 			}
-			key_type getKey() const {return (_it->elem->first);};
+			key_type getKey() const {return (_node->elem->first);};
 
 //  Assignation
 			map_iterator& operator++()
 			{
 				
-				Node<key_type, mapped_type> *tmp = _it->parent;
+				Node<key_type, mapped_type> *tmp = _node->parent;
 
-				if ((_it->right->right || _it->right->left))
+				if ((_node->right->right || _node->right->left))
 				{
 					
-					_it = _it->right;
-					while (_it->left && (_it->left->right || _it->left->left))
-						_it = _it->left;
+					_node = _node->right;
+					while (_node->left && (_node->left->right || _node->left->left))
+						_node = _node->left;
 				}
 				else
 				{
-					if (tmp && tmp->right == _it)
-						while (tmp->right == _it)
+					if (tmp && tmp->right == _node)
+						while (tmp->right == _node)
 						{
-							_it = tmp;
-							tmp = _it->parent;
+							_node = tmp;
+							tmp = _node->parent;
 						}
-					if (_it->right != tmp)
-						_it = tmp;
+					if (_node->right != tmp)
+						_node = tmp;
 				}
 				return (*this);
 			}
@@ -82,24 +85,24 @@ namespace ft
 			}
 			map_iterator& operator--()
 			{
-				Node<key_type, mapped_type> *tmp = _it->parent;
+				Node<key_type, mapped_type> *tmp = _node->parent;
 
-				if (_it->left->right || _it->left->left)
+				if (_node->left->right || _node->left->left)
 				{
-					_it = _it->left;
-					while (_it->right->right || _it->right->left)
-						_it = _it->right;
+					_node = _node->left;
+					while (_node->right->right || _node->right->left)
+						_node = _node->right;
 				}
 				else
 				{
-					if (tmp->left == _it)
-						while(tmp->left == _it)
+					if (tmp->left == _node)
+						while(tmp->left == _node)
 						{
-							_it = tmp;
-							tmp = _it->parent;
+							_node = tmp;
+							tmp = _node->parent;
 						}
-					if (_it->left != tmp)
-						_it = tmp;
+					if (_node->left != tmp)
+						_node = tmp;
 				}
 				return (*this);
 			}
