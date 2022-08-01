@@ -12,17 +12,18 @@ namespace ft
 
 		private:
 		protected:
-			Node<typename Container::key_type, typename Container::mapped_type> *	_it;
+			Node<typename Container::key_type, typename Container::mapped_type> *_it;
+			
 
 		public:
-			typedef Iterator                           iterator_type;
+			typedef Iterator                          	iterator_type;
 			typedef typename Container::key_type		key_type;
 			typedef typename Container::mapped_type		mapped_type;
-			typedef typename traits::iterator_category iterator_category;
-			typedef typename traits::value_type        value_type;
-			typedef typename traits::difference_type   difference_type;
-			typedef typename traits::reference         reference;
-			typedef typename traits::pointer           pointer;
+			typedef typename traits::iterator_category	iterator_category;
+			typedef typename traits::value_type       	value_type;
+			typedef typename traits::difference_type  	difference_type;
+			typedef typename traits::reference        	reference;
+			typedef typename traits::pointer          	pointer;
 
 //  Constructors and destructors
 			map_iterator() : _it(Iterator()) {}
@@ -37,7 +38,7 @@ namespace ft
 			Node<key_type, mapped_type> *base() const { return _it; }
 			reference operator*() const { return *_it; }
 			Node<key_type, mapped_type> *operator->() const { return _it; }
-			int operator[](difference_type ptr) const
+			mapped_type operator[](difference_type ptr) const
 			{
 				// Node tmp;
 		
@@ -45,7 +46,7 @@ namespace ft
 				// return (tmp.val);
 				return (_it->elem->second);
 			}
-			int getKey() const {return (_it->elem->first);};
+			key_type getKey() const {return (_it->elem->first);};
 
 //  Assignation
 			map_iterator& operator++()

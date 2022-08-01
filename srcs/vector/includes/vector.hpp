@@ -402,11 +402,8 @@ namespace ft
                         ret = i;
                         i++;
                     }
-                    // if (i <_size)
-                    // {
                         tmp[j] = _cont[i];
                         j++; 
-                    // }
                 }
                 for (size_t i = 0; i < this->_capa; i++)
                     _alloc.destroy(&this->_cont[i]);

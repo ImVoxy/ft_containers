@@ -9,8 +9,6 @@ namespace ft
 	template<class Key, class T>
 	struct Node {
 		ft::pair<const Key, T> *elem;
-		// int key;
-		// int val;
 		int color; // 1 -> Red, 0 -> Black
 		Node *parent;
 		Node *left;
@@ -152,7 +150,7 @@ namespace ft
 				x->parent = y;
 			}
 
-			ft::pair<NodePtr, bool> insert(ft::pair<int, int> in)
+			ft::pair<NodePtr, bool> insert(ft::pair<key_type, mapped_type> in)
 			{
 				ft::pair<const key_type, mapped_type> *tmp;
 				if (isin(in.first))
@@ -163,9 +161,6 @@ namespace ft
 				tmp = _alloc.allocate(1);
 				node->elem = tmp;
 				_alloc.construct(node->elem, ft::pair<const key_type, mapped_type>(in.first, in.second));
-				// _alloc.construct(node->elem.second, in.second);
-				// node->key = in.first;
-				// node->val = in.second;
 				node->left = TNULL;
 				node->right = TNULL;
 				node->color = 1;
@@ -371,7 +366,7 @@ namespace ft
 				}
 
 				if (z == TNULL) {
-					std::cout << "Couldn't find key in the tree" << std::endl;
+					// std::cout << "Couldn't find key in the tree" << std::endl;
 					return;
 				} 
 

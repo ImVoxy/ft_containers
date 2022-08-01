@@ -269,7 +269,6 @@ namespace ft
         template <class InputIterator>
         void insert (InputIterator first, InputIterator last)
         {
-            // std::cout << "first.getKey()" << std::endl;
             while (first != last)
             {
                 insert (make_pair(first.getKey(), first[first.getKey()]));
