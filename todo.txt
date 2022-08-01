@@ -2,7 +2,6 @@
 
 -> Vector                               OK
 
-capa ???
 
 -> Map
 fix types for all (aled)

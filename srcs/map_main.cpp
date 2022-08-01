@@ -2,58 +2,60 @@
 #include "map/includes/map.hpp"
 #include "others/includes/make_pair.hpp"
 
+#define TEST ft
+
 int main()
 {
-    ft::map<int, int> bst;
+    TEST::map<int, int> bst;
 
     std::cout << "is bst empty ? " << bst.empty() << std::endl;
-	bst.insert(ft::make_pair(8, 1));
+	bst.insert(TEST::make_pair(8, 1));
     bst._tree.prettyPrint();
     std::cout << "is bst empty ? " << bst.empty() << std::endl;
-	bst.insert(ft::make_pair(18, 2));
+	bst.insert(TEST::make_pair(18, 2));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(5, 3));
+	bst.insert(TEST::make_pair(5, 3));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(15, 4));
+	bst.insert(TEST::make_pair(15, 4));
 	bst._tree.prettyPrint();
-    bst.insert(ft::make_pair(17, 5));
+    bst.insert(TEST::make_pair(17, 5));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(25, 6));
+	bst.insert(TEST::make_pair(25, 6));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(40, 7));
+	bst.insert(TEST::make_pair(40, 7));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(80, 8));
+	bst.insert(TEST::make_pair(80, 8));
     bst._tree.prettyPrint();
-    bst.insert(ft::make_pair(42, 9));
+    bst.insert(TEST::make_pair(42, 9));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(11, 10));
+	bst.insert(TEST::make_pair(11, 10));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(8, 11));
+	bst.insert(TEST::make_pair(8, 11));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(204, 12));
+	bst.insert(TEST::make_pair(204, 12));
     bst._tree.prettyPrint();
-	bst.insert(ft::make_pair(111, 13));
+	bst.insert(TEST::make_pair(111, 13));
     // bst._tree.prettyPrint();
 	bst.erase(25);
 	bst._tree.prettyPrint();
     bst.erase(5);
     bst._tree.prettyPrint();
 
-    ft::map<int, int> testcpy = bst;
+    TEST::map<int, int> testcpy = bst;
     testcpy._tree.prettyPrint();
     // bst.clear();
 
-    // ft::map<int, int> cpy(bst);
+    // TEST::map<int, int> cpy(bst);
     // cpy._tree.prettyPrint();
     // std::cout << cpy[8] << std::endl;
 
-    // ft::map<int, int>::iterator it = cpy.begin();
-    // ft::map<int, int>::iterator ite = cpy.end();
+    // TEST::map<int, int>::iterator it = cpy.begin();
+    // TEST::map<int, int>::iterator ite = cpy.end();
 
-    // ft::map<int, int> test(it, ite);
+    // TEST::map<int, int> test(it, ite);
     // std::cout << test[8] << std::endl;
-    // ft::map<int, int>::iterator it_test = test.begin();
-    // ft::map<int, int>::iterator ite_test = test.end();
+    // TEST::map<int, int>::iterator it_test = test.begin();
+    // TEST::map<int, int>::iterator ite_test = test.end();
 
 
     // std::cout << "begin key = " << it.getKey() << " val = " << it[it.getKey()] << std::endl ;
@@ -121,7 +123,7 @@ int main()
     // std::cout << "find existing        -> " << test.find(11).getKey() << std::endl;
     // std::cout << "find not existing    -> " << test.find(500).getKey() << std::endl;
 
-    // const ft::map<int, int>::const_iterator const_test = test.find(11);
+    // const TEST::map<int, int>::const_iterator const_test = test.find(11);
     // std::cout << "find existing        -> " << const_test.getKey() << std::endl;
 
     // std::cout << "size = " << bst.size() << " maxsixe = " << bst.max_size() << std::endl;

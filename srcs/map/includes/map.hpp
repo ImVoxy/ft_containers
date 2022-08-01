@@ -12,8 +12,8 @@
 namespace ft
 {
 
-    template < class Key, class T, class Compare = less<Key>,              
-           class Alloc = allocator<pair<const Key,T> > >
+    template < class Key, class T, class Compare = std::less<Key>,              
+           class Alloc = std::allocator<pair<const Key,T> > >
     class map
     {
         
@@ -26,7 +26,8 @@ namespace ft
             
             
         public:
-            RBTree                                              _tree;
+            RBTree<Key, T, Compare, Alloc>                      _tree;
+
             typedef Key                                         key_type;
             typedef T                                           mapped_type;
             typedef ft::pair<const key_type, mapped_type>       value_type;
