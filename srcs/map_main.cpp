@@ -36,15 +36,15 @@ int main()
     bst._tree.prettyPrint();
 	bst.insert(TEST::make_pair(111, 13));
     // bst._tree.prettyPrint();
-	bst.erase(25);
-	bst._tree.prettyPrint();
-    bst.erase(5);
-    bst._tree.prettyPrint();
+	// bst.erase(25);
+	// bst._tree.prettyPrint();
+    // bst.erase(5);
+    // bst._tree.prettyPrint();
 
-    TEST::map<int, int> testcpy = bst;
-    testcpy._tree.prettyPrint();
-    // bst.clear();
-
+    // TEST::map<int, int> testcpy = bst;
+    // testcpy._tree.prettyPrint();
+    // testcpy.clear();
+    
     // TEST::map<int, int> cpy(bst);
     // cpy._tree.prettyPrint();
     // std::cout << cpy[8] << std::endl;

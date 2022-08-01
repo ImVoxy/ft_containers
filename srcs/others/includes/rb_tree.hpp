@@ -6,8 +6,9 @@
 
 namespace ft
 {
+	template<class Key, class T>
 	struct Node {
-		ft::pair<const key_type, mapped_type> elem;
+		ft::pair<const Key, T> *elem;
 		// int key;
 		// int val;
 		int color; // 1 -> Red, 0 -> Black
@@ -17,7 +18,7 @@ namespace ft
 		
 	};
 
-	typedef Node *NodePtr;
+	
 
 	template < class Key, class T, class Compare = std::less<Key>,              
 			class Alloc = std::allocator<pair<const Key,T> > >
@@ -25,7 +26,7 @@ namespace ft
 	{
 		protected:
 			Alloc					_alloc;
-			std::allocator<Node>	_allocn;
+			std::allocator<Node<Key, T> >	_allocn;
 			Compare					_comp;
 
 		public:
@@ -33,14 +34,20 @@ namespace ft
 			typedef T       mapped_type;
 			typedef Compare	key_compare;
 			typedef Alloc   allocator_type;
+			typedef Node<key_type, mapped_type> *NodePtr;
 
 			RBTree(const key_compare& comp = key_compare(),
               const allocator_type& alloc = allocator_type())
 			{
 				_alloc = alloc;
 				_comp = comp;
+				ft::pair<const key_type, mapped_type> *tmp;
 
 				TNULL = _allocn.allocate(1);
+				tmp = _alloc.allocate(1);
+				TNULL->elem = tmp;
+				_alloc.construct(TNULL->elem, ft::pair<const key_type, mapped_type>());
+
 				TNULL->color = 0;
 				TNULL->left = NULL;
 				TNULL->right = NULL;
@@ -48,7 +55,7 @@ namespace ft
 			}
 			~RBTree()
 			{
-
+				_alloc.deallocate(TNULL->elem, 1);
 				_allocn.deallocate(TNULL, 1);
 			}
 
@@ -147,13 +154,18 @@ namespace ft
 
 			ft::pair<NodePtr, bool> insert(ft::pair<int, int> in)
 			{
+				ft::pair<const key_type, mapped_type> *tmp;
 				if (isin(in.first))
 					return (ft::make_pair(searchTree(in.first), 0));
 
 				NodePtr node = _allocn.allocate(1);
 				node->parent = NULL;
-				node->key = in.first;
-				node->val = in.second;
+				tmp = _alloc.allocate(1);
+				node->elem = tmp;
+				_alloc.construct(node->elem, ft::pair<const key_type, mapped_type>(in.first, in.second));
+				// _alloc.construct(node->elem.second, in.second);
+				// node->key = in.first;
+				// node->val = in.second;
 				node->left = TNULL;
 				node->right = TNULL;
 				node->color = 1;
@@ -164,7 +176,7 @@ namespace ft
 				while (x != TNULL)
 				{
 					y = x;
-					if (node->key < x->key)
+					if (node->elem->first < x->elem->first)
 						x = x->left;
 					else
 						x = x->right;
@@ -173,7 +185,7 @@ namespace ft
 				node->parent = y;
 				if (y == NULL)
 					root = node;
-				else if (node->key < y->key)
+				else if (node->elem->first < y->elem->first)
 					y->left = node;
 				else
 					y->right = node;
@@ -195,7 +207,7 @@ namespace ft
 				return this->root;
 			}
 
-			void deleteNode(int key) {
+			void deleteNode(key_type key) {
 				deleteNodeHelper(this->root, key);
 			}
 
@@ -205,17 +217,17 @@ namespace ft
 				}
 			}
 
-			int isin(const int i)
+			int isin(const key_type i)
 			{
 				NodePtr tmp = this->root;
 
 				while(tmp->right || tmp->left)
 				{
-					if (tmp->left && i < tmp->key)
+					if (tmp->left && i < tmp->elem->first)
 						tmp = tmp->left; 
-					else if (tmp->right && i > tmp->key)
+					else if (tmp->right && i > tmp->elem->first)
 						tmp	= tmp->right;
-					else if (i == tmp->key)
+					else if (i == tmp->elem->first)
 						return (1);
 					else
 						return (0);
@@ -228,17 +240,17 @@ namespace ft
 			NodePtr TNULL;
 
 			void initializeNULLNode(NodePtr node, NodePtr parent) {
-				node->key = 0;
-				node->val = 0;
-				node->parent = parent;
-				node->left = NULL;
-				node->right = NULL;
-				node->color = 0;
+				node->elem->first	= 0;
+				node->elem->second	= 0;
+				node->parent		= parent;
+				node->left			= NULL;
+				node->right			= NULL;
+				node->color			= 0;
 			}
 
 			void preOrderHelper(NodePtr node) {
 				if (node != TNULL) {
-					std::cout<<node->key<<" ";
+					std::cout << node->elem->first << " ";
 					preOrderHelper(node->left);
 					preOrderHelper(node->right);
 				} 
@@ -247,7 +259,7 @@ namespace ft
 			void inOrderHelper(NodePtr node) {
 				if (node != TNULL) {
 					inOrderHelper(node->left);
-					std::cout<<node->key<<" ";
+					std::cout << node->elem->first <<" ";
 					inOrderHelper(node->right);
 				} 
 			}
@@ -256,16 +268,16 @@ namespace ft
 				if (node != TNULL) {
 					postOrderHelper(node->left);
 					postOrderHelper(node->right);
-					std::cout<<node->key<<" ";
+					std::cout << node->elem->first <<" ";
 				} 
 			}
 
-			NodePtr searchTreeHelper(NodePtr node, int key) const {
-				if (node == TNULL || key == node->key) {
+			NodePtr searchTreeHelper(NodePtr node, key_type key) const {
+				if (node == TNULL || key == node->elem->first) {
 					return node;
 				}
 
-				if (key < node->key) {
+				if (key < node->elem->first) {
 					return searchTreeHelper(node->left, key);
 				} 
 				return searchTreeHelper(node->right, key);
@@ -343,15 +355,15 @@ namespace ft
 				v->parent = u->parent;
 			}
 
-			void deleteNodeHelper(NodePtr node, int key) {
+			void deleteNodeHelper(NodePtr node, key_type key) {
 				NodePtr z = TNULL;
 				NodePtr x, y;
 				while (node != TNULL){
-					if (node->key == key) {
+					if (node->elem->first == key) {
 						z = node;
 					}
 
-					if (node->key <= key) {
+					if (node->elem->first <= key) {
 						node = node->right;
 					} else {
 						node = node->left;
@@ -388,6 +400,7 @@ namespace ft
 					y->left->parent = y;
 					y->color = z->color;
 				}
+				_alloc.deallocate(z->elem, 1);
 				_allocn.deallocate(z, 1);
 				if (y_original_color == 0){
 					fixDelete(x);
@@ -457,17 +470,17 @@ namespace ft
 				std::cout<<indent;
 				if (last)
 				{
-					std::cout<<"R----";
+					std::cout << "R----";
 					indent += "     ";
 				}
 				else
 				{
-					std::cout<<"L----";
+					std::cout << "L----";
 					indent += "|    ";
 				}
 					
-				std::string sColor = root->color?"RED":"BLACK";
-				std::cout << root->key << "("<<sColor<<")" << std::endl;
+				std::string sColor = root->color ? "RED" : "BLACK";
+				std::cout << root->elem->first << "("<<sColor<<")" << std::endl;
 				printHelper(root->left, indent, false);
 				printHelper(root->right, indent, true);
 			}

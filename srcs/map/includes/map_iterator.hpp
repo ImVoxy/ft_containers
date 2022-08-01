@@ -12,10 +12,12 @@ namespace ft
 
 		private:
 		protected:
-			Node *	_it;
+			Node<typename Container::key_type, typename Container::mapped_type> *	_it;
 
 		public:
 			typedef Iterator                           iterator_type;
+			typedef typename Container::key_type		key_type;
+			typedef typename Container::mapped_type		mapped_type;
 			typedef typename traits::iterator_category iterator_category;
 			typedef typename traits::value_type        value_type;
 			typedef typename traits::difference_type   difference_type;
@@ -25,31 +27,31 @@ namespace ft
 //  Constructors and destructors
 			map_iterator() : _it(Iterator()) {}
 			explicit map_iterator(const Iterator& it) : _it(it) {}
-			explicit map_iterator(NodePtr it) : _it(it) {}
+			explicit map_iterator(Node<key_type, mapped_type> *it) : _it(it) {}
 			template < typename T >
 			map_iterator(const map_iterator< T,
 					typename enable_if< is_same< T, typename Container::pointer >::value,
 										Container >::type >& it): _it(it.base()) {}
 			~map_iterator(){}
 //  Access
-			Node *base() const { return _it; }
+			Node<key_type, mapped_type> *base() const { return _it; }
 			reference operator*() const { return *_it; }
-			Node *operator->() const { return _it; }
+			Node<key_type, mapped_type> *operator->() const { return _it; }
 			int operator[](difference_type ptr) const
 			{
 				// Node tmp;
 		
 				// tmp = searchTree(ptr);
 				// return (tmp.val);
-				return (_it->val);
+				return (_it->elem->second);
 			}
-			int getKey() const {return (_it->key);};
+			int getKey() const {return (_it->elem->first);};
 
 //  Assignation
 			map_iterator& operator++()
 			{
 				
-				Node *tmp = _it->parent;
+				Node<key_type, mapped_type> *tmp = _it->parent;
 
 				if ((_it->right->right || _it->right->left))
 				{
@@ -79,7 +81,7 @@ namespace ft
 			}
 			map_iterator& operator--()
 			{
-				Node *tmp = _it->parent;
+				Node<key_type, mapped_type> *tmp = _it->parent;
 
 				if (_it->left->right || _it->left->left)
 				{

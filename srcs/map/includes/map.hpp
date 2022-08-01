@@ -21,7 +21,7 @@ namespace ft
         protected:
             Alloc           _alloc;
             size_t          _size;
-            NodePtr         _cont;
+            Node<Key, T>    *_cont;
             Compare         _comp;
             
             
@@ -133,7 +133,7 @@ namespace ft
     //  Iterators
         iterator begin()
         {
-            NodePtr it = _tree.getRoot();
+            Node<key_type, mapped_type> *it = _tree.getRoot();
 
             if (it->left)
                 while (it->left->left)
@@ -143,7 +143,7 @@ namespace ft
 
         const_iterator begin() const
         {
-            NodePtr it = _tree.getRoot();
+            Node<key_type, mapped_type> *it = _tree.getRoot();
          
             while (it->left->left)    
                 it = it->left;
@@ -153,7 +153,7 @@ namespace ft
         
         iterator end()
         {
-            NodePtr it = _tree.getRoot();
+            Node<key_type, mapped_type> *it = _tree.getRoot();
          
             if (it->right)
                 while (it->right->right)
@@ -163,7 +163,7 @@ namespace ft
 
         const_iterator end() const
         {
-            NodePtr it = _tree.getRoot();
+            Node<key_type, mapped_type> *it = _tree.getRoot();
 
             while (it->right->right)
                 it = it->right;
@@ -251,7 +251,7 @@ namespace ft
 
         pair<iterator, bool> insert (const value_type& val)
         {
-            ft::pair<Node*, bool> ret = _tree.insert(val);
+            ft::pair<Node<key_type, mapped_type>*, bool> ret = _tree.insert(val);
             
             if (ret.second)
             {
@@ -285,7 +285,7 @@ namespace ft
     
         size_type count (const key_type& k) const
         {
-            Node *tmp = _tree.searchTree(k);
+            Node<key_type, mapped_type> *tmp = _tree.searchTree(k);
             
             if (tmp && (tmp->right || tmp->left))
                 return (1);
@@ -294,7 +294,7 @@ namespace ft
 
         iterator find (const key_type& k)
         {
-            Node *tmp = _tree.searchTree(k);
+            Node<key_type, mapped_type> *tmp = _tree.searchTree(k);
             
             if (tmp && (tmp->right || tmp->left))
                 return (iterator(tmp));
