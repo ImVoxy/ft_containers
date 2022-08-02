@@ -82,7 +82,7 @@ namespace ft
             _alloc = alloc;
             _comp = comp;
             insert(first, last);
-            insert(ft::make_pair(last.getKey(), last[last.getKey()]));
+            insert(*last);
             _cont = _tree.getRoot();
         }
 
@@ -272,7 +272,7 @@ namespace ft
         {
             while (first != last)
             {
-                insert (make_pair(first.getKey(), first[first.getKey()]));
+                insert(*first);
                 first++;
             }
         }

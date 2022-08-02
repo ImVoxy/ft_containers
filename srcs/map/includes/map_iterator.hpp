@@ -13,7 +13,7 @@ namespace ft
 		private:
 		protected:
 			Node<typename Container::key_type, typename Container::mapped_type> *_node;
-			// Iterator	_it;
+			Iterator	_it;
 
 
 
@@ -28,17 +28,18 @@ namespace ft
 			typedef typename traits::pointer          	pointer;
 
 //  Constructors and destructors
-			map_iterator() : _node(Iterator()) {}
-			explicit map_iterator(const Iterator& it) : _node(it) {}
-			explicit map_iterator(Node<key_type, mapped_type> *it) : _node(it) {}
+			map_iterator() : _node(Iterator()), _it(_node->elem) {}
+			explicit map_iterator(const Iterator& it) : _node(it), _it(_node->elem) {}
+			explicit map_iterator(Node<key_type, mapped_type> *it) : _node(it), _it(_node->elem) {}
 			template < typename T >
 			map_iterator(const map_iterator< T,
 					typename enable_if< is_same< T, typename Container::pointer >::value,
-										Container >::type >& it): _node(it.base()) {}
+										Container >::type >& it): _node(it.getNode()), _it(_node->elem) {}
 			~map_iterator(){}
 //  Access
-			Node<key_type, mapped_type> *base() const { return _node; }
-			reference operator*() const { return *_node; }
+			// Node<key_type, mapped_type> *base() const { return _node; }
+			const Iterator& base() const { return _node->elem; }
+			reference operator*() const { return *_it; }
 			// Node<key_type, mapped_type> *operator->() const { return _it; }
 			pointer *operator->() const {return _node->elem;}
 			mapped_type operator[](difference_type ptr) const
@@ -49,6 +50,7 @@ namespace ft
 				// return (tmp.val);
 				return (_node->elem->second);
 			}
+			Node<key_type, mapped_type> *getNode() const { return (_node); }
 			key_type getKey() const {return (_node->elem->first);};
 
 //  Assignation
