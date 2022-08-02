@@ -28,7 +28,7 @@ namespace ft
 			typedef typename traits::pointer          	pointer;
 
 //  Constructors and destructors
-			map_iterator() : _node(Iterator()), _it(_node->elem) {}
+			map_iterator() : _node(NULL), _it(NULL) {}
 			explicit map_iterator(const Iterator& it) : _node(it), _it(_node->elem) {}
 			explicit map_iterator(Node<key_type, mapped_type> *it) : _node(it), _it(_node->elem) {}
 			template < typename T >
@@ -39,19 +39,20 @@ namespace ft
 //  Access
 			// Node<key_type, mapped_type> *base() const { return _node; }
 			const Iterator& base() const { return _node->elem; }
-			reference operator*() const { return *_it; }
+			reference operator*() const { return (*(_node->elem)); }
 			// Node<key_type, mapped_type> *operator->() const { return _it; }
-			pointer *operator->() const {return _node->elem;}
+			value_type *operator->() const {return _node->elem;}
 			mapped_type operator[](difference_type ptr) const
 			{
 				// Node tmp;
 		
 				// tmp = searchTree(ptr);
 				// return (tmp.val);
+				(void)ptr;
 				return (_node->elem->second);
 			}
 			Node<key_type, mapped_type> *getNode() const { return (_node); }
-			key_type getKey() const {return (_node->elem->first);};
+			key_type getKey() const {return (_node->elem->first);}
 
 //  Assignation
 			map_iterator& operator++()
@@ -148,76 +149,89 @@ namespace ft
                                     typename map_iterator<Iter, Cont>::difference_type n,
                                     const map_iterator<Iter, Cont>& it)
 		{
-			return (map_iterator<Iter, Cont>(it.base() + n));
+			return (map_iterator<Iter, Cont>(it.getKey() + n));
 		}
 
 
 		template < typename IteratorL, typename IteratorR, typename Container >
 		bool operator==(const map_iterator< IteratorL, Container >& lhs,
 						const map_iterator< IteratorR, Container >& rhs)
-		{return (lhs.base() == rhs.base());}
+		{
+			return (lhs.getNode()->elem == rhs.getNode()->elem);}
 
 //  Relational operators
 		template < typename Iterator, typename Container >
 		bool operator==(const map_iterator< Iterator, Container >& lhs,
 						const map_iterator< Iterator, Container >& rhs)
-		{return (lhs.base() == rhs.base());}
+		{if (lhs.getNode() == NULL || rhs.getNode() == NULL)
+		{
+				if (lhs.getNode() == NULL || rhs.getNode() == NULL)
+				{
+					return (1);
+				}
+				else
+					return (0);
+		}
+			return (lhs.getNode()->elem == rhs.getNode()->elem);}
 
 		template < typename IteratorL, typename IteratorR, typename Container >
 		bool operator!=(const map_iterator< IteratorL, Container >& lhs,
 						const map_iterator< IteratorR, Container >& rhs)
-		{return (lhs.base() != rhs.base());}
+		{
+			return (lhs.getNode()->elem != rhs.getNode()->elem);
+		}
 
 		template < typename Iterator, typename Container >
 		bool operator!=(const map_iterator< Iterator, Container >& lhs,
 						const map_iterator< Iterator, Container >& rhs)
-		{return (lhs.base() != rhs.base());}
+		{
+			return (lhs.getNode()->elem != rhs.getNode()->elem);}
 
 		template < typename IteratorL, typename IteratorR, typename Container >
 		bool operator<(const map_iterator< IteratorL, Container >& lhs,
 					    const map_iterator< IteratorR, Container >& rhs)
-		{return (lhs.base() < rhs.base());}
+		{return (lhs.getNode()->elem < rhs.getNode()->elem);}
 
 		template < typename Iterator, typename Container >
 		bool operator<(const map_iterator< Iterator, Container >& lhs,
 					    const map_iterator< Iterator, Container >& rhs)
-		{return (lhs.base() < rhs.base());}
+		{return (lhs.getNode()->elem < rhs.getNode()->elem);}
 
 		template < typename IteratorL, typename IteratorR, typename Container >
 		bool operator>(const map_iterator< IteratorL, Container >& lhs,
 					    const map_iterator< IteratorR, Container >& rhs)
-		{return (lhs.base() > rhs.base());}
+		{return (lhs.getNode()->elem > rhs.getNode()->elem);}
 
 		template < typename Iterator, typename Container >
 		bool operator>(const map_iterator< Iterator, Container >& lhs,
 					    const map_iterator< Iterator, Container >& rhs)
-		{return (lhs.base() > rhs.base());}
+		{return (lhs.getNode()->elem > rhs.getNode()->elem);}
 
 		template < typename IteratorL, typename IteratorR, typename Container >
 		bool operator<=(const map_iterator< IteratorL, Container >& lhs,
 						const map_iterator< IteratorR, Container >& rhs)
-		{return (lhs.base() <= rhs.base());}
+		{return (lhs.getNode()->elem <= rhs.getNode()->elem);}
 
 		template < typename Iterator, typename Container >
 		bool operator<=(const map_iterator< Iterator, Container >& lhs,
 						const map_iterator< Iterator, Container >& rhs)
-		{return (lhs.base() <= rhs.base());}
+		{return (lhs.getNode()->elem <= rhs.getNode()->elem);}
 
 		template < typename IteratorL, typename IteratorR, typename Container >
 		bool operator>=(const map_iterator< IteratorL, Container >& lhs,
 						const map_iterator< IteratorR, Container >& rhs)
-		{return (lhs.base() >= rhs.base());}
+		{return (lhs.getNode()->elem >= rhs.getNode()->elem);}
 
 		template < typename Iterator, typename Container >
 		bool operator>=(const map_iterator< Iterator, Container >& lhs,
 						const map_iterator< Iterator, Container >& rhs)
-		{return (lhs.base() >= rhs.base());}
+		{return (lhs.getNode()->elem >= rhs.getNode()->elem);}
 
 		template < typename IteratorL, typename IteratorR, typename Container >
 		typename map_iterator< IteratorL, Container >::difference_type
 		operator-(const map_iterator< IteratorL, Container >& lhs,
 				const map_iterator< IteratorR, Container >& rhs)
-		{return (lhs.base() - rhs.base());}
+		{return (lhs.getNode()->elem - rhs.getNode()->elem);}
 }
 
 #endif

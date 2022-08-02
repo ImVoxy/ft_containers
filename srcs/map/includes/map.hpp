@@ -78,7 +78,7 @@ namespace ft
             const key_compare& comp = key_compare(),
             const allocator_type& alloc = allocator_type())
         {
-            _size = it_diff(first, last);
+            _size = ft::it_diff(first, last);
             _alloc = alloc;
             _comp = comp;
             insert(first, last);
@@ -166,8 +166,9 @@ namespace ft
         {
             Node<key_type, mapped_type> *it = _tree.getRoot();
 
-            while (it->right->right)
-                it = it->right;
+            if (it->right)
+                while (it->right->right)
+                    it = it->right;
             const iterator ret(it);
             return (ret);
         }
@@ -324,8 +325,8 @@ namespace ft
 
         const_iterator upper_bound (const key_type& k) const
         {
-            iterator tmp = end();
-            iterator finish = begin();
+            const_iterator tmp = end();
+            const_iterator finish = begin();
 
             while (tmp != finish)
             {
@@ -352,8 +353,8 @@ namespace ft
 
         const_iterator lower_bound (const key_type& k) const
         {
-            iterator tmp = begin();
-            iterator finish = end();
+            const_iterator tmp = begin();
+            const_iterator finish = end();
 
             while (tmp != finish)
             {
@@ -366,11 +367,12 @@ namespace ft
 
         pair<const_iterator,const_iterator> equal_range (const key_type& k) const
         {
-            iterator tmp = begin();
+            const_iterator tmp = begin();
+            const_iterator finish = end();
 
             if (_comp(end().getKey(), k))
                 return (ft::make_pair(const_iterator(end()), const_iterator(end())));
-            while (tmp.base())
+            while (tmp != finish)
             {
                 if (!_comp(tmp.getKey(), k))
                     break;
@@ -381,16 +383,18 @@ namespace ft
         pair<iterator,iterator>             equal_range (const key_type& k)
         {
             iterator tmp = begin();
+            iterator finish = end();
 
             if (_comp(end().getKey(), k))
                 return (ft::make_pair(end(), end()));
-            while (tmp.base())
+            while (tmp != finish)
             {
                 if (!_comp(tmp.getKey(), k))
                     break;
                 tmp++;
             }
-            return (ft::make_pair(tmp, tmp));
+            ft::pair<iterator, iterator> test(tmp, tmp);
+            return (test);
         }
     //  Allocator
         allocator_type get_allocator() const{return (this->_alloc);}
