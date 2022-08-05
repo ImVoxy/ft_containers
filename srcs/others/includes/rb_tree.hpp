@@ -10,12 +10,13 @@
 namespace ft
 {
 	template<class Key, class T>
-	struct Node {
-		ft::pair<const Key, T> *elem;
-		int color; // 1 -> Red, 0 -> Black
-		Node *parent;
-		Node *left;
-		Node *right;
+	struct Node
+	{
+		ft::pair<const Key, T>	*elem;
+		int						color;
+		Node					*parent;
+		Node 					*left;
+		Node 					*right;
 	};
 
 	
@@ -25,15 +26,15 @@ namespace ft
 	class RBTree
 	{
 		protected:
-			Alloc					_alloc;
+			Alloc							_alloc;
 			std::allocator<Node<Key, T> >	_allocn;
-			Compare					_comp;
+			Compare							_comp;
 
 		public:
-			typedef Key     key_type;
-			typedef T       mapped_type;
-			typedef Compare	key_compare;
-			typedef Alloc   allocator_type;
+			typedef Key     					key_type;
+			typedef T       					mapped_type;
+			typedef Compare						key_compare;
+			typedef Alloc   					allocator_type;
 			typedef Node<key_type, mapped_type> *NodePtr;
 
 			RBTree(const key_compare& comp = key_compare(),
@@ -48,7 +49,7 @@ namespace ft
 				TNULL->elem = tmp;
 				_alloc.construct(TNULL->elem, ft::pair<const key_type, mapped_type>());
 
-				TNULL->color = 0;
+				TNULL->color = 1;
 				TNULL->left = NULL;
 				TNULL->right = NULL;
 				root = TNULL;
@@ -57,6 +58,30 @@ namespace ft
 			{
 				_alloc.deallocate(TNULL->elem, 1);
 				_allocn.deallocate(TNULL, 1);
+			}
+
+			void sentryNodeInsertChecker(NodePtr node)
+			{
+				if (TNULL->color == 1 || TNULL->parent->elem->first < node->elem->first)
+					TNULL->parent = node;
+				if (TNULL->color == 1)
+					TNULL->color = 2;
+			}
+
+			void sentryNodeDeleteChecker(key_type key)
+			{
+				if (TNULL->parent->elem->first == key)
+				{
+					if (TNULL->parent->left)
+						TNULL->parent = TNULL->parent->left;
+					else if (TNULL->parent->parent)
+						TNULL->parent = TNULL->parent->parent;
+					else
+					{
+						TNULL->parent = NULL;
+						TNULL->color = 1;
+					}
+				}
 			}
 
 			void preorder() {
@@ -163,6 +188,7 @@ namespace ft
 				tmp = _alloc.allocate(1);
 				node->elem = tmp;
 				_alloc.construct(node->elem, ft::pair<const key_type, mapped_type>(in.first, in.second));
+				sentryNodeInsertChecker(node);
 				node->left = TNULL;
 				node->right = TNULL;
 				node->color = 1;
@@ -205,6 +231,7 @@ namespace ft
 			}
 
 			void deleteNode(key_type key) {
+				sentryNodeDeleteChecker(key);
 				deleteNodeHelper(this->root, key);
 			}
 
@@ -368,7 +395,6 @@ namespace ft
 				}
 
 				if (z == TNULL) {
-					// std::cout << "Couldn't find key in the tree" << std::endl;
 					return;
 				} 
 

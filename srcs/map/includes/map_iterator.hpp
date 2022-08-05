@@ -57,7 +57,6 @@ namespace ft
 //  Assignation
 			map_iterator& operator++()
 			{
-				
 				Node<key_type, mapped_type> *tmp = _node->parent;
 
 				if ((_node->right->right || _node->right->left))
