@@ -48,7 +48,6 @@ namespace ft
 				tmp = _alloc.allocate(1);
 				TNULL->elem = tmp;
 				_alloc.construct(TNULL->elem, ft::pair<const key_type, mapped_type>());
-
 				TNULL->color = 1;
 				TNULL->left = NULL;
 				TNULL->right = NULL;
@@ -96,7 +95,7 @@ namespace ft
 				postOrderHelper(this->root);
 			}
 
-			NodePtr searchTree(int k) const {
+			NodePtr searchTree(key_type k) const {
 				return searchTreeHelper(this->root, k);
 			}
 
@@ -229,6 +228,8 @@ namespace ft
 			const NodePtr getRoot() const {
 				return this->root;
 			}
+
+			std::allocator<Node<Key, T> > get_allocator() const{return (this->_allocn);}
 
 			void deleteNode(key_type key) {
 				sentryNodeDeleteChecker(key);

@@ -142,68 +142,39 @@
 // }
 
 #include "../containers_test/srcs/map/common.hpp"
-#include <list>
 
-#define T1 int
-#define T2 foo<int>
-typedef TESTED_NAMESPACE::map<T1, T2>::value_type T3;
-typedef TESTED_NAMESPACE::map<T1, T2>::iterator ft_iterator;
-typedef TESTED_NAMESPACE::map<T1, T2>::const_iterator ft_const_iterator;
+#define T1 char
+#define T2 foo<float>
+typedef TESTED_NAMESPACE::map<T1, T2> _map;
+typedef _map::const_iterator const_it;
 
-static int iter = 0;
+static unsigned int i = 0;
 
-template <typename MAP>
-void    ft_bound(MAP &mp, const T1 &param)
+void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2)
 {
-        ft_iterator ite = mp.end(), it[2];
-        _pair<ft_iterator, ft_iterator> ft_range;
+	bool res[2];
 
-        std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-        std::cout << "with key [" << param << "]:" << std::endl;
-        it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
-        ft_range = mp.equal_range(param);
-        std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-        std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-        std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+	std::cout << "\t-- [" << ++i << "] --" << std::endl;
+	res[0] = mp.key_comp()(it1->first, it2->first);
+	res[1] = mp.value_comp()(*it1, *it2);
+	std::cout << "with [" << it1->first << " and " << it2->first << "]: ";
+	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
 }
 
-template <typename MAP>
-void    ft_const_bound(const MAP &mp, const T1 &param)
+int		main(void)
 {
-        ft_const_iterator ite = mp.end(), it[2];
-        _pair<ft_const_iterator, ft_const_iterator> ft_range;
+	_map	mp;
 
-        std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
-        std::cout << "with key [" << param << "]:" << std::endl;
-        it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
-        ft_range = mp.equal_range(param);
-        std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-        std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-        std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-}
+	mp['a'] = 2.3;
+	mp['b'] = 1.4;
+	mp['c'] = 0.3;
+	mp['d'] = 4.2;
+	printSize(mp);
 
-int             main(void)
-{
-        std::list<T3> lst;
-        unsigned int lst_size = 10;
-        for (unsigned int i = 0; i < lst_size; ++i)
-                lst.push_back(T3(i + 1, (i + 1) * 3));
-        TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
-        printSize(mp);
-        std::cout << "!" << mp._tree.maximum(mp._tree.getRoot())->right->parent->elem->first << std::endl;
+	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
+		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
+			ft_comp(mp, it1, it2);
 
-        // ft_const_bound(mp, -10);
-        // ft_const_bound(mp, 1);
-        // ft_const_bound(mp, 5);
-        // ft_const_bound(mp, 10);
-        // ft_const_bound(mp, 50);
-
-        // printSize(mp);
-
-        // mp.lower_bound(3)->second = 404;
-        // mp.upper_bound(7)->second = 842;
-        // ft_bound(mp, 5);
-        // ft_bound(mp, 7);
-        // printSize(mp);
-        return (0);
+	printSize(mp);
+	return (0);
 }

@@ -55,28 +55,61 @@ namespace ft
 			key_type getKey() const {return (_node->elem->first);}
 
 //  Assignation
+			// map_iterator& operator++()
+			// {
+			// 	Node<key_type, mapped_type> *tmp = _node->parent;
+
+			// 	if ((_node->right->right || _node->right->left))
+			// 	{
+					
+			// 		_node = _node->right;
+			// 		while (_node->left && (_node->left->right || _node->left->left))
+			// 			_node = _node->left;
+			// 	}
+			// 	else
+			// 	{
+			// 		if (tmp && tmp->right == _node)
+			// 			while (tmp->right == _node)
+			// 			{
+			// 				_node = tmp;
+			// 				tmp = _node->parent;
+			// 			}
+			// 		if (_node->right != tmp)
+			// 			_node = tmp;
+			// 	}
+			// 	return (*this);
+			// }
 			map_iterator& operator++()
 			{
 				Node<key_type, mapped_type> *tmp = _node->parent;
 
-				if ((_node->right->right || _node->right->left))
+				if (_node->color != 2)
 				{
-					
-					_node = _node->right;
-					while (_node->left && (_node->left->right || _node->left->left))
-						_node = _node->left;
-				}
-				else
-				{
-					if (tmp && tmp->right == _node)
-						while (tmp->right == _node)
-						{
+					if (_node->right->parent == _node && _node->left->color == 2
+						&& _node->right->color == 2)
+					{
+						_node = _node->right;
+						return *this;
+					}
+					if (_node->right->color != 2)
+					{
+						_node = _node->right;
+						while (_node->left->color != 2)
+							_node = _node->left;
+					}
+					else
+					{
+						if (tmp && tmp->right == _node)
+							while (tmp && tmp->right == _node)
+							{
+								_node = tmp;
+								tmp = _node->parent;
+							}
+						if (_node->right != tmp)
 							_node = tmp;
-							tmp = _node->parent;
-						}
-					if (_node->right != tmp)
-						_node = tmp;
+					}
 				}
+				
 				return (*this);
 			}
 			map_iterator operator++(int)
@@ -89,7 +122,7 @@ namespace ft
 			{
 				Node<key_type, mapped_type> *tmp = _node->parent;
 
-				if (_node->left->right || _node->left->left)
+				if (_node->left && (_node->left->right || _node->left->left))
 				{
 					_node = _node->left;
 					while (_node->right->right || _node->right->left)

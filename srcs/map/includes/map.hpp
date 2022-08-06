@@ -78,9 +78,9 @@ namespace ft
             const key_compare& comp = key_compare(),
             const allocator_type& alloc = allocator_type())
         {
-            _size = ft::it_diff(first, last);
             _alloc = alloc;
             _comp = comp;
+            _size = 0;
             insert(first, last);
             insert(*last);
             _cont = _tree.getRoot();
@@ -88,10 +88,11 @@ namespace ft
 
 	    map (const map& x)
         {
-            _size = x.size();
+            
             _alloc = x.get_allocator();
             _comp = x.key_comp();
-            if (_size)
+            _size = 0;
+            if (x._size())
             {
                 const_iterator it = x.begin();
                 const_iterator ite = x.end();
@@ -103,6 +104,7 @@ namespace ft
                 this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
                 _cont = _tree.getRoot();
             }
+            _size = x.size();
         }
 
         ~map()
@@ -157,7 +159,7 @@ namespace ft
             Node<key_type, mapped_type> *it = _tree.getRoot();
          
             if (it->right)
-                while (it->right->right)
+                while (it->color != 2)
                     it = it->right;
             return (iterator(it));
         }
@@ -167,7 +169,7 @@ namespace ft
             Node<key_type, mapped_type> *it = _tree.getRoot();
 
             if (it->right)
-                while (it->right->right)
+                while (it->color != 2)
                     it = it->right;
             const iterator ret(it);
             return (ret);
@@ -187,7 +189,7 @@ namespace ft
         }
     //  Capacity
         size_type size() const {return (_size);}
-        size_type max_size() const{return (_alloc.max_size());}
+        size_type max_size() const{return (_tree.get_allocator().max_size());}
         bool empty() const
         {
             if (_size == 0)
@@ -195,10 +197,10 @@ namespace ft
             return (0);
         }
     //  Element access
-        int& operator[] (const key_type& k)
+        mapped_type& operator[] (const key_type& k)
         {
-            return (_tree.searchTree(k)->elem->second);
-            // return (*((this->insert(k)).second));
+                // return (_tree.searchTree(k)->elem->second);
+            return(*((this->insert(ft::make_pair(k,mapped_type()))).first)).second;
         }
     //  Modifiers
 
@@ -325,28 +327,28 @@ namespace ft
 
         const_iterator upper_bound (const key_type& k) const
         {
-            const_iterator tmp = end();
-            const_iterator finish = begin();
+            const_iterator finish = end();
+            const_iterator tmp = begin();
 
             while (tmp != finish)
             {
                 if (_comp(k, tmp.getKey()))
                     break;
-                tmp--;
+                tmp++;
             }
-            return (const_iterator (tmp));
+            return (const_iterator(tmp));
         }
 
         iterator lower_bound (const key_type& k)
         {
-            iterator tmp = end();
-            iterator finish = begin();
+            iterator finish = end();
+            iterator tmp = begin();
 
             while (tmp != finish)
             {
-                if (!_comp(tmp.getKey(), k))
-                    break;
-                tmp--;
+                if (!(_comp(tmp.getKey(), k)))
+                    return (tmp);
+                tmp++;
             }
             return (tmp);
         }
@@ -358,11 +360,11 @@ namespace ft
 
             while (tmp != finish)
             {
-                if (!_comp(tmp.getKey(), k))
-                    break;
+                if (!(_comp(tmp.getKey(), k)))
+                    return (tmp);
                 tmp++;
             }
-            return (const_iterator (tmp));
+            return (const_iterator(tmp));
         }
 
         pair<const_iterator,const_iterator> equal_range (const key_type& k) const
