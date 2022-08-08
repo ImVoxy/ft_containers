@@ -82,7 +82,7 @@ namespace ft
             _comp = comp;
             _size = 0;
             insert(first, last);
-            insert(*last);
+            // insert(*last);
             _cont = _tree.getRoot();
         }
 
@@ -92,7 +92,7 @@ namespace ft
             _alloc = x.get_allocator();
             _comp = x.key_comp();
             _size = 0;
-            if (x._size())
+            if (x.size())
             {
                 const_iterator it = x.begin();
                 const_iterator ite = x.end();
@@ -115,7 +115,6 @@ namespace ft
 
         map& operator= (const map& x)
         {
-            _size = x.size();
             _alloc = x.get_allocator();
             _comp = x.key_comp();
             if (_size)
@@ -130,6 +129,7 @@ namespace ft
                 this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
                 _cont = _tree.getRoot();
             }
+            _size = x.size();
             return (*this);
         }
 
@@ -199,8 +199,8 @@ namespace ft
     //  Element access
         mapped_type& operator[] (const key_type& k)
         {
-                // return (_tree.searchTree(k)->elem->second);
-            return(*((this->insert(ft::make_pair(k,mapped_type()))).first)).second;
+            (void)(*((this->insert(ft::make_pair(k,mapped_type()))).first)).second;
+            return(_tree.searchTree(k)->elem->second);
         }
     //  Modifiers
 

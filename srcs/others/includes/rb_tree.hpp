@@ -61,7 +61,7 @@ namespace ft
 
 			void sentryNodeInsertChecker(NodePtr node)
 			{
-				if (TNULL->color == 1 || TNULL->parent->elem->first < node->elem->first)
+				if (TNULL->color == 1 || (TNULL->parent->elem->first < node->elem->first))
 					TNULL->parent = node;
 				if (TNULL->color == 1)
 					TNULL->color = 2;
@@ -231,7 +231,8 @@ namespace ft
 
 			std::allocator<Node<Key, T> > get_allocator() const{return (this->_allocn);}
 
-			void deleteNode(key_type key) {
+			void deleteNode(key_type key)
+			{
 				sentryNodeDeleteChecker(key);
 				deleteNodeHelper(this->root, key);
 			}
@@ -370,53 +371,60 @@ namespace ft
 
 
 			void rbTransplant(NodePtr u, NodePtr v){
-				if (u->parent == NULL) {
+				if (u->parent == NULL)
 					root = v;
-				} else if (u == u->parent->left){
+				else if (u == u->parent->left)
 					u->parent->left = v;
-				} else {
+				else
 					u->parent->right = v;
-				}
 				v->parent = u->parent;
+				// TNULL->parent = maximum(root);
 			}
 
 			void deleteNodeHelper(NodePtr node, key_type key) {
 				NodePtr z = TNULL;
 				NodePtr x, y;
-				while (node != TNULL){
-					if (node->elem->first == key) {
+
+				while (node != TNULL)
+				{
+					if (node->elem->first == key)
 						z = node;
-					}
-
-					if (node->elem->first <= key) {
+					if (node->elem->first <= key)
 						node = node->right;
-					} else {
+					else 
 						node = node->left;
-					}
 				}
-
-				if (z == TNULL) {
+				if (z == TNULL)
 					return;
-				} 
-
 				y = z;
 				int y_original_color = y->color;
-				if (z->left == TNULL) {
+				if (z->left == TNULL)
+				{
 					x = z->right;
 					rbTransplant(z, z->right);
-				} else if (z->right == TNULL) {
+				}
+				else if (z->right == TNULL)
+				{
 					x = z->left;
 					rbTransplant(z, z->left);
-				} else {
+				}
+				
+				else {
 					y = minimum(z->right);
 					y_original_color = y->color;
 					x = y->right;
-					if (y->parent == z) {
+					if (y->parent == z)
+					{
 						x->parent = y;
-					} else {
+						
+					}
+					else
+					{
+						// std::cout << "???" << TNULL->parent->elem->first<< std::endl;
 						rbTransplant(y, y->right);
 						y->right = z->right;
 						y->right->parent = y;
+						// std::cout << "???" << TNULL->parent->elem->first<< std::endl;
 					}
 
 					rbTransplant(z, y);
