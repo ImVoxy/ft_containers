@@ -55,6 +55,7 @@ namespace ft
 			}
 			~RBTree()
 			{
+				root = NULL;
 				_alloc.deallocate(TNULL->elem, 1);
 				_allocn.deallocate(TNULL, 1);
 			}
@@ -235,6 +236,7 @@ namespace ft
 			{
 				sentryNodeDeleteChecker(key);
 				deleteNodeHelper(this->root, key);
+				
 			}
 
 			void prettyPrint() {
@@ -321,20 +323,25 @@ namespace ft
 							s = x->parent->right;
 						}
 
-						if (s->left->color == 0 && s->right->color == 0) {
-							s->color = 1;
+						if (s->left->color != 1 && s->right->color != 1) {
+							if (s->color != 2)
+								s->color = 1;
 							x = x->parent;
 						} else {
-							if (s->right->color == 0) {
-								s->left->color = 0;
-								s->color = 1;
+							if (s->right->color != 1) {
+								if (s->left->color != 2)
+									s->left->color = 0;
+								if (s->color != 2)
+									s->color = 1;
 								rightRotate(s);
 								s = x->parent->right;
 							} 
-
-							s->color = x->parent->color;
-							x->parent->color = 0;
-							s->right->color = 0;
+							if (s->color != 2)
+								s->color = x->parent->color;
+							if (s->parent->color != 2)
+								x->parent->color = 0;
+							if (s->right->color != 2)
+								s->right->color = 0;
 							leftRotate(x->parent);
 							x = root;
 						}
@@ -347,38 +354,44 @@ namespace ft
 							s = x->parent->left;
 						}
 
-						if (s->right->color == 0 && s->right->color == 0) {
-							s->color = 1;
+						if (s->right->color != 1) {
+							if (s->color != 2)
+								s->color = 1;
 							x = x->parent;
 						} else {
-							if (s->left->color == 0) {
-								s->right->color = 0;
-								s->color = 1;
+							if (s->left->color != 1) {
+								if (s->color != 2)
+									s->right->color = 0;
+								if (s->color != 2)
+									s->color = 1;
 								leftRotate(s);
 								s = x->parent->left;
 							} 
-
-							s->color = x->parent->color;
+							if (s->color != 2)
+								s->color = x->parent->color;
 							x->parent->color = 0;
-							s->left->color = 0;
+							if (s->left->color != 2)
+								s->left->color = 0;
 							rightRotate(x->parent);
 							x = root;
 						}
 					} 
 				}
-				x->color = 0;
+				if (x->color != 2)
+					x->color = 0;
 			}
 
 
-			void rbTransplant(NodePtr u, NodePtr v){
+			void rbTransplant(NodePtr u, NodePtr v)
+			{
 				if (u->parent == NULL)
 					root = v;
 				else if (u == u->parent->left)
 					u->parent->left = v;
 				else
 					u->parent->right = v;
-				v->parent = u->parent;
-				// TNULL->parent = maximum(root);
+				if (v->color != 2)
+					v->parent = u->parent;
 			}
 
 			void deleteNodeHelper(NodePtr node, key_type key) {
@@ -398,6 +411,7 @@ namespace ft
 					return;
 				y = z;
 				int y_original_color = y->color;
+				
 				if (z->left == TNULL)
 				{
 					x = z->right;
@@ -410,30 +424,31 @@ namespace ft
 				}
 				
 				else {
+					
 					y = minimum(z->right);
 					y_original_color = y->color;
 					x = y->right;
-					if (y->parent == z)
-					{
+					if (y->parent == z && x->color != 2)
 						x->parent = y;
-						
-					}
 					else
 					{
-						// std::cout << "???" << TNULL->parent->elem->first<< std::endl;
 						rbTransplant(y, y->right);
 						y->right = z->right;
-						y->right->parent = y;
-						// std::cout << "???" << TNULL->parent->elem->first<< std::endl;
+						if (y->right->color != 2)
+							y->right->parent = y;
 					}
 
 					rbTransplant(z, y);
 					y->left = z->left;
-					y->left->parent = y;
-					y->color = z->color;
+					if (y->left->color != 2)
+					{
+						y->left->parent = y;
+						y->color = z->color;
+					}
 				}
 				_alloc.deallocate(z->elem, 1);
 				_allocn.deallocate(z, 1);
+				
 				if (y_original_color == 0){
 					fixDelete(x);
 				}

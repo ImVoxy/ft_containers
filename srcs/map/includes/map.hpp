@@ -82,7 +82,6 @@ namespace ft
             _comp = comp;
             _size = 0;
             insert(first, last);
-            // insert(*last);
             _cont = _tree.getRoot();
         }
 
@@ -115,19 +114,23 @@ namespace ft
 
         map& operator= (const map& x)
         {
+            if (this->_size)
+                    this->clear();
             _alloc = x.get_allocator();
             _comp = x.key_comp();
-            if (_size)
+            if (x.size())
             {
                 const_iterator it = x.begin();
                 const_iterator ite = x.end();
-                while (it != ite)
-                {
-                    this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
-                    it++;
-                }
-                this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
+                // while (it != ite)
+                // {
+                //     this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
+                //     it++;
+                // }
+                // this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
+                this->insert(it, ite);
                 _cont = _tree.getRoot();
+
             }
             _size = x.size();
             return (*this);
@@ -136,9 +139,10 @@ namespace ft
     //  Iterators
         iterator begin()
         {
+           
             Node<key_type, mapped_type> *it = _tree.getRoot();
 
-            if (it->left)
+            if (it && it->left)
                 while (it->left->left)
                     it = it->left;
             return (iterator(it));
@@ -147,9 +151,10 @@ namespace ft
         const_iterator begin() const
         {
             Node<key_type, mapped_type> *it = _tree.getRoot();
-         
-            while (it->left->left)    
-                it = it->left;
+
+            if (it && it->left)
+                while (it && it->left->left)    
+                    it = it->left;
             const iterator ret(it);
             return (ret);
         }
@@ -158,7 +163,7 @@ namespace ft
         {
             Node<key_type, mapped_type> *it = _tree.getRoot();
          
-            if (it->right)
+            if (it && it->right)
                 while (it->color != 2)
                     it = it->right;
             return (iterator(it));
@@ -168,7 +173,7 @@ namespace ft
         {
             Node<key_type, mapped_type> *it = _tree.getRoot();
 
-            if (it->right)
+            if (it && it->right)
                 while (it->color != 2)
                     it = it->right;
             const iterator ret(it);
@@ -241,6 +246,8 @@ namespace ft
         {
             while (erase(begin().getKey()))
             {}
+            _size = 0;
+            _cont = NULL;
             return;
         }
 
