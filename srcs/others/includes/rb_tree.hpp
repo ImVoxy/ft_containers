@@ -182,7 +182,6 @@ namespace ft
 				ft::pair<const key_type, mapped_type> *tmp;
 				if (isin(in.first))
 					return (ft::make_pair(searchTree(in.first), 0));
-
 				NodePtr node = _allocn.allocate(1);
 				node->parent = NULL;
 				tmp = _alloc.allocate(1);

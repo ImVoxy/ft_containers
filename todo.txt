@@ -4,7 +4,29 @@
 
 
 -> Map
-fix types for all (aled)
+
+map/bounds.cpp                     : COMPILE: ✅ | RET: ✅ | OUT: ⚠️  | STD: [Y]
+map/comp.cpp                       : COMPILE: ✅ | RET: ✅ | OUT: ⚠️  | STD: [Y]
+map/copy_construct.cpp             : COMPILE: ✅ | RET: ✅ | OUT: ❌ | STD: [Y]
+map/empty.cpp                      : COMPILE: ✅ | RET: ✅ | OUT: ✅ | STD: [Y]
+map/erase2.cpp                     : COMPILE: ✅ | RET: ❌ | OUT: ❌ | STD: [Y]
+map/erase.cpp                      : COMPILE: ✅ | RET: ❌ | OUT: ❌ | STD: [Y]
+map/find_count.cpp                 : COMPILE: ❌ | RET: ❌ | OUT: ❌ | STD: [Y]
+map/insert2.cpp                    : COMPILE: ✅ | RET: ✅ | OUT: ⚠️  | STD: [Y]
+map/insert.cpp                     : COMPILE: ❌ | RET: ❌ | OUT: ❌ | STD: [Y]
+map/ite_arrow.cpp                  : COMPILE: ✅ | RET: ✅ | OUT: ⚠️  | STD: [Y]
+map/ite_n0.cpp                     : COMPILE: ✅ | RET: ✅ | OUT: ✅ | STD: [N]
+map/ite_n1.cpp                     : COMPILE: ✅ | RET: ✅ | OUT: ✅ | STD: [N]
+map/ite_type.cpp                   : COMPILE: ✅ | RET: ✅ | OUT: ✅ | STD: [N]
+map/more.cpp                       : COMPILE: ✅ | RET: ✅ | OUT: ❌ | STD: [Y]
+map/op_sqbr.cpp                    : COMPILE: ✅ | RET: ✅ | OUT: ⚠️  | STD: [Y]
+map/relational_ope.cpp             : COMPILE: ❌ | RET: ❌ | OUT: ❌ | STD: [Y]
+map/rev_ite_construct.cpp          : COMPILE: ✅ | RET: ✅ | OUT: ✅ | STD: [Y]
+map/rite_arrow.cpp                 : COMPILE: ✅ | RET: ✅ | OUT: ⚠️  | STD: [Y]
+map/rite.cpp                       : COMPILE: ✅ | RET: ✅ | OUT: ✅ | STD: [Y]
+map/swap.cpp                       : COMPILE: ❌ | RET: ❌ | OUT: ❌ | STD: [Y]
+map/tricky_construct.cpp           : COMPILE: ✅ | RET: ✅ | OUT: ⚠️  | STD: [Y]
+map/tricky_erase.cpp               : COMPILE: ✅ | RET: ✅ | OUT: ⚠️  | STD: [Y]
 
 -> Others
 • iterators_traits                      OK

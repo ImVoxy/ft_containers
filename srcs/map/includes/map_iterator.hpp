@@ -41,7 +41,7 @@ namespace ft
 			const Iterator& base() const { return _node->elem; }
 			reference operator*() const { return (*(_node->elem)); }
 			// Node<key_type, mapped_type> *operator->() const { return _it; }
-			value_type *operator->() const {return _node->elem;}
+			pointer operator->() const {return _node->elem;}
 			mapped_type operator[](difference_type ptr) const
 			{
 				// Node tmp;
@@ -99,10 +99,15 @@ namespace ft
 			{
 				Node<key_type, mapped_type> *tmp = _node->parent;
 
-				if (_node->left && (_node->left->right || _node->left->left))
+				if (_node->color == 2)
+				{
+					_node = _node->parent;
+					return (*this);
+				}
+				if (_node->left->color != 2)
 				{
 					_node = _node->left;
-					while (_node->right->right || _node->right->left)
+					while (_node->right->color != 2)
 						_node = _node->right;
 				}
 				else
