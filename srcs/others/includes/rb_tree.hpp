@@ -36,6 +36,8 @@ namespace ft
 			typedef Compare						key_compare;
 			typedef Alloc   					allocator_type;
 			typedef Node<key_type, mapped_type> *NodePtr;
+			NodePtr root;
+			NodePtr TNULL;
 
 			RBTree(const key_compare& comp = key_compare(),
               const allocator_type& alloc = allocator_type())
@@ -72,7 +74,7 @@ namespace ft
 			{
 				if (TNULL->parent->elem->first == key)
 				{
-					if (TNULL->parent->left)
+					if (TNULL->parent->left->color != 2)
 						TNULL->parent = TNULL->parent->left;
 					else if (TNULL->parent->parent)
 						TNULL->parent = TNULL->parent->parent;
@@ -263,8 +265,7 @@ namespace ft
 			}
 
 		private:
-			NodePtr root;
-			NodePtr TNULL;
+			
 
 			void initializeNULLNode(NodePtr node, NodePtr parent) {
 				node->elem->first	= 0;

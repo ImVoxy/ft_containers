@@ -171,22 +171,34 @@ namespace ft
 		bool operator==(const map_iterator< IteratorL, Container >& lhs,
 						const map_iterator< IteratorR, Container >& rhs)
 		{
-			return (lhs.getNode()->elem == rhs.getNode()->elem);}
+			if (lhs.getNode() == NULL || rhs.getNode() == NULL)
+			{
+				if (lhs.getNode() != NULL || rhs.getNode() != NULL)
+				{
+					return (0);
+				}
+				else
+					return (1);
+			}
+			return (lhs.getNode()->elem == rhs.getNode()->elem);
+		}
 
 //  Relational operators
 		template < typename Iterator, typename Container >
 		bool operator==(const map_iterator< Iterator, Container >& lhs,
 						const map_iterator< Iterator, Container >& rhs)
-		{if (lhs.getNode() == NULL || rhs.getNode() == NULL)
 		{
-				if (lhs.getNode() == NULL || rhs.getNode() == NULL)
+			if (lhs.getNode() == NULL || rhs.getNode() == NULL)
+			{
+				if (lhs.getNode() != NULL || rhs.getNode() != NULL)
 				{
-					return (1);
+					return (0);
 				}
 				else
-					return (0);
+					return (1);
+			}
+			return (lhs.getNode()->elem == rhs.getNode()->elem);
 		}
-			return (lhs.getNode()->elem == rhs.getNode()->elem);}
 
 		template < typename IteratorL, typename IteratorR, typename Container >
 		bool operator!=(const map_iterator< IteratorL, Container >& lhs,
