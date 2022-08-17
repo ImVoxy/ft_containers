@@ -37,7 +37,7 @@ namespace ft
 			typedef Alloc   					allocator_type;
 			typedef Node<key_type, mapped_type> *NodePtr;
 			NodePtr root;
-			NodePtr TNULL;
+			NodePtr SNODE;
 
 			RBTree(const key_compare& comp = key_compare(),
               const allocator_type& alloc = allocator_type())
@@ -46,42 +46,42 @@ namespace ft
 				_comp = comp;
 				ft::pair<const key_type, mapped_type> *tmp;
 
-				TNULL = _allocn.allocate(1);
+				SNODE = _allocn.allocate(1);
 				tmp = _alloc.allocate(1);
-				TNULL->elem = tmp;
-				_alloc.construct(TNULL->elem, ft::pair<const key_type, mapped_type>());
-				TNULL->color = 1;
-				TNULL->left = NULL;
-				TNULL->right = NULL;
-				root = TNULL;
+				SNODE->elem = tmp;
+				_alloc.construct(SNODE->elem, ft::pair<const key_type, mapped_type>());
+				SNODE->color = 1;
+				SNODE->left = NULL;
+				SNODE->right = NULL;
+				root = SNODE;
 			}
 			~RBTree()
 			{
 				root = NULL;
-				_alloc.deallocate(TNULL->elem, 1);
-				_allocn.deallocate(TNULL, 1);
+				_alloc.deallocate(SNODE->elem, 1);
+				_allocn.deallocate(SNODE, 1);
 			}
 
 			void sentryNodeInsertChecker(NodePtr node)
 			{
-				if (TNULL->color == 1 || (TNULL->parent->elem->first < node->elem->first))
-					TNULL->parent = node;
-				if (TNULL->color == 1)
-					TNULL->color = 2;
+				if (SNODE->color == 1 || (SNODE->parent->elem->first < node->elem->first))
+					SNODE->parent = node;
+				if (SNODE->color == 1)
+					SNODE->color = 2;
 			}
 
 			void sentryNodeDeleteChecker(key_type key)
 			{
-				if (TNULL->parent->elem->first == key)
+				if (SNODE->parent->elem->first == key)
 				{
-					if (TNULL->parent->left->color != 2)
-						TNULL->parent = TNULL->parent->left;
-					else if (TNULL->parent->parent)
-						TNULL->parent = TNULL->parent->parent;
+					if (SNODE->parent->left->color != 2)
+						SNODE->parent = SNODE->parent->left;
+					else if (SNODE->parent->parent)
+						SNODE->parent = SNODE->parent->parent;
 					else
 					{
-						TNULL->parent = NULL;
-						TNULL->color = 1;
+						SNODE->parent = NULL;
+						SNODE->color = 1;
 					}
 				}
 			}
@@ -103,26 +103,26 @@ namespace ft
 			}
 
 			NodePtr minimum(NodePtr node) {
-				while (node->left != TNULL) {
+				while (node->left != SNODE) {
 					node = node->left;
 				}
 				return node;
 			}
 
 			NodePtr maximum(NodePtr node) {
-				while (node->right != TNULL) {
+				while (node->right != SNODE) {
 					node = node->right;
 				}
 				return node;
 			}
 
 			NodePtr successor(NodePtr x) {
-				if (x->right != TNULL) {
+				if (x->right != SNODE) {
 					return minimum(x->right);
 				}
 
 				NodePtr y = x->parent;
-				while (y != TNULL && x == y->right) {
+				while (y != SNODE && x == y->right) {
 					x = y;
 					y = y->parent;
 				}
@@ -130,12 +130,12 @@ namespace ft
 			}
 
 			NodePtr predecessor(NodePtr x) {
-				if (x->left != TNULL) {
+				if (x->left != SNODE) {
 					return maximum(x->left);
 				}
 
 				NodePtr y = x->parent;
-				while (y != TNULL && x == y->left) {
+				while (y != SNODE && x == y->left) {
 					x = y;
 					y = y->parent;
 				}
@@ -146,7 +146,7 @@ namespace ft
 			void leftRotate(NodePtr x) {
 				NodePtr y = x->right;
 				x->right = y->left;
-				if (y->left != TNULL) {
+				if (y->left != SNODE) {
 					y->left->parent = x;
 				}
 				y->parent = x->parent;
@@ -164,7 +164,7 @@ namespace ft
 			void rightRotate(NodePtr x) {
 				NodePtr y = x->left;
 				x->left = y->right;
-				if (y->right != TNULL) {
+				if (y->right != SNODE) {
 					y->right->parent = x;
 				}
 				y->parent = x->parent;
@@ -190,14 +190,14 @@ namespace ft
 				node->elem = tmp;
 				_alloc.construct(node->elem, ft::pair<const key_type, mapped_type>(in.first, in.second));
 				sentryNodeInsertChecker(node);
-				node->left = TNULL;
-				node->right = TNULL;
+				node->left = SNODE;
+				node->right = SNODE;
 				node->color = 1;
 
 				NodePtr y = NULL;
 				NodePtr x = this->root;
 
-				while (x != TNULL)
+				while (x != SNODE)
 				{
 					y = x;
 					if (node->elem->first < x->elem->first)
@@ -277,7 +277,7 @@ namespace ft
 			}
 
 			void preOrderHelper(NodePtr node) {
-				if (node != TNULL) {
+				if (node != SNODE) {
 					std::cout << node->elem->first << " ";
 					preOrderHelper(node->left);
 					preOrderHelper(node->right);
@@ -285,7 +285,7 @@ namespace ft
 			}
 
 			void inOrderHelper(NodePtr node) {
-				if (node != TNULL) {
+				if (node != SNODE) {
 					inOrderHelper(node->left);
 					std::cout << node->elem->first <<" ";
 					inOrderHelper(node->right);
@@ -293,7 +293,7 @@ namespace ft
 			}
 
 			void postOrderHelper(NodePtr node) {
-				if (node != TNULL) {
+				if (node != SNODE) {
 					postOrderHelper(node->left);
 					postOrderHelper(node->right);
 					std::cout << node->elem->first <<" ";
@@ -301,7 +301,7 @@ namespace ft
 			}
 
 			NodePtr searchTreeHelper(NodePtr node, key_type key) const {
-				if (node == TNULL || key == node->elem->first) {
+				if (node == SNODE || key == node->elem->first) {
 					return node;
 				}
 
@@ -395,10 +395,10 @@ namespace ft
 			}
 
 			void deleteNodeHelper(NodePtr node, key_type key) {
-				NodePtr z = TNULL;
+				NodePtr z = SNODE;
 				NodePtr x, y;
 
-				while (node != TNULL)
+				while (node != SNODE)
 				{
 					if (node->elem->first == key)
 						z = node;
@@ -407,17 +407,17 @@ namespace ft
 					else 
 						node = node->left;
 				}
-				if (z == TNULL)
+				if (z == SNODE)
 					return;
 				y = z;
 				int y_original_color = y->color;
 				
-				if (z->left == TNULL)
+				if (z->left == SNODE)
 				{
 					x = z->right;
 					rbTransplant(z, z->right);
 				}
-				else if (z->right == TNULL)
+				else if (z->right == SNODE)
 				{
 					x = z->left;
 					rbTransplant(z, z->left);
@@ -513,7 +513,7 @@ namespace ft
 
 			void printHelper(NodePtr root, std::string indent, bool last)
 			{
-				if (root != TNULL) {
+				if (root != SNODE) {
 				std::cout<<indent;
 				if (last)
 				{

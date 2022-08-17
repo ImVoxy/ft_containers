@@ -39,7 +39,7 @@ namespace ft
     template <class A, class B>
     bool operator== (const pair<A,B>& lhs, const pair<A,B>& rhs)
     {
-        return ((lhs.first == rhs.first) && (lhs.second == rhs.second));
+        return (lhs.first == rhs.first && lhs.second == rhs.second);
     }
 
     template <class A, class B>

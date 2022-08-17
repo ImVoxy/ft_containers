@@ -229,14 +229,18 @@ namespace ft
 
         void erase (iterator first, iterator last)
         {
+            iterator tmp = first;
+
             while (first != last)
             {
                 if (first.getNode()->color != 2 && _tree.isin(first.getKey()))
                 {
-                    _tree.deleteNode(first.getKey());
+                    tmp = first;
+                    first++;
+                    _tree.deleteNode(tmp.getKey());
                     _size--;
                 }
-                first++;
+                // first = tmp;
             }
         }
 
@@ -256,7 +260,7 @@ namespace ft
             std::swap(_cont, x._cont);
             std::swap(_comp, x._comp);
             std::swap(_tree.root, x._tree.root);
-            std::swap(_tree.TNULL, x._tree.TNULL);
+            std::swap(_tree.SNODE, x._tree.SNODE);
         }
 
         pair<iterator, bool> insert (const value_type& val)
@@ -266,16 +270,16 @@ namespace ft
             
             if (ret.second)
             {
-                _size ++;
+                _size++;
                 _cont = _tree.getRoot();
             }
-            return (ft::pair<iterator, bool>(test, ret.second));
+            return (ft::pair<iterator, bool>(iterator(_tree.searchTree(val.first)), ret.second));
         }
 
         iterator insert (iterator position, const value_type& val)
         {
-            insert(ft::make_pair(position.getKey(), val.second));
-            return (iterator(_tree.searchTree(position.getKey())));
+            (void)position;
+            return (iterator(insert(val).first));
         }
 
         template <class InputIterator>
@@ -394,6 +398,9 @@ namespace ft
 
         template <class A, class B, class C, class D>
         void swap (map<A,B,C,D>& x, map<A,B,C,D>& y);
+        // template <class A, class B, class C, class D>
+        // friend bool operator<  ( const map<A,B,C,D>& lhs,
+        //                     const map<A,B,C,D>& rhs );
     //  Allocator
     };
 
@@ -415,6 +422,7 @@ namespace ft
                     return (0);
                 rit++;
                 lit++;
+                
             }
             return (1);           
         }
