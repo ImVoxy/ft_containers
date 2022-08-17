@@ -173,12 +173,12 @@ int		main(void)
 	printSize(mp_copy);
 
 	mp = mp_copy;
-	// mp_copy = mp_range;
-	// mp_range.clear();
+	mp_copy = mp_range;
+	mp_range.clear();
 
-	// std::cout << "\t-- PART TWO --" << std::endl;
-	// printSize(mp);
-	// printSize(mp_range);
-	// printSize(mp_copy);
+	std::cout << "\t-- PART TWO --" << std::endl;
+	printSize(mp);
+	printSize(mp_range);
+	printSize(mp_copy);
 	return (0);
 }

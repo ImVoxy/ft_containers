@@ -26,9 +26,7 @@ namespace ft
 	class RBTree
 	{
 		protected:
-			Alloc							_alloc;
-			std::allocator<Node<Key, T> >	_allocn;
-			Compare							_comp;
+			
 
 		public:
 			typedef Key     					key_type;
@@ -38,6 +36,9 @@ namespace ft
 			typedef Node<key_type, mapped_type> *NodePtr;
 			NodePtr root;
 			NodePtr SNODE;
+			Alloc							_alloc;
+			std::allocator<Node<Key, T> >	_allocn;
+			Compare							_comp;
 
 			RBTree(const key_compare& comp = key_compare(),
               const allocator_type& alloc = allocator_type())

@@ -102,7 +102,7 @@ namespace ft
                     this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
                     it++;
                 }
-                this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
+                // this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
                 _cont = _tree.getRoot();
             }
             _size = x.size();
@@ -116,8 +116,19 @@ namespace ft
 
         map& operator= (const map& x)
         {
-            if (this->_size)
-                    this->clear();
+            // if (this->_size)
+            this->clear();
+            ft::pair<const key_type, mapped_type> *tmp;
+            _tree._alloc.deallocate(_tree.SNODE->elem, 1);
+            _tree._allocn.deallocate(_tree.SNODE, 1);
+            _tree.SNODE = _tree._allocn.allocate(1);
+            tmp = _tree._alloc.allocate(1);
+            _tree.SNODE->elem = tmp;
+            _tree._alloc.construct(_tree.SNODE->elem, ft::pair<const key_type, mapped_type>());
+            _tree.SNODE->color = 1;
+            _tree.SNODE->left = NULL;
+            _tree.SNODE->right = NULL;
+            _tree.root = _tree.SNODE;
             _alloc = x.get_allocator();
             _comp = x.key_comp();
             if (x.size())
@@ -128,7 +139,7 @@ namespace ft
                 _cont = _tree.getRoot();
 
             }
-            _size = x.size();
+            // _size = x.size();
             return (*this);
         }
         allocator_type get_allocator() const
