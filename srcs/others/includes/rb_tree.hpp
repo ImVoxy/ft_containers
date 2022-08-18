@@ -30,9 +30,6 @@ namespace ft
 			typedef Compare						key_compare;
 			typedef Alloc   					allocator_type;
 			typedef Node<key_type, mapped_type> *NodePtr;
-			
-			
-			
 
 			RBTree(const key_compare& comp = key_compare(),
               const allocator_type& alloc = allocator_type())
