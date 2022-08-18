@@ -22,15 +22,13 @@ namespace ft
         
         private:        
         protected:
-            Alloc           _alloc;
-            size_t          _size;
-            Node<Key, T>    *_cont;
-            Compare         _comp;
-            
-            
-        public:
-            RBTree<Key, T, Compare, Alloc>                      _tree;
+            Alloc                           _alloc;
+            size_t                          _size;
+            Compare                         _comp;
+            RBTree<Key, T, Compare, Alloc>  _tree;
+            Node<Key, T>                    *_cont;
 
+        public:
             typedef Key                                         key_type;
             typedef T                                           mapped_type;
             typedef ft::pair<const key_type, mapped_type>       value_type;
@@ -102,7 +100,6 @@ namespace ft
                     this->insert(ft::make_pair(it.getKey(), it[it.getKey()]));
                     it++;
                 }
-                // this->insert(ft::make_pair(ite.getKey(), ite[ite.getKey()]));
                 _cont = _tree.getRoot();
             }
             _size = x.size();
@@ -116,19 +113,11 @@ namespace ft
 
         map& operator= (const map& x)
         {
-            // if (this->_size)
             this->clear();
-            ft::pair<const key_type, mapped_type> *tmp;
-            _tree._alloc.deallocate(_tree.SNODE->elem, 1);
-            _tree._allocn.deallocate(_tree.SNODE, 1);
-            _tree.SNODE = _tree._allocn.allocate(1);
-            tmp = _tree._alloc.allocate(1);
-            _tree.SNODE->elem = tmp;
-            _tree._alloc.construct(_tree.SNODE->elem, ft::pair<const key_type, mapped_type>());
-            _tree.SNODE->color = 1;
-            _tree.SNODE->left = NULL;
-            _tree.SNODE->right = NULL;
-            _tree.root = _tree.SNODE;
+            _alloc.deallocate(_tree.getSnode()->elem, 1);
+            _tree.get_allocator().deallocate(_tree.getSnode(), 1);
+            
+            _tree.setSnode();
             _alloc = x.get_allocator();
             _comp = x.key_comp();
             if (x.size())
@@ -139,7 +128,6 @@ namespace ft
                 _cont = _tree.getRoot();
 
             }
-            // _size = x.size();
             return (*this);
         }
         allocator_type get_allocator() const
@@ -251,7 +239,6 @@ namespace ft
                     _tree.deleteNode(tmp.getKey());
                     _size--;
                 }
-                // first = tmp;
             }
         }
 
@@ -270,8 +257,7 @@ namespace ft
             std::swap(_size, x._size);
             std::swap(_cont, x._cont);
             std::swap(_comp, x._comp);
-            std::swap(_tree.root, x._tree.root);
-            std::swap(_tree.SNODE, x._tree.SNODE);
+            _tree.swap(x._tree);
         }
 
         pair<iterator, bool> insert (const value_type& val)
@@ -305,7 +291,7 @@ namespace ft
 
     //  Observers
         key_compare key_comp() const{return (_comp);}
-        value_compare value_comp() const{return (_comp);}
+        value_compare value_comp() const{return (value_compare(_comp));}
 
     //  Operations
     
@@ -406,12 +392,6 @@ namespace ft
 
             return (ft::pair<iterator, iterator>(lower, upper));
         }
-
-        template <class A, class B, class C, class D>
-        void swap (map<A,B,C,D>& x, map<A,B,C,D>& y);
-        // template <class A, class B, class C, class D>
-        // friend bool operator<  ( const map<A,B,C,D>& lhs,
-        //                     const map<A,B,C,D>& rhs );
     //  Allocator
     };
 
@@ -429,7 +409,7 @@ namespace ft
                 return (0);
             while ((rit != rite) && (lit != lite))
             {
-                if (rit != lit)
+                if (*rit != *lit)
                     return (0);
                 rit++;
                 lit++;

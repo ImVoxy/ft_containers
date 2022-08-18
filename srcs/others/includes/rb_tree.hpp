@@ -1,11 +1,9 @@
 #ifndef RB_TREE_HPP
 # define RB_TREE_HPP
 
-#include <iostream>
+// #include <iostream>
 #include "pair.hpp"
 #include "make_pair.hpp"
-
-// using namespace std;
 
 namespace ft
 {
@@ -26,36 +24,24 @@ namespace ft
 	class RBTree
 	{
 		protected:
-			
-
 		public:
 			typedef Key     					key_type;
 			typedef T       					mapped_type;
 			typedef Compare						key_compare;
 			typedef Alloc   					allocator_type;
 			typedef Node<key_type, mapped_type> *NodePtr;
-			NodePtr root;
-			NodePtr SNODE;
-			Alloc							_alloc;
-			std::allocator<Node<Key, T> >	_allocn;
-			Compare							_comp;
+			
+			
+			
 
 			RBTree(const key_compare& comp = key_compare(),
               const allocator_type& alloc = allocator_type())
 			{
-				_alloc = alloc;
-				_comp = comp;
-				ft::pair<const key_type, mapped_type> *tmp;
-
-				SNODE = _allocn.allocate(1);
-				tmp = _alloc.allocate(1);
-				SNODE->elem = tmp;
-				_alloc.construct(SNODE->elem, ft::pair<const key_type, mapped_type>());
-				SNODE->color = 1;
-				SNODE->left = NULL;
-				SNODE->right = NULL;
-				root = SNODE;
+				_alloc								= alloc;
+				_comp								= comp;
+				setSnode();
 			}
+
 			~RBTree()
 			{
 				root = NULL;
@@ -63,9 +49,15 @@ namespace ft
 				_allocn.deallocate(SNODE, 1);
 			}
 
+			void swap (RBTree& x)
+			{
+				std::swap(root, x.root);
+            	std::swap(SNODE, x.SNODE);
+			}
+
 			void sentryNodeInsertChecker(NodePtr node)
 			{
-				if (SNODE->color == 1 || (SNODE->parent->elem->first < node->elem->first))
+				if (SNODE->color == 1 || (_comp(SNODE->parent->elem->first, node->elem->first)))
 					SNODE->parent = node;
 				if (SNODE->color == 1)
 					SNODE->color = 2;
@@ -87,56 +79,46 @@ namespace ft
 				}
 			}
 
-			void preorder() {
-				preOrderHelper(this->root);
-			}
-
-			void inorder() {
-				inOrderHelper(this->root);
-			}
-
-			void postorder() {
-				postOrderHelper(this->root);
-			}
-
-			NodePtr searchTree(key_type k) const {
+			NodePtr searchTree(key_type k) const
+			{
 				return searchTreeHelper(this->root, k);
 			}
 
-			NodePtr minimum(NodePtr node) {
-				while (node->left != SNODE) {
+			NodePtr minimum(NodePtr node)
+			{
+				while (node->left != SNODE)
 					node = node->left;
-				}
 				return node;
 			}
 
-			NodePtr maximum(NodePtr node) {
-				while (node->right != SNODE) {
+			NodePtr maximum(NodePtr node)
+			{
+				while (node->right != SNODE)
 					node = node->right;
-				}
 				return node;
 			}
 
-			NodePtr successor(NodePtr x) {
-				if (x->right != SNODE) {
+			NodePtr successor(NodePtr x)
+			{
+				if (x->right != SNODE)
 					return minimum(x->right);
-				}
-
 				NodePtr y = x->parent;
-				while (y != SNODE && x == y->right) {
+				while (y != SNODE && x == y->right)
+				{
 					x = y;
 					y = y->parent;
 				}
 				return y;
 			}
 
-			NodePtr predecessor(NodePtr x) {
-				if (x->left != SNODE) {
+			NodePtr predecessor(NodePtr x)
+			{
+				NodePtr y = x->parent;
+
+				if (x->left != SNODE)
 					return maximum(x->left);
-				}
-
-				NodePtr y = x->parent;
-				while (y != SNODE && x == y->left) {
+				while (y != SNODE && x == y->left)
+				{
 					x = y;
 					y = y->parent;
 				}
@@ -144,38 +126,38 @@ namespace ft
 				return y;
 			}
 
-			void leftRotate(NodePtr x) {
+			void leftRotate(NodePtr x)
+			{
 				NodePtr y = x->right;
+
 				x->right = y->left;
-				if (y->left != SNODE) {
+				if (y->left != SNODE)
 					y->left->parent = x;
-				}
 				y->parent = x->parent;
-				if (x->parent == NULL) {
+				if (x->parent == NULL)
 					this->root = y;
-				} else if (x == x->parent->left) {
+				else if (x == x->parent->left)
 					x->parent->left = y;
-				} else {
+				else
 					x->parent->right = y;
-				}
 				y->left = x;
 				x->parent = y;
 			}
 
-			void rightRotate(NodePtr x) {
+			void rightRotate(NodePtr x)
+			{
 				NodePtr y = x->left;
+
 				x->left = y->right;
-				if (y->right != SNODE) {
+				if (y->right != SNODE)
 					y->right->parent = x;
-				}
 				y->parent = x->parent;
-				if (x->parent == NULL) {
+				if (x->parent == NULL)
 					this->root = y;
-				} else if (x == x->parent->right) {
+				else if (x == x->parent->right)
 					x->parent->right = y;
-				} else {
+				else 
 					x->parent->left = y;
-				}
 				y->right = x;
 				x->parent = y;
 			}
@@ -183,6 +165,7 @@ namespace ft
 			ft::pair<NodePtr, bool> insert(ft::pair<key_type, mapped_type> in)
 			{
 				ft::pair<const key_type, mapped_type> *tmp;
+
 				if (isin(in.first))
 					return (ft::make_pair(searchTree(in.first), 0));
 				NodePtr node = _allocn.allocate(1);
@@ -201,7 +184,7 @@ namespace ft
 				while (x != SNODE)
 				{
 					y = x;
-					if (node->elem->first < x->elem->first)
+					if (_comp(node->elem->first, x->elem->first))
 						x = x->left;
 					else
 						x = x->right;
@@ -210,7 +193,7 @@ namespace ft
 				node->parent = y;
 				if (y == NULL)
 					root = node;
-				else if (node->elem->first < y->elem->first)
+				else if (_comp(node->elem->first, y->elem->first))
 					y->left = node;
 				else
 					y->right = node;
@@ -224,14 +207,23 @@ namespace ft
 				return (fixInsert(node));
 			}
 
-			NodePtr getRoot(){
-				return this->root;
+			void	setSnode()
+			{
+				ft::pair<const key_type, mapped_type> *tmp;
+
+				tmp = _alloc.allocate(1);
+				SNODE = _allocn.allocate(1);
+				SNODE->elem = tmp;
+				_alloc.construct(SNODE->elem, ft::pair<const key_type, mapped_type>());
+				SNODE->color = 1;
+				SNODE->left = NULL;
+				SNODE->right = NULL;
+				root = SNODE;
 			}
 
-			const NodePtr getRoot() const {
-				return this->root;
-			}
-
+			NodePtr getRoot(){return this->root;}
+			NodePtr getSnode(){return this->SNODE;}
+			const NodePtr getRoot() const {return this->root;}
 			std::allocator<Node<Key, T> > get_allocator() const{return (this->_allocn);}
 
 			void deleteNode(key_type key)
@@ -241,21 +233,21 @@ namespace ft
 				
 			}
 
-			void prettyPrint() {
-				if (root) {
-					printHelper(this->root, "", true);
-				}
-			}
+			// void prettyPrint() {
+			// 	if (root) {
+			// 		printHelper(this->root, "", true);
+			// 	}
+			// }
 
 			int isin(const key_type i)
 			{
 				NodePtr tmp = this->root;
 
-				while(tmp->right || tmp->left)
+				while((tmp->right || tmp->left))
 				{
-					if (tmp->left && i < tmp->elem->first)
+					if (tmp->left && (_comp(i, tmp->elem->first)))
 						tmp = tmp->left; 
-					else if (tmp->right && i > tmp->elem->first)
+					else if (tmp->right && (_comp(tmp->elem->first, i)))
 						tmp	= tmp->right;
 					else if (i == tmp->elem->first)
 						return (1);
@@ -266,7 +258,11 @@ namespace ft
 			}
 
 		private:
-			
+			NodePtr 						root;
+			NodePtr							SNODE;
+			Alloc							_alloc;
+			std::allocator<Node<Key, T> >	_allocn;
+			Compare							_comp;
 
 			void initializeNULLNode(NodePtr node, NodePtr parent) {
 				node->elem->first	= 0;
@@ -277,45 +273,20 @@ namespace ft
 				node->color			= 0;
 			}
 
-			void preOrderHelper(NodePtr node) {
-				if (node != SNODE) {
-					std::cout << node->elem->first << " ";
-					preOrderHelper(node->left);
-					preOrderHelper(node->right);
-				} 
-			}
-
-			void inOrderHelper(NodePtr node) {
-				if (node != SNODE) {
-					inOrderHelper(node->left);
-					std::cout << node->elem->first <<" ";
-					inOrderHelper(node->right);
-				} 
-			}
-
-			void postOrderHelper(NodePtr node) {
-				if (node != SNODE) {
-					postOrderHelper(node->left);
-					postOrderHelper(node->right);
-					std::cout << node->elem->first <<" ";
-				} 
-			}
-
-			NodePtr searchTreeHelper(NodePtr node, key_type key) const {
-				if (node == SNODE || key == node->elem->first) {
+			NodePtr searchTreeHelper(NodePtr node, key_type key) const
+			{
+				if (node == SNODE || key == node->elem->first)
 					return node;
-				}
-
-				if (key < node->elem->first) {
+				if (_comp(key, node->elem->first))
 					return searchTreeHelper(node->left, key);
-				} 
 				return searchTreeHelper(node->right, key);
 			}
 
 			void fixDelete(NodePtr x) {
 				NodePtr s;
 				while (x != root && x->color == 0) {
-					if (x == x->parent->left) {
+					if (x == x->parent->left)
+					{
 						s = x->parent->right;
 						if (s->color == 1) {
 							s->color = 0;
@@ -324,12 +295,16 @@ namespace ft
 							s = x->parent->right;
 						}
 
-						if (s->left->color != 1 && s->right->color != 1) {
+						if (s->left->color != 1 && s->right->color != 1)
+						{
 							if (s->color != 2)
 								s->color = 1;
 							x = x->parent;
-						} else {
-							if (s->right->color != 1) {
+						}
+						else
+						{
+							if (s->right->color != 1)
+							{
 								if (s->left->color != 2)
 									s->left->color = 0;
 								if (s->color != 2)
@@ -346,21 +321,28 @@ namespace ft
 							leftRotate(x->parent);
 							x = root;
 						}
-					} else {
+					}
+					else
+					{
 						s = x->parent->left;
-						if (s->color == 1) {
+						if (s->color == 1)
+						{
 							s->color = 0;
 							x->parent->color = 1;
 							rightRotate(x->parent);
 							s = x->parent->left;
 						}
 
-						if (s->right->color != 1) {
+						if (s->right->color != 1)
+						{
 							if (s->color != 2)
 								s->color = 1;
 							x = x->parent;
-						} else {
-							if (s->left->color != 1) {
+						}
+						else
+						{
+							if (s->left->color != 1)
+							{
 								if (s->color != 2)
 									s->right->color = 0;
 								if (s->color != 2)
@@ -403,7 +385,7 @@ namespace ft
 				{
 					if (node->elem->first == key)
 						z = node;
-					if (node->elem->first <= key)
+					if (!(_comp(key, node->elem->first)))
 						node = node->right;
 					else 
 						node = node->left;
@@ -424,8 +406,8 @@ namespace ft
 					rbTransplant(z, z->left);
 				}
 				
-				else {
-					
+				else
+				{	
 					y = minimum(z->right);
 					y_original_color = y->color;
 					x = y->right;
@@ -438,7 +420,6 @@ namespace ft
 						if (y->right->color != 2)
 							y->right->parent = y;
 					}
-
 					rbTransplant(z, y);
 					y->left = z->left;
 					if (y->left->color != 2)
@@ -449,10 +430,8 @@ namespace ft
 				}
 				_alloc.deallocate(z->elem, 1);
 				_allocn.deallocate(z, 1);
-				
-				if (y_original_color == 0){
+				if (y_original_color == 0)
 					fixDelete(x);
-				}
 			}
 			
 			ft::pair<NodePtr, bool> fixInsert(NodePtr k)
@@ -461,7 +440,8 @@ namespace ft
 
 				while (k->parent->color == 1)
 				{
-					if (k->parent == k->parent->parent->right) {
+					if (k->parent == k->parent->parent->right)
+					{
 						u = k->parent->parent->left;
 						if (u->color == 1)
 						{
@@ -485,7 +465,6 @@ namespace ft
 					else
 					{
 						u = k->parent->parent->right;
-
 						if (u->color == 1)
 						{
 							u->color = 0;
@@ -512,27 +491,27 @@ namespace ft
 				return (ft::make_pair(k, true));
 			}
 
-			void printHelper(NodePtr root, std::string indent, bool last)
-			{
-				if (root != SNODE) {
-				std::cout<<indent;
-				if (last)
-				{
-					std::cout << "R----";
-					indent += "     ";
-				}
-				else
-				{
-					std::cout << "L----";
-					indent += "|    ";
-				}
+		// 	void printHelper(NodePtr root, std::string indent, bool last)
+		// 	{
+		// 		if (root != SNODE) {
+		// 		std::cout<<indent;
+		// 		if (last)
+		// 		{
+		// 			std::cout << "R----";
+		// 			indent += "     ";
+		// 		}
+		// 		else
+		// 		{
+		// 			std::cout << "L----";
+		// 			indent += "|    ";
+		// 		}
 					
-				std::string sColor = root->color ? "RED" : "BLACK";
-				std::cout << root->elem->first << "("<<sColor<<")" << std::endl;
-				printHelper(root->left, indent, false);
-				printHelper(root->right, indent, true);
-			}
-		}
+		// 		std::string sColor = root->color ? "RED" : "BLACK";
+		// 		std::cout << root->elem->first << "("<<sColor<<")" << std::endl;
+		// 		printHelper(root->left, indent, false);
+		// 		printHelper(root->right, indent, true);
+		// 	}
+		// }
 	};
 }
 

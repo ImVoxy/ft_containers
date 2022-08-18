@@ -197,7 +197,7 @@ namespace ft
 				else
 					return (1);
 			}
-			return (*(lhs.getNode()->elem) == *(rhs.getNode()->elem));
+			return (lhs.getNode()->elem == rhs.getNode()->elem);
 		}
 
 		template < typename IteratorL, typename IteratorR, typename Container >
