@@ -58,56 +58,89 @@ void    printMapVec(Tmap &mp)
 
 int main()
 {
-    TEST::map<int, int> bst;
-    TEST::map<std::string, char> bst2;
+    TEST::map<int, int> mp;
+    TEST::map<int, int> mpswap;
+    TEST::map<std::string, char> mp2;
     TEST::vector<int> vec1;
     TEST::vector<int> vec2;
     TEST::vector<int> vec3;
-    TEST::map<std::string, TEST::vector<int> > vecmap;
+    TEST::map<std::string, TEST::vector<int> > vecmp;
 
-    std::cout << "is bst empty ? " << bst.empty() << std::endl;
-	bst.insert(TEST::make_pair(8, 1));
-    std::cout << "is bst empty ? " << bst.empty() << std::endl << std::endl;
-	bst.insert(TEST::make_pair(18, 2));
-    printMap(bst);
-	bst.insert(TEST::make_pair(5, 3));
-    printMap(bst);
-	bst.insert(TEST::make_pair(15, 4));
-    printMap(bst);
-    bst.insert(TEST::make_pair(17, 5));
-    printMap(bst);
-	bst.insert(TEST::make_pair(25, 6));
-    printMap(bst);
-	bst.insert(TEST::make_pair(40, 7));
-    printMap(bst);
-	bst.insert(TEST::make_pair(80, 8));
-    printMap(bst);
-    bst.insert(TEST::make_pair(42, 9));
-    printMap(bst);
-	bst.insert(TEST::make_pair(11, 10));
-    printMap(bst);
-	bst.insert(TEST::make_pair(8, 11));
-    printMap(bst);
-	bst.insert(TEST::make_pair(204, 12));
-    printMap(bst);
-	bst.insert(TEST::make_pair(111, 13));
-    printMap(bst);
-	bst.erase(15);
-    bst.erase(5);
-    printMap(bst);
-    bst.erase(++(++(bst.begin())), --(--(bst.end())));
-    printMap(bst);
+    std::cout << "\033[1;33m     BASICS MAP     \033[0m" << std::endl << std::endl;
 
-    TEST::map<int, int> testeq = bst;
+    std::cout << "is mp empty ? " << mp.empty() << std::endl;
+	mp.insert(TEST::make_pair(8, 1));
+    std::cout << "is mp empty ? " << mp.empty() << std::endl << std::endl;
+
+    std::cout << "Some randoms inserts :" << std::endl;
+
+	mp.insert(TEST::make_pair(18, 2));
+    printMap(mp);
+	mp.insert(TEST::make_pair(5, 3));
+    printMap(mp);
+	mp.insert(TEST::make_pair(15, 4));
+    printMap(mp);
+    mp.insert(TEST::make_pair(17, 5));
+    printMap(mp);
+	mp.insert(TEST::make_pair(25, 6));
+    printMap(mp);
+	mp.insert(TEST::make_pair(40, 7));
+    printMap(mp);
+	mp.insert(TEST::make_pair(80, 8));
+    printMap(mp);
+    mp.insert(TEST::make_pair(42, 9));
+    printMap(mp);
+	mp.insert(TEST::make_pair(11, 10));
+    printMap(mp);
+	mp.insert(TEST::make_pair(8, 11));
+    printMap(mp);
+	mp.insert(TEST::make_pair(204, 12));
+    printMap(mp);
+	mp.insert(TEST::make_pair(111, 13));
+    printMap(mp);
+    mpswap.insert(mp.begin(), mp.end());
+    std::cout << "Insert begin to end" << std::endl;
+	printMap(mpswap);
+
+    std::cout << "Erasing existing and not existing elements" << std::endl;
+    mp.erase(142);
+    mp.erase(15);
+    mp.erase(5);
+    printMap(mp);
+    mp.erase(++(++(mp.begin())), --(--(mp.end())));
+    printMap(mp);
+
+    std::cout << "Swap mp and mpswap" << std::endl << "mp is now :" << std::endl;
+    mp.swap(mpswap);
+    printMap(mp);
+    std::cout << "mpswap is now :" << std::endl;
+    printMap(mpswap);
+    std::cout << "Rollback as it was before swap" << std::endl << "mp is now :" << std::endl;
+    mp.swap(mpswap);
+    printMap(mp);
+    std::cout << "mpswap is now :" << std::endl;
+    printMap(mpswap);
+
+    std::cout << "Accessing with [] :" << std::endl;
+    
+    std::cout << "mp[8]   = " << mp[8] << std::endl;
+    std::cout << "mp[111] = " << mp[111] << std::endl;
+    std::cout << "mp[999] = " << mp[999] << std::endl;
+
+    std::cout << "operator= :" << std::endl;
+
+    TEST::map<int, int> testeq = mp;
     printMap(testeq);
     testeq.clear();
 
-    TEST::map<int, int> testcpy(bst);
+    std::cout << "copy construct :" << std::endl;
+
+    TEST::map<int, int> testcpy(mp);
     printMap(testcpy);
     testcpy.clear();
     
     
-    TEST::map<int, int> cpy(bst);
+    TEST::map<int, int> cpy(mp);
     printMap(cpy);
 
     TEST::map<int, int>::iterator it = cpy.begin();
@@ -118,6 +151,8 @@ int main()
 
     TEST::map<int, int>::iterator it_test = test.begin();
     TEST::map<int, int>::iterator ite_test = test.end();
+
+    std::cout << "As random as useless iterator tests :" << std::endl;
 
     it++;
     std::cout << "begin key = " << it->first << " val = " << it->second << std::endl ;
@@ -144,6 +179,8 @@ int main()
     std::cout << "end key   = " << ite->first << " val = " << ite->second << std::endl ;
     ite--;
     std::cout << "end key   = " << ite->first << " val = " << ite->second << std::endl << std::endl;
+
+    std::cout << "Useless test cuz it's an undefined behavior but well, i did it :" << std::endl;
 
     it_test++;
     std::cout << "begin key = " << it_test->first << " val = " << it_test->second << std::endl ;
@@ -185,19 +222,19 @@ int main()
     TEST::map<int, int>::iterator find_test = test.find(11);
     std::cout << "find existing           -> " << find_test->first << std::endl << std::endl;
 
-    std::cout << "size = " << bst.size() << " maxsixe = " << bst.max_size() << std::endl;
-    std::cout << "equalrange existing     -> " << bst.equal_range(11).first->first << " ; " << bst.equal_range(11).second->first << std::endl;
-    std::cout << "equalrange not existing -> " << bst.equal_range(10).first->first << " ; " << bst.equal_range(10).second->first << std::endl;
-    std::cout << "equalrange not existing -> " << (bst.equal_range(250).first != bst.end()) << " (comparison with past the end elem)" << std::endl;
-    std::cout << "lowerbound not existing -> " << bst.lower_bound(11)->first << std::endl;
-    std::cout << "lowerbound not existing -> " << bst.lower_bound(10)->first << std::endl;
-    std::cout << "lowerbound not existing -> " << (bst.lower_bound(250) != bst.end()) << " (comparison with past the end elem)" << std::endl;
-    std::cout << "upperbound not existing -> " << bst.upper_bound(11)->first << std::endl;
-    std::cout << "upperbound not existing -> " << bst.upper_bound(10)->first << std::endl;
-    std::cout << "upperbound not existing -> " << bst.upper_bound(0)->first << std::endl;
+    std::cout << "size = " << mp.size() << " maxsixe = " << mp.max_size() << std::endl;
+    std::cout << "equalrange existing     -> " << mp.equal_range(11).first->first << " ; " << mp.equal_range(11).second->first << std::endl;
+    std::cout << "equalrange not existing -> " << mp.equal_range(10).first->first << " ; " << mp.equal_range(10).second->first << std::endl;
+    std::cout << "equalrange not existing -> " << (mp.equal_range(250).first != mp.end()) << " (comparison with past the end elem)" << std::endl;
+    std::cout << "lowerbound not existing -> " << mp.lower_bound(11)->first << std::endl;
+    std::cout << "lowerbound not existing -> " << mp.lower_bound(10)->first << std::endl;
+    std::cout << "lowerbound not existing -> " << (mp.lower_bound(250) != mp.end()) << " (comparison with past the end elem)" << std::endl;
+    std::cout << "upperbound not existing -> " << mp.upper_bound(11)->first << std::endl;
+    std::cout << "upperbound not existing -> " << mp.upper_bound(10)->first << std::endl;
+    std::cout << "upperbound not existing -> " << mp.upper_bound(0)->first << std::endl;
     
 
-    //
+    std::cout << std::endl << "\033[1;33m     MAP VECTOR     \033[0m" << std::endl << std::endl;
 
     vec1.push_back(10);
     vec1.push_back(42);
@@ -217,9 +254,9 @@ int main()
     TEST::pair<std::string, TEST::vector<int> > pairtest1("bonjour", vec1);
     TEST::pair<std::string, TEST::vector<int> > pairtest2("hello", vec2);
     TEST::pair<std::string, TEST::vector<int> > pairtest3("bye", vec3);
-    vecmap.insert(pairtest1);
-    vecmap.insert(pairtest2);
-    vecmap.insert(pairtest3);
-    printMapVec(vecmap);
+    vecmp.insert(pairtest1);
+    vecmp.insert(pairtest2);
+    vecmp.insert(pairtest3);
+    printMapVec(vecmp);
 
 }
