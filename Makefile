@@ -3,7 +3,7 @@ NAME = tests
 CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-CXXFLAGS = -std=c++98
+# CXXFLAGS = -std=c++98
 INC = -Iincludes
 TEST = ./tests
 
@@ -11,6 +11,7 @@ SRCDIR = srcs/
 
 SRCS = 		stack_main.cpp \
 		vector_main.cpp \
+		map_main.cpp \
 		pair_main.cpp \
 		iterator_main.cpp \
 		reverse_iterator_main.cpp \
@@ -23,6 +24,7 @@ SRCS = 		stack_main.cpp \
 OBJDIR = obj/
 
 OBJ = $(addprefix $(OBJDIR),$(SRCS:.cpp=.o))
+# DEP = $(addprefix $(OBJDIR),$(SRCS:.cpp=.d))
 
 all: $(NAME)
 
@@ -46,3 +48,5 @@ fclean: clean
 	rm -rf $(NAME) a.out
 
 re: clean fclean all
+
+# include $(DEP)

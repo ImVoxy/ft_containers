@@ -8,7 +8,7 @@
 
 #define TEST ft
 
-void display_vec_int(TEST::vector<int> vector_int)
+void display_vec_int2(TEST::vector<int> vector_int)
 {   
     for (int i = 0 ; i < (int)vector_int.size(); i += 1)
         std::cout << vector_int[i] << ", ";
@@ -25,7 +25,7 @@ template <typename T>
 void    printElem2(const T &iterator)
 {
 	std::cout << "key: " << iterator->first << " | value: ";
-    display_vec_int(iterator->second);
+    display_vec_int2(iterator->second);
 }
 
 template<typename Tmap>
@@ -56,7 +56,7 @@ void    printMapVec(Tmap &mp)
     std::cout << std::endl;
 }
 
-int main()
+int map_test()
 {
     TEST::map<int, int> mp;
     TEST::map<int, int> mpswap;
@@ -259,4 +259,5 @@ int main()
     vecmp.insert(pairtest3);
     printMapVec(vecmp);
 
+    return (0);
 }

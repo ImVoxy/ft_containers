@@ -8,6 +8,7 @@
 #include "others/includes/pair.hpp"
 #include "stack/includes/stack.hpp"
 #include "vector/includes/vector.hpp"
+#include "map/includes/map.hpp"
 
 int main()
 {
@@ -16,8 +17,8 @@ int main()
     stack_test();
     std::cout << std::endl << "\033[1;32m     VECTOR TESTS     \033[0m" << std::endl << std::endl;
     vector_test();
-    // std::cout << std::endl << "\033[1;32m     MAP TESTS     \033[0m" << std::endl << std::endl;
-    // map_test();
+    std::cout << std::endl << "\033[1;32m     MAP TESTS     \033[0m" << std::endl << std::endl;
+    map_test();
     std::cout << std::endl << "\033[1;32m     ITERATOR TESTS     \033[0m" << std::endl << std::endl;
     iterator_test();
     std::cout << std::endl << "\033[1;32m     REVERSE_ITERATOR TESTS     \033[0m" << std::endl << std::endl;

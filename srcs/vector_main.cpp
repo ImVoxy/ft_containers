@@ -22,7 +22,7 @@ void display_vec_int(TEST::vector<int> vector_int)
     std::cout << std::endl;
 }
 
-int main()
+int vector_test()
 {
     TEST::vector<int> testnul(5);
     TEST::vector<int> vector_int;

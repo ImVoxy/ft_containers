@@ -12,6 +12,8 @@
 
 #include "map_iterator.hpp"
 
+int map_test();
+
 namespace ft
 {
 
