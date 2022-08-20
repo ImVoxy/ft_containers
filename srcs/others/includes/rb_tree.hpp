@@ -1,7 +1,7 @@
 #ifndef RB_TREE_HPP
 # define RB_TREE_HPP
 
-// #include <iostream>
+#include <iostream>
 #include "pair.hpp"
 #include "make_pair.hpp"
 
@@ -42,6 +42,8 @@ namespace ft
 			~RBTree()
 			{
 				root = NULL;
+				SNODE->elem->first.~key_type();
+				SNODE->elem->second.~mapped_type();
 				_alloc.deallocate(SNODE->elem, 1);
 				_allocn.deallocate(SNODE, 1);
 			}
@@ -425,6 +427,8 @@ namespace ft
 						y->color = z->color;
 					}
 				}
+				z->elem->first.~key_type();
+				z->elem->second.~mapped_type();
 				_alloc.deallocate(z->elem, 1);
 				_allocn.deallocate(z, 1);
 				if (y_original_color == 0)

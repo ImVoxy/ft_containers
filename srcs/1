@@ -1,44 +1,226 @@
-10, 10, 10, 10, 10, 
-10, 10, 10, 10, 10, 
-10, 10, 10, 10, 10, 42, 
-10, 10, 10, 10, 10, 
-22, 10, 10, 10, 10, 10, 
-22, 10, 10, 1, 2, 3, 4, 10, 10, 10, 
-22, 10, 10, 1, 2, 4, 10, 10, 10, 
-22, 10, 10, 1, 2, 4, 10, 10, 10, 
-1, 2, 3, 4, 
-5, 6, 7, 
-5, 6, 7, 
-1, 2, 3, 4, 
+is bst empty ? 1
+is bst empty ? 0
 
-vector_int = 10, 42, 32, 68, 18, 
-vector_int = 10, 42, 32, 68, 18, 32, 57, 32, 
-vector_int.capacity = 8
-vector_int = 10, 42, 32, 68, 18, 32, 57, 32, 1, 2, 3, 4, 
-vector_int.capacity = 16
-vector_int = 10, 42, 32, 68, 18, 32, 57, 32, 
-vector_int.capacity = 16
-vector_int = 4, 3, 2, 
-Back element = 2
-Front element = 4
-vector_int = 2, 1, 
-Back element = 1
-Front element = 2
-vector_int = 2, 1, 
-input_vector_int = 1, 2, 3, 4, 
-input_vector_int.swap(vector_int)
-vector_int = 1, 2, 3, 4, 
-input_vector_int = 2, 1, 
-vector_int.swap(input_vector_int)
-vector_int = vector_int = 2, 1, 
-input_vector_int = 1, 2, 3, 4, 
-is vector_str empty ?: 1
-is vector_int empty ?: 0
-size of vector_int = 2
-max_size of vector_int = 4294967295
-2, 1, 12, 12, 12, 12, 12, 12, 12, 12, 
-vector_int.capacity = 16
-size of vector_int = 10
-vector_int.capacity = 5000000
-size of vector_int = 10
-0 1 2 3 4 5 6 7 8 9 
+
+Content is:
+- key: 8 | value: 1
+- key: 18 | value: 2
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 18 | value: 2
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 15 | value: 4
+- key: 18 | value: 2
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+- key: 40 | value: 7
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+- key: 40 | value: 7
+- key: 80 | value: 8
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+- key: 40 | value: 7
+- key: 42 | value: 9
+- key: 80 | value: 8
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+- key: 40 | value: 7
+- key: 42 | value: 9
+- key: 80 | value: 8
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+- key: 40 | value: 7
+- key: 42 | value: 9
+- key: 80 | value: 8
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+- key: 40 | value: 7
+- key: 42 | value: 9
+- key: 80 | value: 8
+- key: 204 | value: 12
+
+
+Content is:
+- key: 5 | value: 3
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 15 | value: 4
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+- key: 40 | value: 7
+- key: 42 | value: 9
+- key: 80 | value: 8
+- key: 111 | value: 13
+- key: 204 | value: 12
+
+
+Content is:
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 17 | value: 5
+- key: 18 | value: 2
+- key: 25 | value: 6
+- key: 40 | value: 7
+- key: 42 | value: 9
+- key: 80 | value: 8
+- key: 111 | value: 13
+- key: 204 | value: 12
+
+
+Content is:
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 111 | value: 13
+- key: 204 | value: 12
+
+
+Content is:
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 111 | value: 13
+- key: 204 | value: 12
+
+
+Content is:
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 111 | value: 13
+- key: 204 | value: 12
+
+
+Content is:
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 111 | value: 13
+- key: 204 | value: 12
+
+
+Content is:
+- key: 8 | value: 1
+- key: 11 | value: 10
+- key: 111 | value: 13
+- key: 204 | value: 12
+
+begin key = 11 val = 10
+begin key = 111 val = 13
+begin key = 204 val = 12
+begin key = 0 val = 0
+begin key = 204 val = 12
+begin key = 0 val = 0
+end key   = 204 val = 12
+end key   = 111 val = 13
+end key   = 11 val = 10
+end key   = 8 val = 1
+end key   = 204 val = 12
+end key   = 111 val = 13
+
+begin key = 11 val = 10
+begin key = 111 val = 13
+begin key = 204 val = 12
+begin key = 0 val = 0
+begin key = 204 val = 12
+begin key = 0 val = 0
+end key   = 204 val = 12
+end key   = 111 val = 13
+end key   = 11 val = 10
+end key   = 8 val = 1
+end key   = 204 val = 12
+end key   = 111 val = 13
+end key   = 11 val = 10
+end key   = 8 val = 1
+
+count existing          -> 1
+count not existing      -> 0
+find existing           -> 11
+find not existing       -> 0 (comparison with past the end elem)
+find existing           -> 11
+
+size = 4 maxsixe = 230584300921369395
+equalrange existing     -> 11 ; 111
+equalrange not existing -> 11 ; 11
+equalrange not existing -> 0 (comparison with past the end elem)
+lowerbound not existing -> 11
+lowerbound not existing -> 11
+lowerbound not existing -> 0 (comparison with past the end elem)
+upperbound not existing -> 111
+upperbound not existing -> 11
+upperbound not existing -> 8
+size: 3
+max_size: 230584300921369395
+
+Content is:
+- key: bonjour | value: 10, 42, 32, 68, 48, 
+- key: bye | value: 87, 18, 53, 36, 12, 
+- key: hello | value: 66, 19, 18, 26, 94, 
+

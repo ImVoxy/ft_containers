@@ -21,7 +21,7 @@ namespace ft
             pair( const T1& x, const T2& y ) : first(x), second(y){};
             template< class U1, class U2 >
             pair( const pair<U1, U2>& p ) : first(p.first), second(p.second){};
-            // pair( const pair& p ) = default : first(p.first), second(p.second){};
+            // pair( const pair& p ) = default : first(p.first), second(p.second){}; //C++11
 //  Member fonctions
             pair& operator=( const pair& other )
             {

@@ -37,10 +37,8 @@ namespace ft
 										Container >::type >& it): _node(it.getNode()), _it(_node->elem) {}
 			~map_iterator(){}
 //  Access
-			// Node<key_type, mapped_type> *base() const { return _node; }
 			const Iterator& base() const { return _node->elem; }
 			reference operator*() const { return (*(_node->elem)); }
-			// Node<key_type, mapped_type> *operator->() const { return _it; }
 			pointer operator->() const {return _node->elem;}
 			mapped_type operator[](difference_type ptr) const
 			{
@@ -86,6 +84,8 @@ namespace ft
 						}
 					}
 				}
+				else
+				_node = tmp;
 				
 				return (*this);
 			}
@@ -100,7 +100,7 @@ namespace ft
 				Node<key_type, mapped_type> *tmp = _node->parent;
 
 				if (_node->color == 2)
-				{
+				{						
 					_node = _node->parent;
 					return (*this);
 				}
@@ -108,15 +108,24 @@ namespace ft
 				{
 					_node = _node->left;
 					while (_node->right->color != 2)
+					{
 						_node = _node->right;
+					}
 				}
 				else
 				{
-					if (tmp->left == _node)
-						while(tmp->left == _node)
+					if (tmp->color != 2 && tmp->left == _node)
+						while(tmp->color != 2 && tmp->left == _node)
 						{
 							_node = tmp;
-							tmp = _node->parent;
+							if (_node->parent)
+								tmp = _node->parent;
+							else 
+							{
+								while (_node->color != 2)
+									_node = _node->right;
+								return (*this);
+							}
 						}
 					if (_node->left != tmp)
 						_node = tmp;
