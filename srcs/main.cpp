@@ -12,7 +12,6 @@
 
 int main()
 {
-    std::cout << std::boolalpha;
     std::cout << std::endl << "\033[1;32m     STACK TESTS     \033[0m" << std::endl << std::endl;
     stack_test();
     std::cout << std::endl << "\033[1;32m     VECTOR TESTS     \033[0m" << std::endl << std::endl;

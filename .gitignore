@@ -1,5 +1,6 @@
 tests
 containers_test
-obj
+.dep
+.obj
 a.out
 .vscode

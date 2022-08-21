@@ -42,10 +42,6 @@ namespace ft
 			pointer operator->() const {return _node->elem;}
 			mapped_type operator[](difference_type ptr) const
 			{
-				// Node tmp;
-		
-				// tmp = searchTree(ptr);
-				// return (tmp.val);
 				(void)ptr;
 				return (_node->elem->second);
 			}

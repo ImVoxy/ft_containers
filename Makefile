@@ -1,15 +1,17 @@
 NAME = tests
 
-CXX = c++
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
+CC = c++
+CFLAGS = -std=c++98 -Wall -Wextra -Werror -DTEST=ft
+# CFLAGS = -std=c++11 -Wall -Wextra -Werror -DTEST=std
 
-# CXXFLAGS = -std=c++98
-INC = -Iincludes
+INC = srcs/map/includes/ srcs/vector/includes/ srcs/stack/includes/ srcs/others/includes 
 TEST = ./tests
 
 SRCDIR = srcs/
+OBJDIR = .obj/
+D = .dep/
 
-SRCS = 		stack_main.cpp \
+SRCS =		stack_main.cpp \
 		vector_main.cpp \
 		map_main.cpp \
 		pair_main.cpp \
@@ -19,34 +21,45 @@ SRCS = 		stack_main.cpp \
 		lexicographical_compare_main.cpp \
 		is_integral_main.cpp \
 		enable_if_main.cpp
-		
 
-OBJDIR = obj/
-
-OBJ = $(addprefix $(OBJDIR),$(SRCS:.cpp=.o))
-# DEP = $(addprefix $(OBJDIR),$(SRCS:.cpp=.d))
+CFLAGS		+= $(addprefix -I,$(INC))
+SRCS		:= $(addprefix $(SRCDIR),$(SRCS))
+OBJS		:= $(SRCS:$(SRCDIR)%=$(OBJDIR)%.o)
+DEPS		:= $(SRCS:$(SRCDIR)%=$(D)%.d)
+DEPFLAGS	= -MT $(@:$(OBJDIR)%.o=$(SRCDIR)%) -MMD -MP -MF $D$*.d
 
 all: $(NAME)
 
-$(NAME): $(OBJDIR) $(OBJ)
-	$(CXX) $(CXXFLAGS) $(INC) $(OBJ) -o $(NAME)
+$(NAME): $(OBJS)
+	@$(CC) $^ -o $@
 
 $(OBJDIR):
-	mkdir -p $@
+	@mkdir $(OBJDIR)
 
-$(OBJDIR)%.o: $(SRCDIR)%.cpp
-	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+$(D):
+	@mkdir $(D)
 
-exec: all ; $(TEST)
+$(OBJS): $(OBJDIR)%.o:$(SRCDIR)% | $(OBJDIR) $(D)
+	@mkdir -p $(@D)
+	@mkdir -p $(@D:$(OBJDIR)%=$(D)%)
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c $(@:$(OBJDIR)%.o=$(SRCDIR)%) -o $@
 
-valgrind: all ; valgrind $(TEST)
+exec:
+	all ; $(TEST)
+
+valgrind:
+	all ; valgrind $(TEST)
 
 clean:
 	rm -rf $(OBJDIR)
+	rm -rf $D
 
 fclean: clean
 	rm -rf $(NAME) a.out
 
 re: clean fclean all
 
-# include $(DEP)
+DEPFILES := $(SRCS:%.cpp=$D/%.d)
+$(DEPFILES):
+
+include $(DEPFILES)

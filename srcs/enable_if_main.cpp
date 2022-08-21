@@ -3,7 +3,7 @@
 #include "others/includes/enable_if.hpp"
 #include "others/includes/is_integral.hpp"
 
-#define TEST ft
+// #define TEST ft
 
 // 1. the return type (bool) is only valid if T is an integral type:
 template <class T>

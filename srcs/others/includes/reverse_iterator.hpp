@@ -118,10 +118,6 @@ namespace ft
             template <class A, class B>
             friend bool operator>=  (const reverse_iterator<A>& lhs,
                                     const reverse_iterator<B>& rhs);
-            // template <class A>
-            // friend typename reverse_iterator<A>::difference_type operator- (
-            //                         const reverse_iterator<A>& lhs,
-            //                         const reverse_iterator<A>& rhs);
 
     };
 
@@ -168,22 +164,6 @@ namespace ft
         return (!(lhs < rhs));
     }
 
-    // template <class Iter>
-    // typename reverse_iterator<Iter>::difference_type operator- (
-    //                                 const reverse_iterator<Iter>& lhs,
-    //                                 const reverse_iterator<Iter>& rhs)
-    // {
-    //     return (rhs.base() - lhs.base());
-    // }
-
-    // template <class Iter>
-    // typename reverse_iterator<Iter>::difference_type operator+ (
-    //                                 typename reverse_iterator<Iter>::difference_type n,
-    //                                 const reverse_iterator<Iter>& it)
-    // {
-    //     return (reverse_iterator<Iter>(it.base() - n));
-    // }
-
     	template <class Iter>
     	typename ft::reverse_iterator<Iter> operator+ (
                                     typename reverse_iterator<Iter>::difference_type n,
@@ -197,21 +177,6 @@ namespace ft
 		operator-(const reverse_iterator< IteratorL>& lhs,
 				const reverse_iterator< IteratorR>& rhs)
 		{return (rhs.base() - lhs.base());}
-        // template <class Iter>
-    	// typename ft::reverse_iterator<Iter> operator- (
-        //                             typename reverse_iterator<Iter>::difference_type n,
-        //                             const reverse_iterator<Iter>& it)
-		// {
-		// 	return (reverse_iterator<Iter>(it.base() - n));
-		// }
-
-        // template <class Iter1, class Iter2>
-    	// typename ft::reverse_iterator<Iter1> operator- (
-        //                             typename reverse_iterator<Iter1>& it1,
-        //                             typename reverse_iterator<Iter2>& it2)
-		// {
-		// 	return (reverse_iterator<Iter1>(it1.base() - it2.base()));
-		// }
 }
 
 #endif

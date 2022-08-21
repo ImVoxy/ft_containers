@@ -2,7 +2,7 @@
 #include <iomanip>
 #include "others/includes/is_integral.hpp"
  
-#define TEST ft
+// #define TEST ft
 
 class A {};
  

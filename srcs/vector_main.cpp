@@ -3,7 +3,7 @@
 #include <string>
 #include "vector/includes/vector.hpp"
 
-#define TEST ft
+// #define TEST ft
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096

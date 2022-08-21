@@ -6,7 +6,7 @@
 #include <vector>
 #include <list>
  
-#define TEST ft
+// #define TEST ft
 
 template<class BidirIt>
 void my_reverse(BidirIt first, BidirIt last)

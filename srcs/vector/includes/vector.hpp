@@ -61,11 +61,6 @@ namespace ft
             vector (InputIterator first, InputIterator last,
                     const allocator_type& alloc = allocator_type())
             {
-                // InputIterator   tmp = first;
-                // int             size = 0;
-
-                // while (tmp + size != last)
-                //     size++;
                 _alloc = alloc;
                 _size = 0;
                 _capa = 0;
@@ -172,19 +167,15 @@ namespace ft
             {
                 value_type *tmp;
 
-                // tmp = this->_cont;
                 if (n > this->_capa)
                 {
                     if (n > max_size())
                         throw std::length_error("n is higher than max_size");
                     tmp = this->_alloc.allocate(n, 0);
-                    // this->_cont = this->_alloc.allocate(n, 0);
                     for (size_t i = 0; i < this->_size; i++)
                         _alloc.construct(&tmp[i], _cont[i]);
-                        // _alloc.construct(&_cont[i], &tmp[i]);
                     for (size_t i = 0; i < this->_size; i++)
                         _alloc.destroy(&_cont[i]);
-                        // _alloc.destroy(&tmp[i]);
                     _alloc.deallocate(_cont, _capa);
                     this->_cont = tmp;
                     this->_capa = n;

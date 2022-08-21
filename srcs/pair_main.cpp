@@ -7,7 +7,7 @@
 #include <vector>
 #include <functional>
 
-#define TEST ft
+// #define TEST ft
 
 int pair_test()
 {

@@ -4,7 +4,7 @@
 #include "vector/includes/vector.hpp"
 #include "others/includes/lexicographical_compare.hpp"
  
-#define TEST ft
+// #define TEST ft
 
 int lexicographical_compare_test()
 {
